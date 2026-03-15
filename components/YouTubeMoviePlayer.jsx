@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 
 let iframeApiPromise = null;
 
@@ -45,14 +45,14 @@ function loadIframeApi() {
 
 function getErrorLabel(code) {
   if (code === 101 || code === 150) {
-    return "Bu film telif veya yayıncı kısıtı nedeniyle site içinde oynatılamıyor.";
+    return "Bu film telif veya yayin politikasi nedeniyle sayfa icinde oynatilamiyor.";
   }
 
   if (code === 100) {
-    return "Video şu anda kullanılamıyor.";
+    return "Video su anda kullanilamiyor.";
   }
 
-  return "YouTube oynatıcı başlatılamadı.";
+  return "YouTube oynatici baslatilamadi.";
 }
 
 export default function YouTubeMoviePlayer({
@@ -152,33 +152,33 @@ export default function YouTubeMoviePlayer({
   }, [errorCode, fallbackWatchUrl, watchUrl]);
 
   return (
-    <div className="relative aspect-video overflow-hidden rounded-[28px] border border-white/10 bg-black">
+    <div className="relative aspect-video overflow-hidden rounded-[32px] border border-white/10 bg-black">
       <div ref={containerRef} className="h-full w-full" />
 
       {loading && !errorCode && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/72 px-6 text-center">
           <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-white/10 border-t-accent" />
-          <div className="mt-4 text-base font-bold text-white">Film hazırlanıyor</div>
-          <p className="mt-2 text-xs text-white/55">YouTube oynatıcı yükleniyor.</p>
+          <div className="mt-4 text-base font-bold text-white">Film hazirlaniyor</div>
+          <p className="mt-2 text-xs text-white/55">YouTube oynatici yukleniyor.</p>
         </div>
       )}
 
       {Boolean(errorCode) && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/82 px-6 text-center">
-          <div className="text-base font-bold text-amber-200">Site içinde açılamadı</div>
-          <p className="mt-2 max-w-md text-xs text-white/60">{getErrorLabel(errorCode)}</p>
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/84 px-6 text-center">
+          <div className="text-base font-bold text-[#f6d18e]">Sayfa icinde baslatilamadi</div>
+          <p className="mt-2 max-w-md text-xs leading-6 text-white/60">{getErrorLabel(errorCode)}</p>
           <p className="mt-2 text-[11px] font-semibold text-accent/80">
             {fallbackWatchUrl
-              ? "Alternatif YouTube videosuna yönlendiriliyorsun."
-              : "YouTube sayfasına yönlendiriliyorsun."}
+              ? "Seni uygun YouTube videosuna yonlendiriyoruz."
+              : "Seni dogrudan YouTube sayfasina yonlendiriyoruz."}
           </p>
           <a
             href={fallbackWatchUrl || watchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 rounded-xl bg-accent px-5 py-2.5 text-sm font-bold text-black no-underline transition hover:brightness-110"
+            className="mt-5 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-black no-underline transition hover:brightness-110"
           >
-            {fallbackLabel || "YouTube'da İzle"}
+            {fallbackLabel || "YouTube'da izle"}
           </a>
           <p className="mt-3 text-[11px] text-white/35">{title}</p>
         </div>
