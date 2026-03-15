@@ -189,15 +189,15 @@ const KNOWN_CHANNEL_LINKS = {
   },
   haberturktv: {
     officialLive: ["https://www.haberturk.com/canliyayin"],
-    youtubeLive: "https://www.youtube.com/@haberturk/live",
+    youtubeLive: "https://www.youtube.com/@HaberturkTV/live",
   },
   halktv: {
     officialLive: ["https://halktv.com.tr/canli-yayin"],
-    youtubeLive: "https://www.youtube.com/@halktv/live",
+    youtubeLive: "https://www.youtube.com/@Halktvkanali/live",
   },
   sozcutv: {
     officialLive: ["https://www.szctv.com.tr/canli-yayin"],
-    youtubeLive: "https://www.youtube.com/@szctv/live",
+    youtubeLive: "https://www.youtube.com/@SozcuTelevizyonu/live",
   },
   haberglobal: {
     officialLive: ["https://haberglobal.com.tr/canli-yayin"],
@@ -205,7 +205,7 @@ const KNOWN_CHANNEL_LINKS = {
   },
   tv100: {
     officialLive: ["https://www.tv100.com/canli-yayin"],
-    youtubeLive: "https://www.youtube.com/@tv100canli/live",
+    youtubeLive: "https://www.youtube.com/@tv100/live",
   },
   aspor: {
     officialLive: ["https://www.aspor.com.tr/webtv/canli-yayin"],

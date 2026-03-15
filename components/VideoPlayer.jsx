@@ -120,7 +120,7 @@ export default function VideoPlayer({ channel }) {
             status: "ready",
             available: true,
             embedUrl: payload.embedUrl,
-            watchUrl: payload.watchUrl || youtubeLiveLink.url,
+            watchUrl: payload.liveUrl || payload.watchUrl || youtubeLiveLink.url,
             title: payload.title || "",
             reason: "",
           });
