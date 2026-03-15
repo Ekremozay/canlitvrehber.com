@@ -150,6 +150,8 @@ const DIRECT_CHANNEL_ID_OVERRIDES = {
   tvnet: "TVNET.tr",
   tytturk: "TYTTurk.tr",
   eurostar: "EuroStar.tr",
+  ekranmovies: "EkranMovies.ir",
+  t2movies: "T2Movies.ir",
   dwtveurope: "DWEurope.de",
   deutschewelleenglish: "DWEnglish.de",
   rtrussiatoday: "RT.ru",

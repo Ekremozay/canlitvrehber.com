@@ -134,13 +134,6 @@ export default function Home({ favorites, toggleFavorite }) {
           </aside>
 
           <main className="flex-1 overflow-y-auto p-4 sm:p-6">
-            <AdSlot
-              slot={AD_SLOTS.homeLeaderboard}
-              label="Ust Banner Reklam"
-              minHeight={120}
-              className="mb-4"
-            />
-
             <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_310px] gap-6">
               <section>
                 <AiGuidePanel playableCount={totalPlayable} />
@@ -369,6 +362,13 @@ export default function Home({ favorites, toggleFavorite }) {
                 </div>
               </aside>
             </div>
+
+            <AdSlot
+              slot={AD_SLOTS.homeLeaderboard}
+              label="Ust Banner Reklam"
+              minHeight={120}
+              className="mt-6"
+            />
           </main>
         </div>
       </div>

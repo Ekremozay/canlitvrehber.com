@@ -275,3 +275,27 @@
 275. Pijamaskeliler cocuk
 276. Kral Şakir cocuk
 277. Türkmen Sport Tv genel
+278. Ekran Movies genel
+279. GEM Bollywood genel
+280. GEM Classic genel
+281. GEM Comedy genel
+282. GEM Drama genel
+283. GEM Drama + genel
+284. GEM Film genel
+285. GEM Fit spor
+286. GEM Food genel
+287. GEM Junior cocuk
+288. GEM Kids cocuk
+289. GEM Life genel
+290. GEM Mifa genel
+291. GEM Mifa + genel
+292. GEM Nature belgesel
+293. GEM Onyx genel
+294. GEM Pixel genel
+295. GEM River genel
+296. GEM River + genel
+297. GEM Rubix genel
+298. GEM Rubix + genel
+299. GEM Series genel
+300. GEM Series + genel
+301. T2 Movies genel
