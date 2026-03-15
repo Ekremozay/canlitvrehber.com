@@ -1,4 +1,5 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import AdSlot from "../../components/AdSlot";
 import MovieCard from "../../components/MovieCard";
 import SeoHead from "../../components/SeoHead";
@@ -9,6 +10,19 @@ import {
   getYerliFilmBySlug,
   YERLI_FILMLER_PLAYLIST_URL,
 } from "../../lib/localMovies";
+
+const YouTubeMoviePlayer = dynamic(() => import("../../components/YouTubeMoviePlayer"), {
+  ssr: false,
+  loading: () => (
+    <div className="relative aspect-video overflow-hidden rounded-[28px] border border-white/10 bg-black">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/72 px-6 text-center">
+        <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-white/10 border-t-accent" />
+        <div className="mt-4 text-base font-bold text-white">Film hazırlanıyor</div>
+        <p className="mt-2 text-xs text-white/55">YouTube oynatıcı yükleniyor.</p>
+      </div>
+    </div>
+  ),
+});
 
 function InfoItem({ label, value }) {
   if (!value) return null;
@@ -147,18 +161,11 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
 
           <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
             <section className="space-y-6">
-              <div className="overflow-hidden rounded-[28px] border border-white/10 bg-black">
-                <div className="aspect-video">
-                  <iframe
-                    src={movie.embedUrl}
-                    title={`${movie.movieTitle} YouTube Oynatıcı`}
-                    className="h-full w-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-                    allowFullScreen
-                    referrerPolicy="strict-origin-when-cross-origin"
-                  />
-                </div>
-              </div>
+              <YouTubeMoviePlayer
+                videoId={movie.videoId}
+                title={movie.movieTitle}
+                watchUrl={movie.watchUrl}
+              />
 
               <AdSlot
                 slot={AD_SLOTS.homeInfeed}
