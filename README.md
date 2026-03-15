@@ -150,3 +150,27 @@ Referans dosyasini guncellemek icin:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\update-canlitv-reference.ps1
 ```
+
+## Otomatik Link Kontrolu
+
+Proje artik dahili stream linklerini otomatik izler.
+
+- `pages/api/proxy.js` trafik aldiginda stale ise arka planda link kontrolu tetikler.
+- Sonuclar memory cache'te tutulur (`LINK_CHECK_TTL_MS`, varsayilan 15 dakika).
+- Toplu rapor: `GET /api/health/links`
+- Zorla yeniden kontrol: `GET /api/health/links?force=1`
+- Tek kanal kontrolu: `GET /api/health/links?channel=trt1`
+- Cron tetikleme: `GET/POST /api/health/cron` (`x-cron-secret` header veya `?token=`).
+
+CLI ile manuel kontrol:
+
+```bash
+npm run check:links
+npm run check:links:strict
+```
+
+Ornek cron cagrisi:
+
+```bash
+curl -H "x-cron-secret: $LINK_CHECK_CRON_SECRET" https://your-domain.com/api/health/cron
+```

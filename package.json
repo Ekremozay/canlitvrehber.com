@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check:links": "node --no-warnings scripts/check-stream-links.mjs",
+    "check:links:strict": "node --no-warnings scripts/check-stream-links.mjs --fail-on-error"
   },
   "dependencies": {
     "next": "^14.2.0",

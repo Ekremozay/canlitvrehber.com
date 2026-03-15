@@ -1,3 +1,5 @@
+import { triggerBackgroundLinkHealthCheck } from "../../lib/linkHealth";
+
 const HOP_BY_HOP_HEADERS = new Set([
   "connection",
   "keep-alive",
@@ -95,6 +97,8 @@ async function forwardRequest(targetUrl, ref, ua, requestHeaders) {
 }
 
 export default async function handler(req, res) {
+  triggerBackgroundLinkHealthCheck();
+
   if (req.method !== "GET") {
     res.status(405).json({ error: "Method not allowed" });
     return;
