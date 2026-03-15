@@ -9,7 +9,6 @@ import SeoHead from "../components/SeoHead";
 import { CHANNELS, CATEGORIES } from "../lib/channels";
 import { AD_SLOTS } from "../lib/adSlots";
 import { BRAND, SITE_URL } from "../lib/siteConfig";
-import { SAFE_MODE_ENABLED, canUseInternalStream } from "../lib/safeMode";
 import { getBasePlaybackStatus } from "../lib/playbackStatus";
 import { usePlaybackAvailability } from "../lib/usePlaybackAvailability";
 import canliTvReferenceRows from "../data/canlitv-reference.json";
@@ -36,16 +35,11 @@ export default function Home({ favorites, toggleFavorite }) {
   const totalPlayable = useMemo(() => {
     return CHANNELS.filter((item) => getPlaybackStatus(item).playable).length;
   }, [playbackStatuses]);
-  const totalInternal = useMemo(() => {
-    return CHANNELS.filter((item) => canUseInternalStream(item)).length;
-  }, []);
   const totalExternal = CHANNELS.length - totalPlayable;
   const referenceSummary = useMemo(() => {
-    const totals = { total: 0, redirect: 0, open: 0, youtube: 0 };
+    const totals = { total: 0, youtube: 0 };
     canliTvReferenceRows.forEach((item) => {
       totals.total += 1;
-      if (item.mode === "telif_redirect") totals.redirect += 1;
-      if (String(item.mode || "").startsWith("embedded")) totals.open += 1;
       if (item.mode === "embedded_youtube") totals.youtube += 1;
     });
     return totals;
@@ -87,7 +81,7 @@ export default function Home({ favorites, toggleFavorite }) {
   const showList = viewMode === "list" || viewMode === "both";
 
   const seoDescription =
-    "Canli TV kanallarini tek ekranda izle. Haber, spor, cocuk, belgesel ve yerel kanallara hizli ulas; dahili player ve resmi canli yayin linkleriyle kesintisiz deneyim.";
+    "Canli TV kanallarini tek ekranda izle. Haber, spor, cocuk, belgesel ve yerel kanallara hizli ulas; dogrulanmis resmi YouTube canli yayinlariyla yasal ve net deneyim.";
 
   return (
     <>
@@ -134,18 +128,16 @@ export default function Home({ favorites, toggleFavorite }) {
                     <div>
                       <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Kanal Rehberi</h1>
                       <p className="text-sm text-white/50 mt-1">
-                        Toplam {CHANNELS.length} kanal, site icinde oynatilabilen {totalPlayable} kanal.
+                        Toplam {CHANNELS.length} kanal, site icinde resmi YouTube player ile izlenebilen {totalPlayable} kanal.
                       </p>
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap">
-                      {SAFE_MODE_ENABLED && (
-                        <span className="px-2.5 py-1 rounded-full border border-amber-400/40 bg-amber-300/10 text-amber-200 text-[11px] font-semibold">
-                          Hukuki Guvenli Mod Acik
-                        </span>
-                      )}
+                      <span className="px-2.5 py-1 rounded-full border border-emerald-400/40 bg-emerald-400/10 text-emerald-100 text-[11px] font-semibold">
+                        Yasal Mod: Resmi YouTube
+                      </span>
                       <span className="px-2.5 py-1 rounded-full border border-white/15 bg-white/5 text-white/70 text-[11px] font-semibold">
-                        Ref: {referenceSummary.redirect} resmi / {referenceSummary.open} acik
+                        Ref: {referenceSummary.youtube} YouTube kaynagi
                       </span>
                       <button
                         onClick={() => setShowPlayableOnly((prev) => !prev)}
@@ -236,10 +228,7 @@ export default function Home({ favorites, toggleFavorite }) {
                 <div className="flex flex-wrap items-center gap-2 mb-5">
                   <span className="text-sm text-white/40 font-medium">Sonuc: {filtered.length} kanal</span>
                   <span className="px-2 py-1 rounded-full text-[11px] border border-accent/30 bg-accent/10 text-accent font-semibold">
-                    Oynatilabilir: {totalPlayable}
-                  </span>
-                  <span className="px-2 py-1 rounded-full text-[11px] border border-emerald-400/30 bg-emerald-400/10 text-emerald-100 font-semibold">
-                    Dahili: {totalInternal}
+                    YouTube Canli: {totalPlayable}
                   </span>
                   <span className="px-2 py-1 rounded-full text-[11px] border border-white/20 text-white/60 font-semibold">
                     Harici: {totalExternal}

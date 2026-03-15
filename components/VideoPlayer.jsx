@@ -1,96 +1,111 @@
-import { useRef, useState, useEffect, useCallback, useMemo } from "react";
-import { useHlsPlayer } from "../lib/useHlsPlayer";
-import {
-  SAFE_MODE_ENABLED,
-  canUseInternalStream,
-  getChannelStreamOptions,
-  isBlockedBySafeMode,
-} from "../lib/safeMode";
-import {
-  getOfficialLiveLink,
-  getYoutubeLiveLink,
-  hasYoutubeCandidate,
-} from "../lib/channelPlayback";
-
-const PERFORMANCE_MODE_LABELS = {
-  performance: "Performans",
-  balanced: "Dengeli",
-  quality: "Yuksek Kalite",
-};
-
-const IMAGE_MODE_LABELS = {
-  standard: "Standart",
-  clear: "Net",
-  vivid: "Canli",
-};
-
-const IMAGE_FILTERS = {
-  standard: "none",
-  clear: "contrast(1.08) saturate(1.06)",
-  vivid: "contrast(1.12) saturate(1.14) brightness(1.02)",
-};
+import { useEffect, useMemo, useState } from "react";
+import { getYoutubeLiveLink } from "../lib/channelPlayback";
 
 const EMPTY_YOUTUBE_STATE = {
-  status: "unavailable",
+  status: "idle",
   available: false,
   embedUrl: "",
   watchUrl: "",
+  liveUrl: "",
   title: "",
   reason: "",
+  checkedAt: "",
 };
 
-export default function VideoPlayer({ channel }) {
-  const videoRef = useRef(null);
-  const hideTimer = useRef(null);
+function getReasonLabel(reason) {
+  const map = {
+    live_not_found: "Bu kanal icin su anda aktif resmi YouTube canli yayini bulunamadi.",
+    missing_youtube_source: "Bu kanal icin tanimli resmi YouTube kaynagi yok.",
+    invalid_youtube_url: "YouTube kaynagi gecersiz gorunuyor.",
+    timeout: "YouTube canli kontrolu zaman asimina ugradi.",
+    network_error: "YouTube canli kontrolu sirasinda baglanti hatasi olustu.",
+  };
 
-  const [playing, setPlaying] = useState(true);
-  const [volume, setVolume] = useState(80);
-  const [muted, setMuted] = useState(false);
-  const [showUI, setShowUI] = useState(true);
-  const [showQuality, setShowQuality] = useState(false);
-  const [performanceMode, setPerformanceMode] = useState("balanced");
-  const [imageMode, setImageMode] = useState("standard");
-  const [selectedPlayer, setSelectedPlayer] = useState("internal");
-  const [youtubeState, setYoutubeState] = useState(EMPTY_YOUTUBE_STATE);
+  return map[String(reason || "")] || "YouTube canli yayini su an dogrulanamadi.";
+}
 
-  const internalPlaybackAllowed = canUseInternalStream(channel);
-  const blockedByPolicy = isBlockedBySafeMode(channel);
+function buildYoutubeState(channel, playbackStatus, youtubeLiveLink) {
+  if (!youtubeLiveLink?.url) {
+    return {
+      ...EMPTY_YOUTUBE_STATE,
+      status: "unavailable",
+      reason: "missing_youtube_source",
+    };
+  }
+
+  if (playbackStatus?.verified) {
+    if (playbackStatus.playable && playbackStatus.playbackType === "youtube" && playbackStatus.embedUrl) {
+      return {
+        ...EMPTY_YOUTUBE_STATE,
+        status: "ready",
+        available: true,
+        embedUrl: playbackStatus.embedUrl,
+        watchUrl: playbackStatus.liveUrl || playbackStatus.watchUrl || youtubeLiveLink.url,
+        liveUrl: playbackStatus.liveUrl || "",
+        title: playbackStatus.youtubeTitle || channel?.name || "YouTube Canli",
+        checkedAt: playbackStatus.checkedAt || "",
+      };
+    }
+
+    return {
+      ...EMPTY_YOUTUBE_STATE,
+      status: "unavailable",
+      watchUrl: playbackStatus.watchUrl || youtubeLiveLink.url,
+      liveUrl: playbackStatus.liveUrl || "",
+      title: playbackStatus.youtubeTitle || "",
+      reason: playbackStatus.youtubeReason || "live_not_found",
+      checkedAt: playbackStatus.checkedAt || "",
+    };
+  }
+
+  return {
+    ...EMPTY_YOUTUBE_STATE,
+    status: "checking",
+    watchUrl: youtubeLiveLink.url,
+    liveUrl: youtubeLiveLink.url,
+  };
+}
+
+function formatCheckedAt(checkedAt) {
+  if (!checkedAt) return "";
+
+  try {
+    return new Intl.DateTimeFormat("tr-TR", {
+      day: "2-digit",
+      month: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(new Date(checkedAt));
+  } catch {
+    return "";
+  }
+}
+
+export default function VideoPlayer({ channel, playbackStatus = null }) {
   const youtubeLiveLink = getYoutubeLiveLink(channel);
-  const officialLiveLink = getOfficialLiveLink(channel);
-  const hasYoutubeOption = hasYoutubeCandidate(channel);
-
-  const streamOptions = useMemo(() => {
-    if (!internalPlaybackAllowed) return [];
-    return getChannelStreamOptions(channel);
-  }, [channel, internalPlaybackAllowed]);
-
-  const [selectedSourceId, setSelectedSourceId] = useState(streamOptions[0]?.id || "");
+  const [youtubeState, setYoutubeState] = useState(() =>
+    buildYoutubeState(channel, playbackStatus, youtubeLiveLink)
+  );
 
   useEffect(() => {
-    setSelectedSourceId(streamOptions[0]?.id || "");
-  }, [channel.id, streamOptions]);
+    setYoutubeState(buildYoutubeState(channel, playbackStatus, youtubeLiveLink));
+  }, [
+    channel?.id,
+    playbackStatus?.verified,
+    playbackStatus?.playable,
+    playbackStatus?.playbackType,
+    playbackStatus?.embedUrl,
+    playbackStatus?.watchUrl,
+    playbackStatus?.liveUrl,
+    playbackStatus?.youtubeTitle,
+    playbackStatus?.youtubeReason,
+    playbackStatus?.checkedAt,
+    youtubeLiveLink?.url,
+  ]);
 
   useEffect(() => {
-    setSelectedPlayer(internalPlaybackAllowed ? "internal" : hasYoutubeOption ? "youtube" : "internal");
-    setShowQuality(false);
-    setYoutubeState(
-      hasYoutubeOption
-        ? {
-            status: "checking",
-            available: false,
-            embedUrl: "",
-            watchUrl: "",
-            title: "",
-            reason: "",
-          }
-        : EMPTY_YOUTUBE_STATE
-    );
-  }, [channel.id, internalPlaybackAllowed, hasYoutubeOption]);
-
-  useEffect(() => {
-    if (!youtubeLiveLink?.url) {
-      setYoutubeState(EMPTY_YOUTUBE_STATE);
-      return;
+    if (!youtubeLiveLink?.url || playbackStatus?.verified) {
+      return undefined;
     }
 
     const controller = new AbortController();
@@ -99,6 +114,8 @@ export default function VideoPlayer({ channel }) {
     setYoutubeState((prev) => ({
       ...prev,
       status: "checking",
+      watchUrl: prev.watchUrl || youtubeLiveLink.url,
+      liveUrl: prev.liveUrl || youtubeLiveLink.url,
       reason: "",
     }));
 
@@ -117,39 +134,36 @@ export default function VideoPlayer({ channel }) {
 
         if (payload.available && payload.embedUrl) {
           setYoutubeState({
+            ...EMPTY_YOUTUBE_STATE,
             status: "ready",
             available: true,
             embedUrl: payload.embedUrl,
             watchUrl: payload.liveUrl || payload.watchUrl || youtubeLiveLink.url,
-            title: payload.title || "",
-            reason: "",
+            liveUrl: payload.liveUrl || "",
+            title: payload.title || channel?.name || "YouTube Canli",
+            checkedAt: payload.checkedAt || "",
           });
-
-          if (!internalPlaybackAllowed) {
-            setSelectedPlayer("youtube");
-          }
-
           return;
         }
 
         setYoutubeState({
+          ...EMPTY_YOUTUBE_STATE,
           status: "unavailable",
-          available: false,
-          embedUrl: "",
-          watchUrl: youtubeLiveLink.url,
+          watchUrl: payload.watchUrl || youtubeLiveLink.url,
+          liveUrl: payload.liveUrl || "",
           title: payload.title || "",
           reason: payload.reason || "live_not_found",
+          checkedAt: payload.checkedAt || "",
         });
       })
       .catch((error) => {
         if (!active || error?.name === "AbortError") return;
 
         setYoutubeState({
+          ...EMPTY_YOUTUBE_STATE,
           status: "error",
-          available: false,
-          embedUrl: "",
           watchUrl: youtubeLiveLink.url,
-          title: "",
+          liveUrl: youtubeLiveLink.url,
           reason: error?.message || "youtube_status_failed",
         });
       });
@@ -158,525 +172,110 @@ export default function VideoPlayer({ channel }) {
       active = false;
       controller.abort();
     };
-  }, [channel.id, youtubeLiveLink?.url, internalPlaybackAllowed]);
+  }, [channel?.id, channel?.name, playbackStatus?.verified, youtubeLiveLink?.url]);
 
-  const orderedCandidates = useMemo(() => {
-    if (streamOptions.length === 0) return [];
-    const selectedIndex = Math.max(
-      0,
-      streamOptions.findIndex((item) => item.id === selectedSourceId)
-    );
-    const selected = streamOptions[selectedIndex];
-    const rest = streamOptions.filter((item, idx) => idx !== selectedIndex);
-    return [selected.url, ...rest.map((item) => item.url)];
-  }, [streamOptions, selectedSourceId]);
-
-  const internalCandidates = selectedPlayer === "internal" ? orderedCandidates : [];
-  const selectedSource =
-    streamOptions.find((item) => item.id === selectedSourceId) || streamOptions[0] || null;
-
-  const {
-    status,
-    qualities,
-    currentQuality,
-    changeQuality,
-    sourceIndex,
-    sourceCount,
-  } = useHlsPlayer(videoRef, internalCandidates, { autoplay: true, performanceMode });
-
-  const youtubeReady = youtubeState.status === "ready" && Boolean(youtubeState.embedUrl);
-  const youtubeChecking = youtubeState.status === "checking";
-  const youtubeFailed = youtubeState.status === "unavailable" || youtubeState.status === "error";
-
-  useEffect(() => {
-    if (!videoRef.current) return;
-    videoRef.current.volume = muted ? 0 : volume / 100;
-    videoRef.current.muted = muted;
-  }, [volume, muted]);
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v || status !== "playing" || selectedPlayer !== "internal") return;
-    if (playing) v.play().catch(() => {});
-    else v.pause();
-  }, [playing, status, selectedPlayer]);
-
-  useEffect(() => {
-    if (selectedPlayer !== "internal") return;
-    if ((status === "error" || status === "unavailable") && youtubeReady) {
-      setSelectedPlayer("youtube");
-    }
-  }, [selectedPlayer, status, youtubeReady]);
-
-  const handleMouseMove = useCallback(() => {
-    setShowUI(true);
-    if (hideTimer.current) clearTimeout(hideTimer.current);
-    hideTimer.current = setTimeout(() => setShowUI(false), 3500);
-  }, []);
-
-  const toggleFullscreen = () => {
-    const el = document.querySelector("[data-player-wrap]");
-    if (!el) return;
-    if (document.fullscreenElement) document.exitFullscreen();
-    else el.requestFullscreen?.();
-  };
-
-  const qualityLabel = (level) => {
-    if (!level) return "Otomatik";
-    if (level.height) return `${level.height}p`;
-    if (level.bitrate) return `${Math.round(level.bitrate / 1000)}k`;
-    return "Otomatik";
-  };
-
-  const topLabel =
-    selectedPlayer === "youtube"
-      ? youtubeState.title || "YouTube Canli"
-      : status === "playing"
-        ? currentQuality === -1
-          ? `${PERFORMANCE_MODE_LABELS[performanceMode]}`
-          : qualityLabel(qualities[currentQuality])
-        : "-";
-
-  const showInternalOverlay = selectedPlayer === "internal";
-  const showYoutubeFrame = selectedPlayer === "youtube" && youtubeReady;
+  const openUrl = youtubeState.liveUrl || youtubeState.watchUrl || youtubeLiveLink?.url || "";
+  const checkedAtLabel = useMemo(() => formatCheckedAt(youtubeState.checkedAt), [youtubeState.checkedAt]);
+  const isReady = youtubeState.status === "ready" && Boolean(youtubeState.embedUrl);
+  const isChecking = youtubeState.status === "checking";
 
   return (
-    <div
-      data-player-wrap
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setShowUI(false)}
-      className="relative w-full aspect-video max-h-[72vh] bg-black overflow-hidden rounded-2xl border border-white/10"
-      style={{ cursor: showUI ? "default" : "none" }}
-    >
-      {showYoutubeFrame ? (
+    <div className="relative w-full aspect-video max-h-[72vh] overflow-hidden rounded-2xl border border-white/10 bg-black">
+      {isReady ? (
         <iframe
           src={youtubeState.embedUrl}
           title={`${channel.name} YouTube Canli`}
-          className="w-full h-full bg-black"
+          className="h-full w-full bg-black"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           allowFullScreen
           referrerPolicy="strict-origin-when-cross-origin"
         />
       ) : (
-        <video
-          ref={videoRef}
-          className="w-full h-full object-contain bg-black"
-          style={{ filter: IMAGE_FILTERS[imageMode] }}
-          playsInline
-          onClick={() => setPlaying((prev) => !prev)}
-        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black px-6 text-center">
+          {isChecking ? (
+            <>
+              <div className="h-10 w-10 rounded-full border-[3px] border-white/10 border-t-accent animate-spin" />
+              <div className="mt-4 text-base font-bold text-white">
+                Resmi YouTube canli yayini kontrol ediliyor
+              </div>
+              <p className="mt-2 max-w-md text-xs text-white/55">
+                Site icinde sadece dogrulanmis YouTube canli yayinlari aciliyor. Sonuc saatlik cache ile yenilenir.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="text-base font-bold text-red-400">YouTube canli yayini acilamadi</div>
+              <p className="mt-2 max-w-md text-xs text-white/55">{getReasonLabel(youtubeState.reason)}</p>
+              {checkedAtLabel && (
+                <p className="mt-2 text-[11px] text-white/35">Son kontrol: {checkedAtLabel}</p>
+              )}
+              {openUrl && (
+                <a
+                  href={openUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 rounded-xl border border-red-400/30 bg-red-400/10 px-5 py-2.5 text-sm font-semibold text-red-100 no-underline transition hover:bg-red-400/20"
+                >
+                  YouTube'da Kontrol Et
+                </a>
+              )}
+            </>
+          )}
+        </div>
       )}
 
-      {showInternalOverlay && status === "loading" && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/65 z-10">
-          <div className="w-10 h-10 border-[3px] border-white/10 border-t-accent rounded-full animate-spin" />
-          <span className="text-sm text-white/60 mt-3.5">
-            Yayin aciliyor {sourceCount > 1 ? `(${sourceIndex + 1}/${sourceCount})` : ""}
+      <div
+        className="absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-3 px-5 py-4"
+        style={{
+          background: "linear-gradient(180deg, rgba(0,0,0,0.78) 0%, transparent 100%)",
+          pointerEvents: "none",
+        }}
+      >
+        <div className="flex min-w-0 items-center gap-3">
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-widest font-mono ${
+              isReady
+                ? "border border-danger/30 bg-danger/15 text-danger"
+                : "border border-white/15 bg-white/10 text-white/70"
+            }`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${isReady ? "bg-danger animate-pulse" : "bg-white/45"}`} />
+            {isReady ? "CANLI" : "YOUTUBE"}
           </span>
+          <span className="truncate text-sm font-bold text-white">{channel.name}</span>
         </div>
-      )}
+        <span className="hidden rounded-full border border-emerald-400/25 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-bold text-emerald-100 sm:inline-flex">
+          Resmi YouTube Player
+        </span>
+      </div>
 
-      {selectedPlayer === "youtube" && youtubeChecking && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/75 z-10 px-6 text-center">
-          <div className="w-10 h-10 border-[3px] border-white/10 border-t-accent rounded-full animate-spin" />
-          <div className="text-base font-bold text-white mt-4">YouTube canli yayin kontrol ediliyor</div>
-          <p className="text-xs text-white/50 mt-2">Canli yayin bulunursa ayni sayfada player acilacak</p>
+      <div
+        className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-3 px-5 pb-4 pt-10 sm:flex-row sm:items-end sm:justify-between"
+        style={{
+          background: "linear-gradient(0deg, rgba(0,0,0,0.88) 0%, transparent 100%)",
+          pointerEvents: "none",
+        }}
+      >
+        <div className="max-w-xl text-xs text-white/60">
+          <div className="font-semibold text-white/85">Oynatma ve reklam yonetimi YouTube tarafinda kalir.</div>
+          <div className="mt-1">
+            Site icinde sadece resmi ve dogrulanmis YouTube canli yayinlari gosterilir.
+            {checkedAtLabel ? ` Son kontrol: ${checkedAtLabel}.` : ""}
+          </div>
         </div>
-      )}
 
-      {showInternalOverlay && status === "error" && !youtubeReady && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/75 z-10 px-6 text-center">
-          <div className="text-4xl mb-2">!</div>
-          <div className="text-base font-bold text-red-400">Yayin su an acilamadi</div>
-          <p className="text-xs text-white/50 mt-2 mb-4">
-            {youtubeChecking
-              ? "Dahili kaynak hata verdi. YouTube canli yedegi kontrol ediliyor..."
-              : "Farkli bir kaynak secin veya daha sonra tekrar deneyin"}
-          </p>
-          {youtubeChecking && (
-            <div className="text-xs text-emerald-300 mb-3">YouTube player hazirsa otomatik gecilecek</div>
-          )}
-          {officialLiveLink?.url && (
+        <div className="flex items-center gap-2" style={{ pointerEvents: "auto" }}>
+          {openUrl && (
             <a
-              href={officialLiveLink.url}
+              href={openUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2 rounded-xl bg-accent text-black text-sm font-bold hover:brightness-110 transition no-underline mb-2"
-            >
-              Resmi Canli Ac
-            </a>
-          )}
-          {youtubeLiveLink?.url && (
-            <a
-              href={youtubeLiveLink.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-2 rounded-xl border border-white/20 bg-white/10 text-white text-sm font-semibold hover:bg-white/20 transition no-underline mb-2"
+              className="rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white no-underline transition hover:bg-white/15"
             >
               YouTube'da Ac
             </a>
           )}
-          <button
-            onClick={() => window.location.reload()}
-            className="px-6 py-2 rounded-xl border border-white/20 bg-white/10 text-white text-sm font-semibold hover:bg-accent hover:text-black hover:border-accent transition"
-          >
-            Yeniden Dene
-          </button>
         </div>
-      )}
-
-      {showInternalOverlay && status === "unavailable" && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/75 z-10 px-6 text-center gap-2.5">
-          {blockedByPolicy && SAFE_MODE_ENABLED && (
-            <div className="max-w-md rounded-xl border border-amber-400/40 bg-amber-300/10 px-4 py-2 text-xs text-amber-200">
-              Bu kanal dahili playerda Guvenli Mod nedeniyle kapali.
-            </div>
-          )}
-
-          {youtubeChecking && (
-            <div className="max-w-md rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-xs text-emerald-200">
-              YouTube canli player kontrol ediliyor.
-            </div>
-          )}
-
-          {youtubeReady && (
-            <button
-              onClick={() => setSelectedPlayer("youtube")}
-              className="px-5 py-2.5 rounded-xl border border-emerald-400/35 bg-emerald-400/15 text-emerald-100 text-sm font-bold hover:bg-emerald-400/25 transition"
-            >
-              YouTube Player'a Gec
-            </button>
-          )}
-
-          {officialLiveLink && (
-            <a
-              href={officialLiveLink.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-2.5 rounded-xl bg-accent text-black text-sm font-bold hover:brightness-110 transition no-underline"
-            >
-              Resmi Canli Ac
-            </a>
-          )}
-
-          {youtubeLiveLink && !youtubeReady && (
-            <a
-              href={youtubeLiveLink.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-2.5 rounded-xl border border-white/20 bg-white/10 text-white text-sm font-semibold hover:bg-white/20 transition no-underline"
-            >
-              YouTube Canli Ac
-            </a>
-          )}
-
-          {!officialLiveLink && !youtubeLiveLink && (
-            <div className="text-sm text-white/70">Canli kaynak bulunamadi</div>
-          )}
-        </div>
-      )}
-
-      {selectedPlayer === "youtube" && youtubeFailed && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/75 z-10 px-6 text-center gap-2.5">
-          <div className="text-base font-bold text-red-400">YouTube canli yedegi bulunamadi</div>
-          <p className="text-xs text-white/50 max-w-md">
-            Bu kanal icin YouTube tarafinda aktif embed edilebilir canli yayin bulunamadi.
-          </p>
-          {internalPlaybackAllowed && (
-            <button
-              onClick={() => setSelectedPlayer("internal")}
-              className="px-5 py-2.5 rounded-xl border border-white/20 bg-white/10 text-white text-sm font-semibold hover:bg-white/20 transition"
-            >
-              Dahili Player'a Don
-            </button>
-          )}
-          {officialLiveLink?.url && (
-            <a
-              href={officialLiveLink.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-2.5 rounded-xl bg-accent text-black text-sm font-bold hover:brightness-110 transition no-underline"
-            >
-              Resmi Canli Ac
-            </a>
-          )}
-        </div>
-      )}
-
-      <div
-        className="absolute top-0 inset-x-0 px-5 py-4 flex justify-between items-center z-20 transition-opacity duration-300"
-        style={{
-          opacity: showUI ? 1 : 0,
-          background: "linear-gradient(180deg, rgba(0,0,0,0.72) 0%, transparent 100%)",
-          pointerEvents: showUI ? "auto" : "none",
-        }}
-      >
-        <div className="flex items-center gap-3 min-w-0">
-          <span className="inline-flex items-center gap-1.5 bg-danger/15 border border-danger/30 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-danger tracking-widest font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-danger animate-pulse" />
-            CANLI
-          </span>
-          <span className="text-sm font-bold truncate">{channel.name}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          {(internalPlaybackAllowed || youtubeReady || youtubeChecking) && (
-            <div className="hidden sm:flex items-center gap-1 rounded-full border border-white/10 bg-black/35 p-1">
-              {internalPlaybackAllowed && (
-                <button
-                  onClick={() => setSelectedPlayer("internal")}
-                  className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition ${
-                    selectedPlayer === "internal"
-                      ? "bg-accent text-black"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Dahili
-                </button>
-              )}
-              {(youtubeReady || youtubeChecking) && (
-                <button
-                  onClick={() => {
-                    if (youtubeReady) setSelectedPlayer("youtube");
-                  }}
-                  className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition ${
-                    selectedPlayer === "youtube" && youtubeReady
-                      ? "bg-emerald-400 text-black"
-                      : "text-white/70 hover:text-white"
-                  } ${youtubeChecking ? "opacity-70 cursor-wait" : ""}`}
-                >
-                  {youtubeChecking ? "YouTube..." : "YouTube"}
-                </button>
-              )}
-            </div>
-          )}
-          <span className="font-mono text-[11px] text-white/70 max-w-[180px] truncate">{topLabel}</span>
-          {selectedPlayer === "internal" && selectedSource && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/70">
-              {selectedSource.label}
-            </span>
-          )}
-          {selectedPlayer === "youtube" && youtubeReady && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-400/15 text-emerald-100 border border-emerald-400/25">
-              YouTube Player
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div
-        className="absolute bottom-0 inset-x-0 px-5 pb-4 pt-10 flex items-center justify-between z-20 transition-opacity duration-300"
-        style={{
-          opacity: showUI ? 1 : 0,
-          background: "linear-gradient(0deg, rgba(0,0,0,0.86) 0%, transparent 100%)",
-          pointerEvents: showUI ? "auto" : "none",
-        }}
-      >
-        {selectedPlayer === "internal" ? (
-          <>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setPlaying((prev) => !prev)}
-                className="w-10 h-10 rounded-full bg-white/10 border border-white/15 text-white flex items-center justify-center hover:bg-white/20 transition"
-              >
-                {playing ? "||" : ">"}
-              </button>
-
-              <button
-                onClick={() => setMuted((prev) => !prev)}
-                className="text-white/70 hover:text-white transition p-1"
-              >
-                {muted ? "M" : volume > 50 ? "L" : "S"}
-              </button>
-
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={muted ? 0 : volume}
-                onChange={(e) => {
-                  setVolume(Number(e.target.value));
-                  setMuted(false);
-                }}
-                className="w-20 h-[3px] accent-accent"
-              />
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <button
-                  onClick={() => setShowQuality((prev) => !prev)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-white/80 text-xs font-semibold hover:bg-white/10 transition"
-                >
-                  Ayarlar
-                </button>
-
-                {showQuality && (
-                  <div className="absolute bottom-full right-0 mb-2 bg-[rgba(15,15,22,0.96)] border border-white/10 rounded-xl p-1.5 min-w-[220px] backdrop-blur-xl z-50 max-h-[60vh] overflow-auto">
-                    <div className="px-3 py-2 text-[10px] text-white/40 font-bold tracking-wide">
-                      YAYIN KAYNAGI
-                    </div>
-                    {streamOptions.length > 0 ? (
-                      streamOptions.map((option) => (
-                        <button
-                          key={option.id}
-                          onClick={() => {
-                            setSelectedSourceId(option.id);
-                            setShowQuality(false);
-                          }}
-                          className={`w-full px-3 py-2 rounded-lg text-xs font-semibold text-left transition ${
-                            selectedSourceId === option.id
-                              ? "bg-accent/10 text-accent"
-                              : "text-white/60 hover:bg-white/5"
-                          }`}
-                        >
-                          <div>{option.label}</div>
-                          {option.sourceHost && (
-                            <div className="text-[10px] text-white/35 mt-0.5">{option.sourceHost}</div>
-                          )}
-                        </button>
-                      ))
-                    ) : (
-                      <div className="px-3 py-2 text-xs text-white/45">Dahili kaynak bulunamadi</div>
-                    )}
-
-                    {(youtubeReady || youtubeChecking) && (
-                      <>
-                        <div className="mx-2 my-1 border-t border-white/10" />
-                        <div className="px-3 py-2 text-[10px] text-white/40 font-bold tracking-wide">
-                          OYNATICI
-                        </div>
-                        <button
-                          onClick={() => {
-                            if (youtubeReady) {
-                              setSelectedPlayer("youtube");
-                              setShowQuality(false);
-                            }
-                          }}
-                          className={`w-full px-3 py-2 rounded-lg text-xs font-semibold text-left transition ${
-                            youtubeReady
-                              ? "text-white/60 hover:bg-white/5"
-                              : "text-white/35 cursor-wait"
-                          }`}
-                        >
-                          {youtubeChecking ? "YouTube canli kontrol ediliyor" : "YouTube Player'a Gec"}
-                        </button>
-                      </>
-                    )}
-
-                    <div className="mx-2 my-1 border-t border-white/10" />
-
-                    <div className="px-3 py-2 text-[10px] text-white/40 font-bold tracking-wide">
-                      OYNATMA MODU
-                    </div>
-                    {Object.entries(PERFORMANCE_MODE_LABELS).map(([mode, label]) => (
-                      <button
-                        key={mode}
-                        onClick={() => {
-                          setPerformanceMode(mode);
-                          changeQuality(-1);
-                        }}
-                        className={`w-full px-3 py-2 rounded-lg text-xs font-semibold text-left transition ${
-                          performanceMode === mode && currentQuality === -1
-                            ? "bg-accent/10 text-accent"
-                            : "text-white/60 hover:bg-white/5"
-                        }`}
-                      >
-                        {label}
-                      </button>
-                    ))}
-
-                    <div className="mx-2 my-1 border-t border-white/10" />
-
-                    <div className="px-3 py-2 text-[10px] text-white/40 font-bold tracking-wide">
-                      GORUNTU MODU
-                    </div>
-                    {Object.entries(IMAGE_MODE_LABELS).map(([mode, label]) => (
-                      <button
-                        key={mode}
-                        onClick={() => setImageMode(mode)}
-                        className={`w-full px-3 py-2 rounded-lg text-xs font-semibold text-left transition ${
-                          imageMode === mode
-                            ? "bg-accent/10 text-accent"
-                            : "text-white/60 hover:bg-white/5"
-                        }`}
-                      >
-                        {label}
-                      </button>
-                    ))}
-
-                    {qualities.length > 0 && (
-                      <>
-                        <div className="mx-2 my-1 border-t border-white/10" />
-                        <div className="px-3 py-2 text-[10px] text-white/40 font-bold tracking-wide">
-                          COZUNURLUK
-                        </div>
-                        {[{ idx: -1, label: "Otomatik" }, ...qualities.map((q, idx) => ({ idx, label: qualityLabel(q) }))].map(
-                          (item) => (
-                            <button
-                              key={item.idx}
-                              onClick={() => changeQuality(item.idx)}
-                              className={`w-full px-3 py-2 rounded-lg text-xs font-semibold text-left transition ${
-                                currentQuality === item.idx
-                                  ? "bg-accent/10 text-accent"
-                                  : "text-white/60 hover:bg-white/5"
-                              }`}
-                            >
-                              {item.idx === -1
-                                ? `${PERFORMANCE_MODE_LABELS[performanceMode]} / Otomatik`
-                                : item.label}
-                            </button>
-                          )
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              <button
-                onClick={toggleFullscreen}
-                className="px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition text-sm"
-              >
-                [ ]
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1.5 rounded-lg border border-emerald-400/30 bg-emerald-400/10 text-emerald-100 text-xs font-bold">
-                YouTube Canli Player
-              </span>
-              {internalPlaybackAllowed && (
-                <button
-                  onClick={() => setSelectedPlayer("internal")}
-                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-white/80 text-xs font-semibold hover:bg-white/10 transition"
-                >
-                  Dahili'ye Don
-                </button>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              {youtubeState.watchUrl && (
-                <a
-                  href={youtubeState.watchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-white/80 text-xs font-semibold hover:bg-white/10 transition no-underline"
-                >
-                  YouTube'da Ac
-                </a>
-              )}
-              <button
-                onClick={toggleFullscreen}
-                className="px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition text-sm"
-              >
-                [ ]
-              </button>
-            </div>
-          </>
-        )}
       </div>
     </div>
   );
