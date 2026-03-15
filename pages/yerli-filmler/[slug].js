@@ -165,6 +165,8 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
                 videoId={movie.videoId}
                 title={movie.movieTitle}
                 watchUrl={movie.watchUrl}
+                fallbackWatchUrl={movie.alternativeVideo?.watchUrl || ""}
+                fallbackLabel={movie.alternativeVideo ? "Alternatif Videoyu Aç" : "YouTube'da İzle"}
               />
 
               <AdSlot
@@ -217,6 +219,16 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
                   >
                     YouTube'da Aç
                   </a>
+                  {movie.alternativeVideo?.watchUrl && (
+                    <a
+                      href={movie.alternativeVideo.watchUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-xl border border-amber-300/25 bg-amber-300/10 px-4 py-3 text-sm font-semibold text-amber-100 no-underline transition hover:bg-amber-300/15"
+                    >
+                      Alternatif Tek Parça Video
+                    </a>
+                  )}
                   <a
                     href={movie.channelUrl || YERLI_FILMLER_PLAYLIST_URL}
                     target="_blank"

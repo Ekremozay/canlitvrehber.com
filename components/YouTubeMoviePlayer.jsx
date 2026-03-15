@@ -55,9 +55,16 @@ function getErrorLabel(code) {
   return "YouTube oynatıcı başlatılamadı.";
 }
 
-export default function YouTubeMoviePlayer({ videoId, title, watchUrl }) {
+export default function YouTubeMoviePlayer({
+  videoId,
+  title,
+  watchUrl,
+  fallbackWatchUrl = "",
+  fallbackLabel = "",
+}) {
   const containerRef = useRef(null);
   const playerRef = useRef(null);
+  const redirectTimerRef = useRef(null);
   const [errorCode, setErrorCode] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -116,12 +123,33 @@ export default function YouTubeMoviePlayer({ videoId, title, watchUrl }) {
 
     return () => {
       active = false;
+      if (redirectTimerRef.current) {
+        window.clearTimeout(redirectTimerRef.current);
+        redirectTimerRef.current = null;
+      }
       if (playerRef.current) {
         playerRef.current.destroy();
         playerRef.current = null;
       }
     };
   }, [playerVars, videoId]);
+
+  useEffect(() => {
+    if (!errorCode) return undefined;
+
+    const targetUrl = fallbackWatchUrl || watchUrl;
+
+    redirectTimerRef.current = window.setTimeout(() => {
+      window.location.assign(targetUrl);
+    }, 1200);
+
+    return () => {
+      if (redirectTimerRef.current) {
+        window.clearTimeout(redirectTimerRef.current);
+        redirectTimerRef.current = null;
+      }
+    };
+  }, [errorCode, fallbackWatchUrl, watchUrl]);
 
   return (
     <div className="relative aspect-video overflow-hidden rounded-[28px] border border-white/10 bg-black">
@@ -139,13 +167,18 @@ export default function YouTubeMoviePlayer({ videoId, title, watchUrl }) {
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/82 px-6 text-center">
           <div className="text-base font-bold text-amber-200">Site içinde açılamadı</div>
           <p className="mt-2 max-w-md text-xs text-white/60">{getErrorLabel(errorCode)}</p>
+          <p className="mt-2 text-[11px] font-semibold text-accent/80">
+            {fallbackWatchUrl
+              ? "Alternatif YouTube videosuna yönlendiriliyorsun."
+              : "YouTube sayfasına yönlendiriliyorsun."}
+          </p>
           <a
-            href={watchUrl}
+            href={fallbackWatchUrl || watchUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 rounded-xl bg-accent px-5 py-2.5 text-sm font-bold text-black no-underline transition hover:brightness-110"
           >
-            YouTube'da İzle
+            {fallbackLabel || "YouTube'da İzle"}
           </a>
           <p className="mt-3 text-[11px] text-white/35">{title}</p>
         </div>
