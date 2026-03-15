@@ -1,5 +1,5 @@
 ﻿import Link from "next/link";
-import { canUseInternalStream } from "../lib/safeMode";
+import { getChannelPlaybackType, isChannelPlayable } from "../lib/channelPlayback";
 import { getCanliTvModeLabel, getCanliTvReference } from "../lib/canlitvReference";
 
 function prettyCategory(category) {
@@ -17,7 +17,8 @@ function prettyCategory(category) {
 }
 
 export default function ChannelListItem({ channel, isFav, onToggleFav }) {
-  const hasStream = canUseInternalStream(channel);
+  const hasStream = isChannelPlayable(channel);
+  const playbackType = getChannelPlaybackType(channel);
   const reference = getCanliTvReference(channel);
 
   return (
@@ -50,7 +51,11 @@ export default function ChannelListItem({ channel, isFav, onToggleFav }) {
                 : "border-white/20 text-white/45 bg-white/5"
             }`}
           >
-            {hasStream ? "Canli" : "Harici"}
+            {hasStream
+              ? playbackType === "youtube"
+                ? "YouTube"
+                : "Canli"
+              : "Harici"}
           </span>
           {reference?.mode && (
             <span className="px-2 py-0.5 rounded-full border border-amber-300/35 bg-amber-300/10 text-[10px] text-amber-100/85">
@@ -80,7 +85,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav }) {
               : "bg-white/10 text-white/70 hover:bg-white/15"
           }`}
         >
-          {hasStream ? "Izle" : "Ac"}
+          {hasStream ? (playbackType === "youtube" ? "YouTube" : "Izle") : "Ac"}
         </Link>
       </div>
     </div>

@@ -10,6 +10,7 @@ import {
   canUseInternalStream,
   isBlockedBySafeMode,
 } from "../../lib/safeMode";
+import { getChannelPlaybackType, isChannelPlayable } from "../../lib/channelPlayback";
 import { getCanliTvModeLabel, getCanliTvReference } from "../../lib/canlitvReference";
 
 const VideoPlayer = dynamic(() => import("../../components/VideoPlayer"), {
@@ -42,6 +43,8 @@ export default function WatchPage({ favorites, toggleFavorite }) {
   const isFav = channel ? favorites.includes(channel.id) : false;
 
   const hasInternalStream = canUseInternalStream(channel);
+  const canPlayInSite = isChannelPlayable(channel);
+  const playbackType = getChannelPlaybackType(channel);
   const blockedByPolicy = isBlockedBySafeMode(channel);
   const canliTvReference = getCanliTvReference(channel);
 
@@ -112,12 +115,12 @@ export default function WatchPage({ favorites, toggleFavorite }) {
                 minHeight={110}
               />
 
-              {!hasInternalStream && channel.externalLinks?.length > 0 && (
+              {!canPlayInSite && channel.externalLinks?.length > 0 && (
                 <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4">
                   <div className="text-sm font-bold text-amber-200 mb-2">
                     {blockedByPolicy
                       ? "Bu kanalda dahili yayin Guvenli Mod nedeniyle kapali"
-                      : "Bu kanal icin dahili player kaynagi yok"}
+                      : "Bu kanal icin site ici player kaynagi yok"}
                   </div>
                   <p className="text-xs text-amber-100/80 mb-3">
                     {blockedByPolicy
@@ -151,9 +154,15 @@ export default function WatchPage({ favorites, toggleFavorite }) {
                   <div className="text-sm font-semibold mt-1 truncate">{channel.network || "Bilinmiyor"}</div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
-                  <div className="text-[11px] uppercase tracking-wide text-white/40">Dahili Kaynak</div>
+                  <div className="text-[11px] uppercase tracking-wide text-white/40">Player Modu</div>
                   <div className="text-sm font-semibold mt-1">
-                    {hasInternalStream ? "Var" : blockedByPolicy ? "Guvenli Mod Kapali" : "Yok"}
+                    {playbackType === "internal"
+                      ? "Dahili"
+                      : playbackType === "youtube"
+                        ? "YouTube"
+                        : blockedByPolicy
+                          ? "Guvenli Mod Kapali"
+                          : "Harici"}
                   </div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
@@ -242,7 +251,8 @@ export default function WatchPage({ favorites, toggleFavorite }) {
                 <h3 className="text-sm font-bold text-white/70 mb-3">Diger Kanallar</h3>
                 <div className="space-y-2">
                   {otherChannels.map((item) => {
-                    const itemHasStream = canUseInternalStream(item);
+                    const itemPlaybackType = getChannelPlaybackType(item);
+                    const itemHasStream = isChannelPlayable(item);
 
                     return (
                       <Link
@@ -253,7 +263,11 @@ export default function WatchPage({ favorites, toggleFavorite }) {
                         <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
                         <span className="flex-1 truncate">{item.name}</span>
                         <span className={`text-[10px] font-mono ${itemHasStream ? "text-accent" : "text-white/40"}`}>
-                          {itemHasStream ? "CANLI" : "HARICI"}
+                          {itemHasStream
+                            ? itemPlaybackType === "youtube"
+                              ? "YT"
+                              : "CANLI"
+                            : "HARICI"}
                         </span>
                       </Link>
                     );

@@ -1,9 +1,10 @@
 ﻿import Link from "next/link";
-import { canUseInternalStream } from "../lib/safeMode";
+import { getChannelPlaybackType, isChannelPlayable } from "../lib/channelPlayback";
 import { getCanliTvModeLabel, getCanliTvReference } from "../lib/canlitvReference";
 
 export default function ChannelCard({ channel, isFav, onToggleFav }) {
-  const hasStream = canUseInternalStream(channel);
+  const hasStream = isChannelPlayable(channel);
+  const playbackType = getChannelPlaybackType(channel);
   const reference = getCanliTvReference(channel);
   const initials = channel.name
     .split(" ")
@@ -67,7 +68,11 @@ export default function ChannelCard({ channel, isFav, onToggleFav }) {
                 hasStream ? "bg-danger animate-pulse" : "bg-white/40"
               }`}
             />
-            {hasStream ? "LIVE" : "KAYNAK YOK"}
+            {hasStream
+              ? playbackType === "youtube"
+                ? "YOUTUBE"
+                : "LIVE"
+              : "KAYNAK YOK"}
           </span>
 
           {reference?.mode && (
@@ -87,7 +92,7 @@ export default function ChannelCard({ channel, isFav, onToggleFav }) {
             textShadow: "0 1px 2px rgba(0,0,0,0.3)",
           }}
         >
-          {hasStream ? "Izle" : "Kaynak Yok"}
+          {hasStream ? (playbackType === "youtube" ? "YouTube Ile Izle" : "Izle") : "Kaynak Yok"}
         </Link>
 
         <div className="mt-2.5 pt-2.5 border-t border-white/[0.06] opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-14 transition-all duration-300 overflow-hidden">

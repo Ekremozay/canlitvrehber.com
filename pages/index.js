@@ -10,6 +10,7 @@ import { CHANNELS, CATEGORIES } from "../lib/channels";
 import { AD_SLOTS } from "../lib/adSlots";
 import { BRAND, SITE_URL } from "../lib/siteConfig";
 import { SAFE_MODE_ENABLED, canUseInternalStream } from "../lib/safeMode";
+import { isChannelPlayable } from "../lib/channelPlayback";
 import canliTvReferenceRows from "../data/canlitv-reference.json";
 
 const VIEW_MODES = [
@@ -19,21 +20,23 @@ const VIEW_MODES = [
 ];
 
 function hasPlayableStream(channel) {
-  return canUseInternalStream(channel);
+  return isChannelPlayable(channel);
 }
 
 export default function Home({ favorites, toggleFavorite }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
-  const [showPlayableOnly, setShowPlayableOnly] = useState(false);
-  const [viewMode, setViewMode] = useState("both");
+  const [showPlayableOnly, setShowPlayableOnly] = useState(true);
+  const [viewMode, setViewMode] = useState("list");
   const [letterFilter, setLetterFilter] = useState("all");
   const searchTerm = search.trim().toLowerCase();
 
   const totalPlayable = useMemo(() => {
     return CHANNELS.filter((item) => hasPlayableStream(item)).length;
   }, []);
-
+  const totalInternal = useMemo(() => {
+    return CHANNELS.filter((item) => canUseInternalStream(item)).length;
+  }, []);
   const totalExternal = CHANNELS.length - totalPlayable;
   const referenceSummary = useMemo(() => {
     const totals = { total: 0, redirect: 0, open: 0, youtube: 0 };
@@ -129,7 +132,7 @@ export default function Home({ favorites, toggleFavorite }) {
                     <div>
                       <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Kanal Rehberi</h1>
                       <p className="text-sm text-white/50 mt-1">
-                        Toplam {CHANNELS.length} kanal, dahili player ile oynatilabilen {totalPlayable} kanal.
+                        Toplam {CHANNELS.length} kanal, site icinde oynatilabilen {totalPlayable} kanal.
                       </p>
                     </div>
 
@@ -231,7 +234,10 @@ export default function Home({ favorites, toggleFavorite }) {
                 <div className="flex flex-wrap items-center gap-2 mb-5">
                   <span className="text-sm text-white/40 font-medium">Sonuc: {filtered.length} kanal</span>
                   <span className="px-2 py-1 rounded-full text-[11px] border border-accent/30 bg-accent/10 text-accent font-semibold">
-                    Dahili (izinli): {totalPlayable}
+                    Oynatilabilir: {totalPlayable}
+                  </span>
+                  <span className="px-2 py-1 rounded-full text-[11px] border border-emerald-400/30 bg-emerald-400/10 text-emerald-100 font-semibold">
+                    Dahili: {totalInternal}
                   </span>
                   <span className="px-2 py-1 rounded-full text-[11px] border border-white/20 text-white/60 font-semibold">
                     Harici: {totalExternal}
@@ -241,7 +247,8 @@ export default function Home({ favorites, toggleFavorite }) {
                       setSearch("");
                       setCategory("all");
                       setLetterFilter("all");
-                      setShowPlayableOnly(false);
+                      setShowPlayableOnly(true);
+                      setViewMode("list");
                     }}
                     className="ml-auto px-3 py-1.5 rounded-lg text-[11px] font-semibold border border-white/20 text-white/65 hover:text-white hover:bg-white/10 transition"
                   >
