@@ -1,6 +1,5 @@
 import "../styles/globals.css";
-import { useState, useCallback } from "react";
-import Script from "next/script";
+import { useState, useCallback, useEffect } from "react";
 import { ADSENSE_CLIENT } from "../lib/adSlots";
 
 // Favori state'ini tüm sayfalarda paylaşmak için App level'da tutuyoruz
@@ -13,17 +12,21 @@ export default function App({ Component, pageProps }) {
     );
   }, []);
 
+  useEffect(() => {
+    if (!ADSENSE_CLIENT) return;
+    const scriptId = "adsense-script";
+    if (document.getElementById(scriptId)) return;
+
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
+    document.head.appendChild(script);
+  }, []);
+
   return (
     <>
-      {ADSENSE_CLIENT && (
-        <Script
-          id="adsense-script"
-          strategy="afterInteractive"
-          async
-          crossOrigin="anonymous"
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-        />
-      )}
       <Component
         {...pageProps}
         favorites={favorites}
