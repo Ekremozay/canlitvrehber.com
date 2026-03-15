@@ -1,0 +1,14 @@
+﻿<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#08080c"/>
+  <circle cx="1010" cy="92" r="240" fill="#00E87B" fill-opacity="0.12"/>
+  <circle cx="180" cy="580" r="260" fill="#00B4D8" fill-opacity="0.12"/>
+
+  <rect x="90" y="120" width="180" height="180" rx="34" fill="#111118" stroke="#263041" stroke-width="6"/>
+  <rect x="120" y="152" width="120" height="84" rx="14" fill="#0E1118"/>
+  <path d="M168 172L212 194L168 216V172Z" fill="#00E87B"/>
+  <rect x="136" y="255" width="88" height="10" rx="5" fill="#00B4D8" fill-opacity="0.7"/>
+
+  <text x="300" y="205" fill="#F8FAFC" font-size="74" font-family="Arial, sans-serif" font-weight="700">canlitvrehber.com</text>
+  <text x="300" y="268" fill="#00E87B" font-size="30" font-family="Arial, sans-serif" font-weight="600">Canli TV Rehberi</text>
+  <text x="300" y="325" fill="#CBD5E1" font-size="28" font-family="Arial, sans-serif">Haber, spor, cocuk ve yerel kanallar tek ekranda</text>
+</svg>

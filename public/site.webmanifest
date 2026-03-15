@@ -1,0 +1,15 @@
+﻿{
+  "name": "Canli TV Rehber",
+  "short_name": "CanliTV",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08080c",
+  "theme_color": "#08080c",
+  "icons": [
+    {
+      "src": "/logo-canlitvrehber.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

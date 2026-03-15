@@ -1,0 +1,1664 @@
+﻿[
+    {
+        "slug":  "24-tv",
+        "name":  "24 Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=831\u0026mobile=0"
+    },
+    {
+        "slug":  "360-tv",
+        "name":  "360 TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=15\u0026mobile=0"
+    },
+    {
+        "slug":  "abb-tv",
+        "name":  "Ankara Büyükşehir Belediyesi TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/iZoN48pVBUs?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "abc-news",
+        "name":  "ABC News",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/iipR5yUp36o?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "afroturk-tv",
+        "name":  "Afroturk TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13242\u0026mobile=0"
+    },
+    {
+        "slug":  "agro-tv",
+        "name":  "Agro TV",
+        "mode":  "telif_redirect",
+        "target":  "https://www.agrotv.com.tr/canli-yayin"
+    },
+    {
+        "slug":  "a-haber-canli-izle",
+        "name":  "A Haber",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/nmY9i63t6qo?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=0\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "ahi-tv",
+        "name":  "Ahi Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12252\u0026mobile=0"
+    },
+    {
+        "slug":  "akilli-tv",
+        "name":  "Akıllı Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=854\u0026mobile=0"
+    },
+    {
+        "slug":  "akit-tv",
+        "name":  "Akit TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12491\u0026mobile=0"
+    },
+    {
+        "slug":  "aksu-tv",
+        "name":  "Aksu Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=835\u0026mobile=0"
+    },
+    {
+        "slug":  "alanya-tv",
+        "name":  "Alanya Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=866\u0026mobile=0"
+    },
+    {
+        "slug":  "aljazeera",
+        "name":  "Al Jazeera English",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/gCNeDWCI0vo?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "al-sunnah-tv",
+        "name":  "Al Sunnah TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/rHWSRMcGGBQ?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "altas-tv",
+        "name":  "Altaş Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12333\u0026mobile=0"
+    },
+    {
+        "slug":  "altin-asir-tv",
+        "name":  "Altın Asır Tv",
+        "mode":  "embedded_player_src",
+        "target":  "https://alpha.tv.online.tm/hls/ch001_720/index.m3u8"
+    },
+    {
+        "slug":  "alvin-channel",
+        "name":  "Alvin Channel",
+        "mode":  "embedded_player_src",
+        "target":  "https://cdn10-alvinchannel.yayin.com.tr/alvinchannel/alvinchannel/chunklist_w91852283.m3u8"
+    },
+    {
+        "slug":  "anadolu-dost-tv",
+        "name":  "Anadolu Dost TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13331\u0026mobile=0"
+    },
+    {
+        "slug":  "anadolu-net-tv",
+        "name":  "Anadolu Net TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13397\u0026mobile=0"
+    },
+    {
+        "slug":  "a-news",
+        "name":  "A News",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/L4O-IO_dySQ?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "a-para",
+        "name":  "A Para",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/6-Q8v_e-M2g?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "arb-24-tv",
+        "name":  "ARB 24 TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12986\u0026mobile=0"
+    },
+    {
+        "slug":  "arb-gunes-tv",
+        "name":  "ARB Güneş TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12988\u0026mobile=0"
+    },
+    {
+        "slug":  "arb-tv",
+        "name":  "ARB TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12985\u0026mobile=0"
+    },
+    {
+        "slug":  "art-tv-amasya",
+        "name":  "Amasya Art Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=71\u0026mobile=0"
+    },
+    {
+        "slug":  "askabat-tv",
+        "name":  "Askabat TV",
+        "mode":  "embedded_player_src",
+        "target":  "https://alpha.tv.online.tm/hls/ch006_720/index.m3u8"
+    },
+    {
+        "slug":  "aspor-canli-izle",
+        "name":  "A Spor",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/mgeW8Qm8-SY?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "as-tv-bursa",
+        "name":  "As Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=904\u0026mobile=0"
+    },
+    {
+        "slug":  "atv-canli",
+        "name":  "ATV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=3\u0026mobile=0"
+    },
+    {
+        "slug":  "azad-tv",
+        "name":  "Atv Azad TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11229\u0026mobile=0"
+    },
+    {
+        "slug":  "azstar-tv",
+        "name":  "Az Star TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12770\u0026mobile=0"
+    },
+    {
+        "slug":  "az-tv",
+        "name":  "Az TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=32\u0026mobile=0"
+    },
+    {
+        "slug":  "baku-tv",
+        "name":  "Bakü TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13342\u0026mobile=0"
+    },
+    {
+        "slug":  "bein-sports-haber",
+        "name":  "beIN Sports Haber",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12990\u0026mobile=0"
+    },
+    {
+        "slug":  "bengu-turk",
+        "name":  "Bengü Türk TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/W-wgfi-XdN8?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "beyaz-tv",
+        "name":  "Beyaz TV",
+        "mode":  "embedded_player_src",
+        "target":  "https://radyolar.top/beyaz-tv.html"
+    },
+    {
+        "slug":  "bi-kanal",
+        "name":  "Bi Kanal",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13432\u0026mobile=0"
+    },
+    {
+        "slug":  "bir-tv",
+        "name":  "Bir TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13378\u0026mobile=0"
+    },
+    {
+        "slug":  "bizimev-tv",
+        "name":  "Bizimev Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/GGVY0yNfkCo?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "bloomberg",
+        "name":  "Bloomberg ABD",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/iEpJwprxDdk?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "bloomberg-ht-tv",
+        "name":  "Bloomberg HT",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/hHSmBJk6w0c?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "bodrum-kent-tv",
+        "name":  "Bodrum Kent TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13439\u0026mobile=0"
+    },
+    {
+        "slug":  "brt-1",
+        "name":  "BRT 1",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11449\u0026mobile=0"
+    },
+    {
+        "slug":  "brt-2",
+        "name":  "BRT 2",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11450\u0026mobile=0"
+    },
+    {
+        "slug":  "brtv",
+        "name":  "BRTV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=910\u0026mobile=0"
+    },
+    {
+        "slug":  "cankiri-tv",
+        "name":  "Çankırı Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12037\u0026mobile=0"
+    },
+    {
+        "slug":  "canli-a2-izle",
+        "name":  "A2 TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12870\u0026mobile=0"
+    },
+    {
+        "slug":  "can-tv",
+        "name":  "Can Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12996\u0026mobile=0"
+    },
+    {
+        "slug":  "cartoon-network",
+        "name":  "Cartoon Network",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11233\u0026mobile=0"
+    },
+    {
+        "slug":  "cay-tv",
+        "name":  "Çay Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=840\u0026mobile=0"
+    },
+    {
+        "slug":  "cbc-sport-izle",
+        "name":  "CBC Sport",
+        "mode":  "telif_redirect",
+        "target":  "https://cbcsport.az/live/"
+    },
+    {
+        "slug":  "cbc-tv",
+        "name":  "CBC Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12310\u0026mobile=0"
+    },
+    {
+        "slug":  "cem-tv",
+        "name":  "Cem Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=837\u0026mobile=0"
+    },
+    {
+        "slug":  "cifci-tv",
+        "name":  "Çiftçi Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12255\u0026mobile=0"
+    },
+    {
+        "slug":  "cine-1",
+        "name":  "Cine 1",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13352\u0026mobile=0"
+    },
+    {
+        "slug":  "cnbc-e",
+        "name":  "CNBC-e",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13406\u0026mobile=0"
+    },
+    {
+        "slug":  "cnn-turk-izle-1",
+        "name":  "CNN Türk",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/6N8_r2uwLEc?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=0\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "deniz-postasi-tv",
+        "name":  "Deniz Postası TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13296\u0026mobile=0"
+    },
+    {
+        "slug":  "deutsche-welle",
+        "name":  "Deutsche Welle English",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13129\u0026mobile=0"
+    },
+    {
+        "slug":  "dim-tv",
+        "name":  "Dim TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13208\u0026mobile=0"
+    },
+    {
+        "slug":  "diyanet-cocuk",
+        "name":  "Diyanet Çocuk",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/nJj2jjIU2go?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "diyanet-tv",
+        "name":  "Diyanet TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13050\u0026mobile=0"
+    },
+    {
+        "slug":  "diyar-tv",
+        "name":  "Diyar Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12198\u0026mobile=0"
+    },
+    {
+        "slug":  "dmax-canli-yayin",
+        "name":  "DMAX",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12979\u0026mobile=0"
+    },
+    {
+        "slug":  "dost-tv",
+        "name":  "Dost Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=46\u0026mobile=0"
+    },
+    {
+        "slug":  "dunyatv-az",
+        "name":  "Dünya TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12671\u0026mobile=0"
+    },
+    {
+        "slug":  "duzce-tv",
+        "name":  "Düzce Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=876\u0026mobile=0"
+    },
+    {
+        "slug":  "dw-tv-europe",
+        "name":  "DW TV Europe",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12403\u0026mobile=0"
+    },
+    {
+        "slug":  "edirne-tv",
+        "name":  "Edirne Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11319\u0026mobile=0"
+    },
+    {
+        "slug":  "ege-live-tv",
+        "name":  "Ege Live TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13286\u0026mobile=0"
+    },
+    {
+        "slug":  "ekol-sports",
+        "name":  "Ekol Sports",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13433\u0026mobile=0"
+    },
+    {
+        "slug":  "ekol-tv",
+        "name":  "Ekol TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13389\u0026mobile=0"
+    },
+    {
+        "slug":  "ekoturk-tv",
+        "name":  "Ekotürk TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/nI9J2ZzsfH8?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "erciyes-tv",
+        "name":  "Erciyes Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=61\u0026mobile=0"
+    },
+    {
+        "slug":  "ert-tokat",
+        "name":  "ERT Erbaa Radyo ve TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=881\u0026mobile=0"
+    },
+    {
+        "slug":  "ertv",
+        "name":  "Er TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=879\u0026mobile=0"
+    },
+    {
+        "slug":  "es-tv",
+        "name":  "Es Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=70\u0026mobile=0"
+    },
+    {
+        "slug":  "etv-kayseri",
+        "name":  "ETV Kayseri",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13325\u0026mobile=0"
+    },
+    {
+        "slug":  "e-tv-manisa",
+        "name":  "Etv Manisa",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12327\u0026mobile=0"
+    },
+    {
+        "slug":  "euro-news",
+        "name":  "Euro News",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/pykpO5kQJ98?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "euronews-german",
+        "name":  "Euronews German",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/CQ3KsEbsYHs?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "euro-star",
+        "name":  "Euro Star",
+        "mode":  "unknown",
+        "target":  ""
+    },
+    {
+        "slug":  "fb-tv",
+        "name":  "FB TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=85\u0026mobile=0"
+    },
+    {
+        "slug":  "finans-turk-tv",
+        "name":  "Finans Türk Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13064\u0026mobile=0"
+    },
+    {
+        "slug":  "flash-haber",
+        "name":  "Flash Haber Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=830\u0026mobile=0"
+    },
+    {
+        "slug":  "fm-tv",
+        "name":  "FM TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12766\u0026mobile=0"
+    },
+    {
+        "slug":  "fortunatv",
+        "name":  "Fortuna Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12876\u0026mobile=0"
+    },
+    {
+        "slug":  "franken-tv",
+        "name":  "Franken Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10693\u0026mobile=0"
+    },
+    {
+        "slug":  "frt-tv",
+        "name":  "FRT TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11327\u0026mobile=0"
+    },
+    {
+        "slug":  "gozde-tv",
+        "name":  "Gözde TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13376\u0026mobile=0"
+    },
+    {
+        "slug":  "grt-tv",
+        "name":  "GRT TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11328\u0026mobile=0"
+    },
+    {
+        "slug":  "gunaz-tv",
+        "name":  "Günaz Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=34\u0026mobile=0"
+    },
+    {
+        "slug":  "guneydogu-tv",
+        "name":  "Güneydoğu Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10649\u0026mobile=0"
+    },
+    {
+        "slug":  "gzt-tv",
+        "name":  "GZT TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13412\u0026mobile=0"
+    },
+    {
+        "slug":  "haber-61",
+        "name":  "Haber 61",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12348\u0026mobile=0"
+    },
+    {
+        "slug":  "haber-global",
+        "name":  "Haber Global",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/EqoCJ8BPxtE?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "haberturk",
+        "name":  "Habertürk TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=894\u0026mobile=0"
+    },
+    {
+        "slug":  "halk-tv-canli",
+        "name":  "Halk TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/8uNelFh0oz4?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "ht-spor-1",
+        "name":  "HT Spor",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13407\u0026mobile=0"
+    },
+    {
+        "slug":  "huda-tv",
+        "name":  "Huda Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12345\u0026mobile=0"
+    },
+    {
+        "slug":  "hunat-tv",
+        "name":  "Hunat TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13141\u0026mobile=0"
+    },
+    {
+        "slug":  "icel-tv",
+        "name":  "İçel Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12328\u0026mobile=0"
+    },
+    {
+        "slug":  "ictimai-tv",
+        "name":  "İctimai Tv",
+        "mode":  "unknown",
+        "target":  ""
+    },
+    {
+        "slug":  "idman-tv",
+        "name":  "İdman Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12028\u0026mobile=0"
+    },
+    {
+        "slug":  "ikra-tv",
+        "name":  "İkra TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13404\u0026mobile=0"
+    },
+    {
+        "slug":  "ilke-tv",
+        "name":  "İlke TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12910\u0026mobile=0"
+    },
+    {
+        "slug":  "imedi-tv",
+        "name":  "İmedi Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=905\u0026mobile=0"
+    },
+    {
+        "slug":  "india-today",
+        "name":  "India Today",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12923\u0026mobile=0"
+    },
+    {
+        "slug":  "israil-abd-iran-savasi",
+        "name":  "İsrail - ABD - İran Savaşı",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/JboXN7CuKxc?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "izmir-turk-tv",
+        "name":  "İzmir Türk TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13343\u0026mobile=0"
+    },
+    {
+        "slug":  "kabe-tv",
+        "name":  "Kabe Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/NSIIe1QBwBE?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-12",
+        "name":  "Kanal 12",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11419\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal15",
+        "name":  "Kanal 15",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12700\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-19",
+        "name":  "Kanal 19",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=87\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-23",
+        "name":  "Kanal 23",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=107\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-26",
+        "name":  "Kanal 26",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=68\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-3",
+        "name":  "Kanal 3",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11689\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-32",
+        "name":  "Kanal 32",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=901\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-33",
+        "name":  "Kanal 33",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11341\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-34",
+        "name":  "Kanal 34",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12351\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal38",
+        "name":  "Kanal 38",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=58\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-5",
+        "name":  "Kanal 5",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/f-mWbfRc6rU?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-58",
+        "name":  "Kanal 58",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11345\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal7",
+        "name":  "Kanal 7",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=9\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-7-avrupa",
+        "name":  "Kanal 7 Avrupa",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=101\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-avrupa",
+        "name":  "Kanal Avrupa",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=21\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-b",
+        "name":  "Kanal B",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=33\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-d-canli-yayin",
+        "name":  "",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=2\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-firat",
+        "name":  "Kanal Fırat",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12077\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-plus",
+        "name":  "Kanal Plus",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13418\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-s-azerbaycan",
+        "name":  "Kanal S Az",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11844\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-t",
+        "name":  "Kanal T",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11273\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-urfa",
+        "name":  "Kanal Urfa",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=10932\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-v",
+        "name":  "Kanal V",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12763\u0026mobile=0"
+    },
+    {
+        "slug":  "kanal-z",
+        "name":  "Kanal Z",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=842\u0026mobile=0"
+    },
+    {
+        "slug":  "kayseri-life-tv",
+        "name":  "Life Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12886\u0026mobile=0"
+    },
+    {
+        "slug":  "kay-tv",
+        "name":  "Kay Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10678\u0026mobile=0"
+    },
+    {
+        "slug":  "kent-deha-tv",
+        "name":  "Kent Deha Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11316\u0026mobile=0"
+    },
+    {
+        "slug":  "kent-turk-tv",
+        "name":  "Kent Türk TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12976\u0026mobile=0"
+    },
+    {
+        "slug":  "kibris-ada-tv",
+        "name":  "Kıbrıs Ada Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=10650\u0026mobile=0"
+    },
+    {
+        "slug":  "kibris-genc-tv",
+        "name":  "Kıbrıs Genç Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=863\u0026mobile=0"
+    },
+    {
+        "slug":  "kibris-tv",
+        "name":  "Kıbrıs Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11841\u0026mobile=0"
+    },
+    {
+        "slug":  "kocaeli-tv",
+        "name":  "Kocaeli Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10659\u0026mobile=0"
+    },
+    {
+        "slug":  "kontratv",
+        "name":  "Kontra Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12767\u0026mobile=0"
+    },
+    {
+        "slug":  "kon-tv",
+        "name":  "Kon TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=35\u0026mobile=0"
+    },
+    {
+        "slug":  "konya-olay-tv",
+        "name":  "Konya Olay Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13023\u0026mobile=0"
+    },
+    {
+        "slug":  "koroglu-tv",
+        "name":  "Köroğlu Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=97\u0026mobile=0"
+    },
+    {
+        "slug":  "koy-tv",
+        "name":  "Köy Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12013\u0026mobile=0"
+    },
+    {
+        "slug":  "kral-sakir",
+        "name":  "Kral Şakir",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/5Whk9MVTpI4?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "krt-tv",
+        "name":  "KRT TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/9SjCdNwD0x0?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "ktv-kazakistan",
+        "name":  "KTV Kazakistan",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13097\u0026mobile=0"
+    },
+    {
+        "slug":  "kudus-tv",
+        "name":  "Kudüs Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12152\u0026mobile=0"
+    },
+    {
+        "slug":  "lalegul-tv",
+        "name":  "Lalegül Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12260\u0026mobile=0"
+    },
+    {
+        "slug":  "lider-haber-tv",
+        "name":  "Lider Haber",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/ery4g4yuaeM?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "line-tv",
+        "name":  "Line Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10722\u0026mobile=0"
+    },
+    {
+        "slug":  "luys-tv",
+        "name":  "Luys TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13391\u0026mobile=0"
+    },
+    {
+        "slug":  "makkah-tv",
+        "name":  "Makkah Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/OXQ5WB5Csnw?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "marmara-tv",
+        "name":  "Marmara Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=42\u0026mobile=0"
+    },
+    {
+        "slug":  "mavi-karadeniz-tv",
+        "name":  "Mavi Karadeniz Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10974\u0026mobile=0"
+    },
+    {
+        "slug":  "medeniyet-tv",
+        "name":  "Medeniyet Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12029\u0026mobile=0"
+    },
+    {
+        "slug":  "medine-tv",
+        "name":  "Medine Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/rHWSRMcGGBQ?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "meltem-tv",
+        "name":  "Meltem TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11218\u0026mobile=0"
+    },
+    {
+        "slug":  "mercan-tv",
+        "name":  "Mercan Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=91\u0026mobile=0"
+    },
+    {
+        "slug":  "milli-piyango-tv",
+        "name":  "Milli Piyango TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/VJGIVCgmgHs?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "minika-cocuk-canli-izle",
+        "name":  "Minika Çocuk",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12005\u0026mobile=0"
+    },
+    {
+        "slug":  "minika-go-izle",
+        "name":  "Minika Go",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12006\u0026mobile=0"
+    },
+    {
+        "slug":  "mpl-tv",
+        "name":  "Mpl Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/Xzyu20PDZIo?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "nasa-tv",
+        "name":  "NASA TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/vytmBNhc9ig?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "neo-haber",
+        "name":  "Neo Haber",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13436\u0026mobile=0"
+    },
+    {
+        "slug":  "niederbayern-tv",
+        "name":  "Niederbayern TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13330\u0026mobile=0"
+    },
+    {
+        "slug":  "noa4-hamburg",
+        "name":  "NOA4 Hamburg",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=263\u0026mobile=0"
+    },
+    {
+        "slug":  "now-tv-canli-yayin",
+        "name":  "Now TV",
+        "mode":  "telif_redirect",
+        "target":  "https://www.nowtv.com.tr/canli-yayin"
+    },
+    {
+        "slug":  "ntv-canli-izle",
+        "name":  "NTV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/pqq5c6k70kk?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "nur-tv",
+        "name":  "Nur Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/3bsskekN0j8?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "oberpfalz-tv",
+        "name":  "Oberpfalz Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10945\u0026mobile=0"
+    },
+    {
+        "slug":  "offener-kanal-berlin",
+        "name":  "Offener Kanal Berlin",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10940\u0026mobile=0"
+    },
+    {
+        "slug":  "okku-tv",
+        "name":  "OKKU Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13385\u0026mobile=0"
+    },
+    {
+        "slug":  "olay-turk",
+        "name":  "Olay Türk",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13176\u0026mobile=0"
+    },
+    {
+        "slug":  "on4-tv",
+        "name":  "On4 Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12070\u0026mobile=0"
+    },
+    {
+        "slug":  "on6-tv",
+        "name":  "ON6 TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/O_dEuU6vX4E?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "ons-tv",
+        "name":  "Ons TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13419\u0026mobile=0"
+    },
+    {
+        "slug":  "owazy-tv",
+        "name":  "OWAZY TV",
+        "mode":  "embedded_player_src",
+        "target":  "https://alpha.tv.online.tm/hls/ch005_720/index.m3u8"
+    },
+    {
+        "slug":  "pijamaskeliler",
+        "name":  "Pijamaskeliler",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/s4qNDaFQQns?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "press-tv",
+        "name":  "Press Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11507\u0026mobile=0"
+    },
+    {
+        "slug":  "qvc",
+        "name":  "QVC",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/ufwLk92fA9k?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "real-tv",
+        "name":  "Real Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/2AL5iJY8Id8?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "rehber-tv",
+        "name":  "Rehber Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11974\u0026mobile=0"
+    },
+    {
+        "slug":  "rfh",
+        "name":  "RFH",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=718\u0026mobile=0"
+    },
+    {
+        "slug":  "rudawtv",
+        "name":  "Rudaw Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12869\u0026mobile=0"
+    },
+    {
+        "slug":  "russia-today",
+        "name":  "RT (Russia Today)",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=805\u0026mobile=0"
+    },
+    {
+        "slug":  "salihli-sonsoz-tv",
+        "name":  "Salihli Sonsöz TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13145\u0026mobile=0"
+    },
+    {
+        "slug":  "sat-7",
+        "name":  "Sat7 Türk",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=456\u0026mobile=0"
+    },
+    {
+        "slug":  "semerkand-tv",
+        "name":  "Semerkand Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12003\u0026mobile=0"
+    },
+    {
+        "slug":  "semerkand-way",
+        "name":  "Semerkand Way",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13430\u0026mobile=0"
+    },
+    {
+        "slug":  "serhat-tv",
+        "name":  "Serhat Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12494\u0026mobile=0"
+    },
+    {
+        "slug":  "show-max",
+        "name":  "Show Max",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12646\u0026mobile=0"
+    },
+    {
+        "slug":  "show-turk-tv",
+        "name":  "Show Türk Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=10713\u0026mobile=0"
+    },
+    {
+        "slug":  "show-tv-izle-1",
+        "name":  "Show TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=4\u0026mobile=0"
+    },
+    {
+        "slug":  "sifir-tv",
+        "name":  "Sıfır TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/-C_qsnQlAmA?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "sim-tv",
+        "name":  "Kanal Sim",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12148\u0026mobile=0"
+    },
+    {
+        "slug":  "sky-news",
+        "name":  "SKY News",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/YDvsBbKfLPA?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "sonmez-tv",
+        "name":  "Sönmez TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13403\u0026mobile=0"
+    },
+    {
+        "slug":  "sozcu-tv-izle",
+        "name":  "Sözcü TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/ztmY_cCtUl0?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "spacetoon-kids-tv",
+        "name":  "Spacetoon Kids TV",
+        "mode":  "telif_redirect",
+        "target":  "https://spacetoon.com.tr/tr/"
+    },
+    {
+        "slug":  "space-tv",
+        "name":  "Space TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12312\u0026mobile=0"
+    },
+    {
+        "slug":  "sports-tv",
+        "name":  "Sports Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12017\u0026mobile=0"
+    },
+    {
+        "slug":  "star-tv-canli",
+        "name":  "Star TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=99\u0026mobile=0"
+    },
+    {
+        "slug":  "sun-tv",
+        "name":  "Sun Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10706\u0026mobile=0"
+    },
+    {
+        "slug":  "tarim-tv",
+        "name":  "Tarım Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11215\u0026mobile=0"
+    },
+    {
+        "slug":  "tay-tv",
+        "name":  "Tay Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=10647\u0026mobile=0"
+    },
+    {
+        "slug":  "tbmm-tv-1",
+        "name":  "TBMM TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12002\u0026mobile=0"
+    },
+    {
+        "slug":  "tele1-tv",
+        "name":  "Tele1 TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12887\u0026mobile=0"
+    },
+    {
+        "slug":  "telenews",
+        "name":  "Telenews",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13437\u0026mobile=0"
+    },
+    {
+        "slug":  "tempo-tv",
+        "name":  "Tempo Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11277\u0026mobile=0"
+    },
+    {
+        "slug":  "tgrt-belgesel",
+        "name":  "TGRT Belgesel",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/j9iJW9c04j4?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "tgrt-eu",
+        "name":  "TGRT EU",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/nxgYI7l98nM?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "tgrt-haber",
+        "name":  "TGRT Haber",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11\u0026mobile=0"
+    },
+    {
+        "slug":  "th-turk-haber",
+        "name":  "TH Türk Haber",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13390\u0026mobile=0"
+    },
+    {
+        "slug":  "tivi6",
+        "name":  "Tivi6",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13327\u0026mobile=0"
+    },
+    {
+        "slug":  "tivibu-spor",
+        "name":  "Tivibu Spor",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12843\u0026mobile=0"
+    },
+    {
+        "slug":  "tjk",
+        "name":  "TJK TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=36\u0026mobile=0"
+    },
+    {
+        "slug":  "tlc",
+        "name":  "TLC",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11219\u0026mobile=0"
+    },
+    {
+        "slug":  "tokat-super-tv",
+        "name":  "Tokat Süper Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=83\u0026mobile=0"
+    },
+    {
+        "slug":  "tom-and-jery",
+        "name":  "Tom and Jerry",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/400k2SKoeh4?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "ton-tv",
+        "name":  "Ton Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11367\u0026mobile=0"
+    },
+    {
+        "slug":  "toprak-tv",
+        "name":  "Toprak TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12274\u0026mobile=0"
+    },
+    {
+        "slug":  "torba-tv",
+        "name":  "Torba Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12969\u0026mobile=0"
+    },
+    {
+        "slug":  "trakya-turk-tv",
+        "name":  "Trakya Türk Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12097\u0026mobile=0"
+    },
+    {
+        "slug":  "trt1-izle",
+        "name":  "TRT 1",
+        "mode":  "telif_redirect",
+        "target":  "https://www.tabii.com/tr/watch/live/trt1?trackId=150005"
+    },
+    {
+        "slug":  "trt-2",
+        "name":  "TRT 2",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13038\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-6-kurdi",
+        "name":  "TRT Kürdi",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=10715\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-arapca",
+        "name":  "TRT Arapça",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=11189\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-avaz",
+        "name":  "TRT Avaz",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=10714\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-belgesel",
+        "name":  "TRT Belgesel",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11106\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-cocuk",
+        "name":  "TRT Çocuk",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=86\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-diyanet-cocuk",
+        "name":  "TRT Diyanet Çocuk",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13415\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-eba-tv",
+        "name":  "TRT Eba TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13209\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-genc",
+        "name":  "TRT Genç",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13442\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-haber-izle",
+        "name":  "TRT Haber",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=19\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-spor-2",
+        "name":  "TRT Spor Yıldız",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13160\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-spor-izle",
+        "name":  "TRT Spor",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=893\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-turk",
+        "name":  "TRT Türk",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11186\u0026mobile=0"
+    },
+    {
+        "slug":  "trt-world",
+        "name":  "TRT World",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12774\u0026mobile=0"
+    },
+    {
+        "slug":  "turkmeneli-tv",
+        "name":  "Türkmeneli TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=20\u0026mobile=0"
+    },
+    {
+        "slug":  "turkmenistan-tv",
+        "name":  "Türkmenistan Tv",
+        "mode":  "embedded_player_src",
+        "target":  "https://alpha.tv.online.tm/hls/ch007_720/index.m3u8"
+    },
+    {
+        "slug":  "turkmen-sport-tv",
+        "name":  "Türkmen Sport Tv",
+        "mode":  "embedded_player_src",
+        "target":  "https://alpha.tv.online.tm/hls/ch004_720/index.m3u8"
+    },
+    {
+        "slug":  "tv-1",
+        "name":  "Tv 1",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11910\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-100",
+        "name":  "TV 100",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/JCuAFKp_WdE?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "tv2",
+        "name":  "tv2",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12984\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-2020",
+        "name":  "TV 2020",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12276\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-264",
+        "name":  "Tv 264",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13025\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-38",
+        "name":  "TV38",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13124\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-4",
+        "name":  "Tv4",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12018\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-41",
+        "name":  "TV 41",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=14\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-42",
+        "name":  "TV 42",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13443\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-5",
+        "name":  "TV 5",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=17\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-52",
+        "name":  "TV52",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=10967\u0026mobile=0"
+    },
+    {
+        "slug":  "tv85-izle",
+        "name":  "Tv8.5",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=63\u0026mobile=0"
+    },
+    {
+        "slug":  "tv8-izle-4",
+        "name":  "Tv8",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=10924\u0026mobile=0"
+    },
+    {
+        "slug":  "tvden",
+        "name":  "TV Den",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=12927\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-kayseri",
+        "name":  "Tv Kayseri",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=53\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-net",
+        "name":  "Tvnet",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/0GVtv6xQGZE?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "tv-sudbaden",
+        "name":  "Tv Sudbaden",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=561\u0026mobile=0"
+    },
+    {
+        "slug":  "tyt-turk",
+        "name":  "TYT Türk",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13417\u0026mobile=0"
+    },
+    {
+        "slug":  "ulke-tv",
+        "name":  "Ülke TV",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/yIbNbhHaWXU?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "ulusal-kanal",
+        "name":  "Ulusal Kanal",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12737\u0026mobile=0"
+    },
+    {
+        "slug":  "un-tv-konya",
+        "name":  "Konya Ün Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11366\u0026mobile=0"
+    },
+    {
+        "slug":  "urfa-haber",
+        "name":  "Urfa Haber",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13416\u0026mobile=0"
+    },
+    {
+        "slug":  "urfanatik-tv",
+        "name":  "Urfanatik TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13340\u0026mobile=0"
+    },
+    {
+        "slug":  "uskudar-universitesi-tv",
+        "name":  "Üsküdar Üniversitesi TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player1/index.php?id=13257\u0026mobile=0"
+    },
+    {
+        "slug":  "vuslat-tv",
+        "name":  "Malatya Vuslat TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11660\u0026mobile=0"
+    },
+    {
+        "slug":  "world-turk-tv",
+        "name":  "World Türk TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=13341\u0026mobile=0"
+    },
+    {
+        "slug":  "xezer-tv",
+        "name":  "Xezer Tv",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=11827\u0026mobile=0"
+    },
+    {
+        "slug":  "yaban-tv",
+        "name":  "Yaban TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12044\u0026mobile=0"
+    },
+    {
+        "slug":  "yaslik-tv-turkmenistan",
+        "name":  "Yaşlık Tv Türkmenistan",
+        "mode":  "embedded_player_src",
+        "target":  "https://alpha.tv.online.tm/hls/ch002_720/index.m3u8"
+    },
+    {
+        "slug":  "yol-tv",
+        "name":  "Yol Tv",
+        "mode":  "embedded_youtube",
+        "target":  "/player/iframe.php?url=https://www.youtube.com/embed/5_y3aX3iqjU?rel=0\u0026showinfo=0\u0026autoplay=1\u0026enablejsapi=1\u0026r=1\u0026mobile=0\u0026mobile=0"
+    },
+    {
+        "slug":  "zaroktv",
+        "name":  "Zarok TV",
+        "mode":  "embedded_player_src",
+        "target":  "/player/index.php?id=12764\u0026mobile=0"
+    }
+]

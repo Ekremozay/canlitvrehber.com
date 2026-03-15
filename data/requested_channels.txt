@@ -1,0 +1,277 @@
+﻿1. TRT 1 genel
+2. Show TV genel
+3. Star TV genel
+4. Kanal 7 genel
+5. ATV genel
+6. Kanal D genel
+7. Now TV genel
+8. Tv8 genel
+9. TRT Haber haber
+10. CNN Türk haber
+11. NTV haber
+12. A Haber haber
+13. Habertürk TV haber
+14. Halk TV haber
+15. Sözcü TV haber
+16. Haber Global haber
+17. TV 100 haber
+18. 360 TV genel
+19. Beyaz TV genel
+20. Tv8.5 genel
+21. TRT Spor spor
+22. beIN Sports Haber spor
+23. HT Spor spor
+24. A Spor spor
+25. Sports Tv spor
+26. Tivibu Spor spor
+27. FB TV spor
+28. TRT Spor Yıldız spor
+29. Sıfır TV spor
+30. TJK TV spor
+31. Tay Tv spor
+32. TLC belgesel
+33. DMAX belgesel
+34. TRT Belgesel belgesel
+35. TGRT Belgesel belgesel
+36. Yaban TV belgesel
+37. TRT Çocuk cocuk
+38. Cartoon Network cocuk
+39. Diyanet Çocuk cocuk
+40. TRT Diyanet Çocuk cocuk
+41. Minika Çocuk cocuk
+42. Spacetoon Kids TV cocuk
+43. Minika Go cocuk
+44. Zarok TV cocuk
+45. ARB Güneş TV cocuk
+46. İsrail - ABD - İran Savaşı haber
+47. Lider Haber haber
+48. TGRT Haber haber
+49. KRT TV haber
+50. Ulusal Kanal haber
+51. Bengü Türk TV haber
+52. Bloomberg HT haber
+53. Akit TV haber
+54. Flash Haber Tv haber
+55. Ülke TV haber
+56. İlke TV haber
+57. Tele1 TV haber
+58. A Para haber
+59. Yol Tv haber
+60. Neo Haber haber
+61. Telenews haber
+62. Meltem TV haber
+63. Cem Tv genel
+64. Tv4 genel
+65. Show Max genel
+66. Cine 1 genel
+67. tv2 genel
+68. TYT Türk genel
+69. Bi Kanal genel
+70. Ekotürk TV haber
+71. Tvnet haber
+72. TV 5 haber
+73. 24 Tv haber
+74. GZT TV genel
+75. TBMM TV haber
+76. Kabe Tv dini
+77. Medine Tv dini
+78. Lalegül Tv dini
+79. Rehber Tv dini
+80. Semerkand Tv dini
+81. Semerkand Way dini
+82. Dost Tv dini
+83. Diyanet TV dini
+84. İkra TV dini
+85. FM TV dini
+86. TRT Eba TV genel
+87. TRT 2 genel
+88. TRT Genç genel
+89. TRT Türk genel
+90. TRT World haber
+91. TRT Avaz belgesel
+92. TRT Kürdi genel
+93. TRT Arapça genel
+94. Konya Olay Tv yerel
+95. TH Türk Haber haber
+96. Luys TV genel
+97. On4 Tv dini
+98. Kanal V yerel
+99. Kon TV yerel
+100. Kanal 33 yerel
+101. Bodrum Kent TV yerel
+102. Tivi6 genel
+103. A2 TV genel
+104. Kanal 38 yerel
+105. Tv Kayseri yerel
+106. TV 41 yerel
+107. Kanal 58 yerel
+108. TV 42 yerel
+109. Bir TV genel
+110. Gözde TV yerel
+111. Düzce Tv yerel
+112. TV 2020 haber
+113. Kıbrıs Ada Tv genel
+114. Kanal Plus genel
+115. Kıbrıs Genç Tv haber
+116. Torba Tv genel
+117. Kanal Sim genel
+118. Kanal T genel
+119. BRT 1 genel
+120. BRT 2 genel
+121. Tarım Tv belgesel
+122. Kıbrıs Tv genel
+123. Köy Tv belgesel
+124. OKKU Tv genel
+125. Çiftçi Tv belgesel
+126. Toprak TV belgesel
+127. Xezer Tv genel
+128. Az TV genel
+129. ARB TV genel
+130. Medeniyet Tv genel
+131. Kanal S Az genel
+132. Günaz Tv genel
+133. CBC Tv genel
+134. İctimai Tv genel
+135. CBC Sport spor
+136. İdman Tv spor
+137. Space TV genel
+138. ARB 24 TV genel
+139. Dünya TV genel
+140. Atv Azad TV genel
+141. Real Tv genel
+142. Bakü TV genel
+143. Alvin Channel genel
+144. Kanal 12 dini
+145. Tv 1 yerel
+146. Kanal 3 yerel
+147. Kanal 5 yerel
+148. Ekol TV haber
+149. Ekol Sports spor
+150. Salihli Sonsöz TV yerel
+151. Az Star TV genel
+152. Kanal 19 yerel
+153. Kanal 23 yerel
+154. ON6 TV yerel
+155. Kanal 26 yerel
+156. Güneydoğu Tv yerel
+157. Kanal 32 yerel
+158. Kanal 34 yerel
+159. TV52 yerel
+160. Haber 61 yerel
+161. Köroğlu Tv yerel
+162. Mercan Tv yerel
+163. Es Tv yerel
+164. Aksu Tv yerel
+165. Urfa Haber yerel
+166. As Tv yerel
+167. Kay Tv yerel
+168. World Türk TV yerel
+169. Euro Star genel
+170. Alanya Tv yerel
+171. Kanal Urfa yerel
+172. Ons TV genel
+173. Edirne Tv yerel
+174. Malatya Vuslat TV yerel
+175. TGRT EU genel
+176. Ahi Tv yerel
+177. Urfanatik TV yerel
+178. Milli Piyango TV genel
+179. Kanal Fırat yerel
+180. Kudüs Tv dini
+181. Diyar Tv yerel
+182. Tempo Tv genel
+183. Kanal 7 Avrupa genel
+184. İçel Tv genel
+185. Kanal B haber
+186. Kanal Z genel
+187. Akıllı Tv genel
+188. Çay Tv genel
+189. Mavi Karadeniz Tv genel
+190. Nur Tv dini
+191. Mpl Tv genel
+192. Show Türk Tv genel
+193. Kanal Avrupa genel
+194. Erciyes Tv yerel
+195. Amasya Art Tv yerel
+196. Marmara Tv yerel
+197. Sun Tv yerel
+198. Konya Ün Tv yerel
+199. Line Tv yerel
+200. Kent Deha Tv yerel
+201. Etv Manisa yerel
+202. Er TV yerel
+203. Can Tv haber
+204. Anadolu Dost TV yerel
+205. BRTV genel
+206. CNBC-e genel
+207. GRT TV yerel
+208. QVC ticari
+209. Euronews German haber
+210. Euro News haber
+211. İmedi Tv genel
+212. Ege Live TV genel
+213. Al Jazeera English haber
+214. Serhat Tv yerel
+215. Huda Tv dini
+216. Türkmeneli TV genel
+217. Agro TV genel
+218. İzmir Türk TV yerel
+219. Tokat Süper Tv yerel
+220. Hunat TV yerel
+221. Ton Tv yerel
+222. Bizimev Tv genel
+223. Altaş Tv genel
+224. Deniz Postası TV yerel
+225. Finans Türk Tv genel
+226. Kanal 15 yerel
+227. Afroturk TV genel
+228. Anadolu Net TV genel
+229. RT (Russia Today) haber
+230. Sönmez TV genel
+231. Olay Türk yerel
+232. Life Tv yerel
+233. Üsküdar Üniversitesi TV genel
+234. Dim TV haber
+235. ERT Erbaa Radyo ve TV yerel
+236. Ankara Büyükşehir Belediyesi TV yerel
+237. Al Sunnah TV dini
+238. Yaşlık Tv Türkmenistan genel
+239. TV38 genel
+240. ETV Kayseri yerel
+241. SKY News haber
+242. DW TV Europe genel
+243. Press Tv haber
+244. Fortuna Tv genel
+245. KTV Kazakistan genel
+246. Kontra Tv genel
+247. TV Den genel
+248. Çankırı Tv genel
+249. NASA TV belgesel
+250. NOA4 Hamburg yerel
+251. Türkmenistan Tv genel
+252. Sat7 Türk dini
+253. Tv Sudbaden genel
+254. RFH yerel
+255. Franken Tv yerel
+256. Offener Kanal Berlin genel
+257. Oberpfalz Tv yerel
+258. FRT TV yerel
+259. Niederbayern TV yerel
+260. Askabat TV genel
+261. Rudaw Tv genel
+262. Altın Asır Tv genel
+263. India Today genel
+264. Makkah Tv dini
+265. Kent Türk TV yerel
+266. OWAZY TV genel
+267. A News haber
+268. Deutsche Welle English genel
+269. Trakya Türk Tv genel
+270. Bloomberg ABD haber
+271. Tv 264 yerel
+272. Kocaeli Tv yerel
+273. ABC News haber
+274. Tom and Jerry cocuk
+275. Pijamaskeliler cocuk
+276. Kral Şakir cocuk
+277. Türkmen Sport Tv genel

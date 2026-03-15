@@ -1,0 +1,8 @@
+﻿<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="120" fill="#08080c"/>
+  <rect x="56" y="96" width="400" height="320" rx="72" fill="#111118" stroke="#1f2937" stroke-width="8"/>
+  <rect x="96" y="136" width="320" height="220" rx="36" fill="#0B0B12"/>
+  <path d="M226 220C226 203.431 239.431 190 256 190C272.569 190 286 203.431 286 220V292C286 308.569 272.569 322 256 322C239.431 322 226 308.569 226 292V220Z" fill="#00E87B"/>
+  <rect x="120" y="380" width="272" height="20" rx="10" fill="#00B4D8" fill-opacity="0.55"/>
+  <text x="256" y="468" text-anchor="middle" fill="#E5E7EB" font-size="48" font-family="Arial, sans-serif" font-weight="700">TVR</text>
+</svg>
