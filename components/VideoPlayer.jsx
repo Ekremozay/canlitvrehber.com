@@ -9,7 +9,7 @@ import {
 import {
   getOfficialLiveLink,
   getYoutubeLiveLink,
-  hasYoutubePlayback,
+  hasYoutubeCandidate,
 } from "../lib/channelPlayback";
 
 const PERFORMANCE_MODE_LABELS = {
@@ -57,7 +57,7 @@ export default function VideoPlayer({ channel }) {
   const blockedByPolicy = isBlockedBySafeMode(channel);
   const youtubeLiveLink = getYoutubeLiveLink(channel);
   const officialLiveLink = getOfficialLiveLink(channel);
-  const hasYoutubeCandidate = hasYoutubePlayback(channel);
+  const hasYoutubeOption = hasYoutubeCandidate(channel);
 
   const streamOptions = useMemo(() => {
     if (!internalPlaybackAllowed) return [];
@@ -71,10 +71,10 @@ export default function VideoPlayer({ channel }) {
   }, [channel.id, streamOptions]);
 
   useEffect(() => {
-    setSelectedPlayer(internalPlaybackAllowed ? "internal" : hasYoutubeCandidate ? "youtube" : "internal");
+    setSelectedPlayer(internalPlaybackAllowed ? "internal" : hasYoutubeOption ? "youtube" : "internal");
     setShowQuality(false);
     setYoutubeState(
-      hasYoutubeCandidate
+      hasYoutubeOption
         ? {
             status: "checking",
             available: false,
@@ -85,7 +85,7 @@ export default function VideoPlayer({ channel }) {
           }
         : EMPTY_YOUTUBE_STATE
     );
-  }, [channel.id, internalPlaybackAllowed, hasYoutubeCandidate]);
+  }, [channel.id, internalPlaybackAllowed, hasYoutubeOption]);
 
   useEffect(() => {
     if (!youtubeLiveLink?.url) {

@@ -10,7 +10,8 @@ import { CHANNELS, CATEGORIES } from "../lib/channels";
 import { AD_SLOTS } from "../lib/adSlots";
 import { BRAND, SITE_URL } from "../lib/siteConfig";
 import { SAFE_MODE_ENABLED, canUseInternalStream } from "../lib/safeMode";
-import { isChannelPlayable } from "../lib/channelPlayback";
+import { getBasePlaybackStatus } from "../lib/playbackStatus";
+import { usePlaybackAvailability } from "../lib/usePlaybackAvailability";
 import canliTvReferenceRows from "../data/canlitv-reference.json";
 
 const VIEW_MODES = [
@@ -19,10 +20,6 @@ const VIEW_MODES = [
   { id: "both", label: "Tumu" },
 ];
 
-function hasPlayableStream(channel) {
-  return isChannelPlayable(channel);
-}
-
 export default function Home({ favorites, toggleFavorite }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
@@ -30,10 +27,15 @@ export default function Home({ favorites, toggleFavorite }) {
   const [viewMode, setViewMode] = useState("list");
   const [letterFilter, setLetterFilter] = useState("all");
   const searchTerm = search.trim().toLowerCase();
+  const playbackStatuses = usePlaybackAvailability(CHANNELS);
+
+  const getPlaybackStatus = (channel) => {
+    return playbackStatuses[channel.id] || getBasePlaybackStatus(channel);
+  };
 
   const totalPlayable = useMemo(() => {
-    return CHANNELS.filter((item) => hasPlayableStream(item)).length;
-  }, []);
+    return CHANNELS.filter((item) => getPlaybackStatus(item).playable).length;
+  }, [playbackStatuses]);
   const totalInternal = useMemo(() => {
     return CHANNELS.filter((item) => canUseInternalStream(item)).length;
   }, []);
@@ -60,13 +62,13 @@ export default function Home({ favorites, toggleFavorite }) {
       const inSearch =
         channel.name.toLowerCase().includes(searchTerm) ||
         (channel.description || "").toLowerCase().includes(searchTerm);
-      const byPlayableFilter = !showPlayableOnly || hasPlayableStream(channel);
+      const byPlayableFilter = !showPlayableOnly || getPlaybackStatus(channel).playable;
       const byLetter =
         letterFilter === "all" || channel.name.toUpperCase().startsWith(letterFilter);
 
       return inCategory && inSearch && byPlayableFilter && byLetter;
     });
-  }, [category, searchTerm, showPlayableOnly, letterFilter]);
+  }, [category, searchTerm, showPlayableOnly, letterFilter, playbackStatuses]);
 
   const cardItemsWithAds = useMemo(() => {
     const output = [];
@@ -291,6 +293,8 @@ export default function Home({ favorites, toggleFavorite }) {
                               <ChannelCard
                                 key={item.id}
                                 channel={item.channel}
+                                playable={getPlaybackStatus(item.channel).playable}
+                                playbackType={getPlaybackStatus(item.channel).playbackType}
                                 isFav={favorites.includes(item.channel.id)}
                                 onToggleFav={toggleFavorite}
                               />
@@ -314,6 +318,8 @@ export default function Home({ favorites, toggleFavorite }) {
                             <ChannelListItem
                               key={`list-${channel.id}`}
                               channel={channel}
+                              playable={getPlaybackStatus(channel).playable}
+                              playbackType={getPlaybackStatus(channel).playbackType}
                               isFav={favorites.includes(channel.id)}
                               onToggleFav={toggleFavorite}
                             />

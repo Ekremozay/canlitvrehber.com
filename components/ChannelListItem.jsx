@@ -16,9 +16,9 @@ function prettyCategory(category) {
   return map[category] || category;
 }
 
-export default function ChannelListItem({ channel, isFav, onToggleFav }) {
-  const hasStream = isChannelPlayable(channel);
-  const playbackType = getChannelPlaybackType(channel);
+export default function ChannelListItem({ channel, isFav, onToggleFav, playable, playbackType }) {
+  const hasStream = typeof playable === "boolean" ? playable : isChannelPlayable(channel);
+  const resolvedPlaybackType = playbackType || getChannelPlaybackType(channel);
   const reference = getCanliTvReference(channel);
 
   return (
@@ -52,7 +52,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav }) {
             }`}
           >
             {hasStream
-              ? playbackType === "youtube"
+              ? resolvedPlaybackType === "youtube"
                 ? "YouTube"
                 : "Canli"
               : "Harici"}
@@ -85,7 +85,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav }) {
               : "bg-white/10 text-white/70 hover:bg-white/15"
           }`}
         >
-          {hasStream ? (playbackType === "youtube" ? "YouTube" : "Izle") : "Ac"}
+          {hasStream ? (resolvedPlaybackType === "youtube" ? "YouTube" : "Izle") : "Ac"}
         </Link>
       </div>
     </div>

@@ -5,9 +5,16 @@ import AdSlot from "../components/AdSlot";
 import SeoHead from "../components/SeoHead";
 import { CHANNELS } from "../lib/channels";
 import { AD_SLOTS } from "../lib/adSlots";
+import { getBasePlaybackStatus } from "../lib/playbackStatus";
+import { usePlaybackAvailability } from "../lib/usePlaybackAvailability";
 
 export default function Favorites({ favorites, toggleFavorite }) {
   const [search, setSearch] = useState("");
+  const playbackStatuses = usePlaybackAvailability(CHANNELS);
+
+  const getPlaybackStatus = (channel) => {
+    return playbackStatuses[channel.id] || getBasePlaybackStatus(channel);
+  };
 
   const favChannels = CHANNELS.filter(
     (channel) =>
@@ -53,6 +60,8 @@ export default function Favorites({ favorites, toggleFavorite }) {
                 <ChannelCard
                   key={channel.id}
                   channel={channel}
+                  playable={getPlaybackStatus(channel).playable}
+                  playbackType={getPlaybackStatus(channel).playbackType}
                   isFav={true}
                   onToggleFav={toggleFavorite}
                 />

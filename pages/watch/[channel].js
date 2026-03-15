@@ -10,7 +10,8 @@ import {
   canUseInternalStream,
   isBlockedBySafeMode,
 } from "../../lib/safeMode";
-import { getChannelPlaybackType, isChannelPlayable } from "../../lib/channelPlayback";
+import { getBasePlaybackStatus } from "../../lib/playbackStatus";
+import { usePlaybackAvailability } from "../../lib/usePlaybackAvailability";
 import { getCanliTvModeLabel, getCanliTvReference } from "../../lib/canlitvReference";
 
 const VideoPlayer = dynamic(() => import("../../components/VideoPlayer"), {
@@ -41,10 +42,20 @@ export default function WatchPage({ favorites, toggleFavorite }) {
 
   const channel = CHANNELS.find((item) => item.id === channelId);
   const isFav = channel ? favorites.includes(channel.id) : false;
+  const relatedChannels = channel
+    ? [channel, ...CHANNELS.filter((item) => item.id !== channel.id).slice(0, 8)]
+    : [];
+  const playbackStatuses = usePlaybackAvailability(relatedChannels);
+
+  const getPlaybackStatus = (item) => {
+    if (!item) return null;
+    return playbackStatuses[item.id] || getBasePlaybackStatus(item);
+  };
 
   const hasInternalStream = canUseInternalStream(channel);
-  const canPlayInSite = isChannelPlayable(channel);
-  const playbackType = getChannelPlaybackType(channel);
+  const currentPlaybackStatus = getPlaybackStatus(channel);
+  const canPlayInSite = currentPlaybackStatus?.playable || false;
+  const playbackType = currentPlaybackStatus?.playbackType || "external";
   const blockedByPolicy = isBlockedBySafeMode(channel);
   const canliTvReference = getCanliTvReference(channel);
 
@@ -251,8 +262,9 @@ export default function WatchPage({ favorites, toggleFavorite }) {
                 <h3 className="text-sm font-bold text-white/70 mb-3">Diger Kanallar</h3>
                 <div className="space-y-2">
                   {otherChannels.map((item) => {
-                    const itemPlaybackType = getChannelPlaybackType(item);
-                    const itemHasStream = isChannelPlayable(item);
+                    const itemPlaybackStatus = getPlaybackStatus(item);
+                    const itemPlaybackType = itemPlaybackStatus?.playbackType || "external";
+                    const itemHasStream = itemPlaybackStatus?.playable || false;
 
                     return (
                       <Link
