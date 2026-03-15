@@ -118,12 +118,6 @@ export default function WatchPage({ favorites, toggleFavorite }) {
             <div className="space-y-4">
               <VideoPlayer channel={channel} playbackStatus={currentPlaybackStatus} />
 
-              <AdSlot
-                slot={AD_SLOTS.homeLeaderboard}
-                label="Video Alti Reklam"
-                minHeight={110}
-              />
-
               {!canPlayInSite && (
                 <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4">
                   <div className="mb-2 text-sm font-bold text-amber-200">

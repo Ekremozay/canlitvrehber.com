@@ -99,6 +99,7 @@ function formatCheckedAt(checkedAt) {
 
 export default function VideoPlayer({ channel, playbackStatus = null }) {
   const videoRef = useRef(null);
+  const redirectTimerRef = useRef(null);
 
   const internalPlaybackAllowed = canUseInternalStream(channel);
   const blockedByPolicy = isBlockedBySafeMode(channel);
@@ -246,8 +247,6 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
   }, [selectedSourceId, streamOptions]);
 
   const internalCandidates = selectedPlayer === "internal" ? orderedCandidates : [];
-  const selectedSource =
-    streamOptions.find((item) => item.id === selectedSourceId) || streamOptions[0] || null;
 
   const { status, sourceIndex, sourceCount } = useHlsPlayer(videoRef, internalCandidates, {
     autoplay: true,
@@ -257,6 +256,13 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
   const youtubeChecking = youtubeState.status === "checking";
   const youtubeFailed = youtubeState.status === "unavailable" || youtubeState.status === "error";
   const checkedAtLabel = formatCheckedAt(youtubeState.checkedAt);
+  const directYoutubeUrl = youtubeState.liveUrl || youtubeState.watchUrl || youtubeLiveLink?.url || "";
+  const officialUrl = officialLiveLink?.url || "";
+  const shouldAutoRedirectToOfficial =
+    selectedPlayer === "external" &&
+    !youtubeChecking &&
+    !youtubeReady &&
+    Boolean(officialUrl);
 
   useEffect(() => {
     if (!internalPlaybackAllowed) {
@@ -292,15 +298,27 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
     }
   }, [internalPlaybackAllowed, selectedPlayer, youtubeFailed]);
 
-  const playerLabel =
-    selectedPlayer === "youtube"
-      ? "YouTube"
-      : selectedPlayer === "internal"
-        ? "Bizim Yayin"
-        : "Harici";
+  useEffect(() => {
+    if (redirectTimerRef.current) {
+      window.clearTimeout(redirectTimerRef.current);
+      redirectTimerRef.current = null;
+    }
 
-  const directYoutubeUrl = youtubeState.liveUrl || youtubeState.watchUrl || youtubeLiveLink?.url || "";
-  const officialUrl = officialLiveLink?.url || "";
+    if (!shouldAutoRedirectToOfficial || !officialUrl) {
+      return undefined;
+    }
+
+    redirectTimerRef.current = window.setTimeout(() => {
+      window.location.assign(officialUrl);
+    }, 1200);
+
+    return () => {
+      if (redirectTimerRef.current) {
+        window.clearTimeout(redirectTimerRef.current);
+        redirectTimerRef.current = null;
+      }
+    };
+  }, [channel?.id, officialUrl, shouldAutoRedirectToOfficial]);
 
   return (
     <div className="relative w-full aspect-video max-h-[72vh] overflow-hidden rounded-2xl border border-white/10 bg-black">
@@ -393,17 +411,24 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
             </>
           ) : (
             <>
-              <div className="text-base font-bold text-red-400">Site ici oynatici acilamadi</div>
+              <div className={`text-base font-bold ${shouldAutoRedirectToOfficial ? "text-accent" : "text-red-400"}`}>
+                {shouldAutoRedirectToOfficial ? "Resmi siteye yonlendiriliyorsunuz" : "Site ici oynatici acilamadi"}
+              </div>
               <p className="mt-2 max-w-md text-xs text-white/55">
-                {hasYoutubeOption
-                  ? getReasonLabel(youtubeState.reason)
-                  : "Bu kanal icin tanimli YouTube canli kaynagi bulunamadi."}
+                {shouldAutoRedirectToOfficial
+                  ? "Bizde yayin ve YouTube canli secenegi su an acilmadi. Resmi canli yayin sayfasi birazdan otomatik acilacak."
+                  : hasYoutubeOption
+                    ? getReasonLabel(youtubeState.reason)
+                    : "Bu kanal icin tanimli YouTube canli kaynagi bulunamadi."}
               </p>
               {checkedAtLabel && (
                 <p className="mt-2 text-[11px] text-white/35">Son YouTube kontrolu: {checkedAtLabel}</p>
               )}
+              {shouldAutoRedirectToOfficial && (
+                <p className="mt-2 text-[11px] font-semibold text-accent/80">Yonlendirme otomatik baslatildi.</p>
+              )}
               <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                {directYoutubeUrl && (
+                {directYoutubeUrl && !shouldAutoRedirectToOfficial && (
                   <a
                     href={directYoutubeUrl}
                     target="_blank"
@@ -471,59 +496,6 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
             )}
           </div>
         )}
-      </div>
-
-      <div
-        className="absolute inset-x-0 bottom-0 z-20 flex flex-col gap-3 px-5 pb-4 pt-10 sm:flex-row sm:items-end sm:justify-between"
-        style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.88) 0%, transparent 100%)" }}
-      >
-        <div className="max-w-xl text-xs text-white/60">
-          <div className="font-semibold text-white/85">Oynatici sirasi: Bizim yayin - YouTube - Resmi site</div>
-          <div className="mt-1">
-            Aktif kaynak: {playerLabel}.
-            {selectedPlayer === "internal" && selectedSource ? ` ${selectedSource.label} kullaniliyor.` : ""}
-            {checkedAtLabel ? ` Son YouTube kontrolu: ${checkedAtLabel}.` : ""}
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          {selectedPlayer !== "youtube" && youtubeReady && (
-            <button
-              onClick={() => setSelectedPlayer("youtube")}
-              className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-100 transition hover:bg-emerald-400/20"
-            >
-              YouTube
-            </button>
-          )}
-          {selectedPlayer !== "internal" && internalPlaybackAllowed && (
-            <button
-              onClick={() => setSelectedPlayer("internal")}
-              className="rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/15"
-            >
-              Bizim Yayin
-            </button>
-          )}
-          {directYoutubeUrl && (
-            <a
-              href={directYoutubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white no-underline transition hover:bg-white/15"
-            >
-              YouTube'da Ac
-            </a>
-          )}
-          {officialUrl && (
-            <a
-              href={officialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg bg-accent px-3 py-1.5 text-xs font-bold text-black no-underline transition hover:brightness-110"
-            >
-              Resmi Site
-            </a>
-          )}
-        </div>
       </div>
     </div>
   );
