@@ -1,16 +1,48 @@
 import "../styles/globals.css";
 import { useState, useCallback, useEffect } from "react";
 import { ADSENSE_CLIENT } from "../lib/adSlots";
+import {
+  FAVORITES_STORAGE_KEY,
+  RECENTLY_WATCHED_STORAGE_KEY,
+  normalizeFavoriteIds,
+  normalizeRecentlyWatched,
+  readStoredJson,
+  upsertRecentlyWatched,
+  writeStoredJson,
+} from "../lib/personalization";
 
-// Favori state'ini tüm sayfalarda paylaşmak için App level'da tutuyoruz
+// Favori ve izleme gecmisi state'ini tum sayfalarda paylasiyoruz.
 export default function App({ Component, pageProps }) {
   const [favorites, setFavorites] = useState([]);
+  const [recentlyWatched, setRecentlyWatched] = useState([]);
 
   const toggleFavorite = useCallback((id) => {
     setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   }, []);
+
+  const recordWatch = useCallback((id) => {
+    setRecentlyWatched((prev) => upsertRecentlyWatched(prev, id));
+  }, []);
+
+  useEffect(() => {
+    setFavorites(normalizeFavoriteIds(readStoredJson(FAVORITES_STORAGE_KEY, [])));
+    setRecentlyWatched(
+      normalizeRecentlyWatched(readStoredJson(RECENTLY_WATCHED_STORAGE_KEY, []))
+    );
+  }, []);
+
+  useEffect(() => {
+    writeStoredJson(FAVORITES_STORAGE_KEY, normalizeFavoriteIds(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
+    writeStoredJson(
+      RECENTLY_WATCHED_STORAGE_KEY,
+      normalizeRecentlyWatched(recentlyWatched)
+    );
+  }, [recentlyWatched]);
 
   useEffect(() => {
     if (!ADSENSE_CLIENT) return;
@@ -26,12 +58,12 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <>
-      <Component
-        {...pageProps}
-        favorites={favorites}
-        toggleFavorite={toggleFavorite}
-      />
-    </>
+    <Component
+      {...pageProps}
+      favorites={favorites}
+      recentlyWatched={recentlyWatched}
+      toggleFavorite={toggleFavorite}
+      recordWatch={recordWatch}
+    />
   );
 }

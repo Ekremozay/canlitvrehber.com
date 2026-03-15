@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -32,15 +33,48 @@ function ExternalButton({ link }) {
   );
 }
 
-export default function WatchPage({ favorites, toggleFavorite }) {
+export default function WatchPage({
+  favorites,
+  recentlyWatched = [],
+  toggleFavorite,
+  recordWatch,
+}) {
   const router = useRouter();
   const { channel: channelId } = router.query;
 
   const channel = CHANNELS.find((item) => item.id === channelId);
   const isFav = channel ? favorites.includes(channel.id) : false;
-  const relatedChannels = channel
-    ? [channel, ...CHANNELS.filter((item) => item.id !== channel.id).slice(0, 8)]
-    : [];
+  const recommendedChannels = useMemo(() => {
+    if (!channel) return [];
+
+    const recentIds = new Set(recentlyWatched.map((item) => item.id));
+    const favoriteIds = new Set(favorites);
+
+    return CHANNELS.filter((item) => item.id !== channel.id)
+      .sort((left, right) => {
+        const leftSameCategory = left.category === channel.category ? 1 : 0;
+        const rightSameCategory = right.category === channel.category ? 1 : 0;
+        if (rightSameCategory !== leftSameCategory) {
+          return rightSameCategory - leftSameCategory;
+        }
+
+        const leftRecent = recentIds.has(left.id) ? 1 : 0;
+        const rightRecent = recentIds.has(right.id) ? 1 : 0;
+        if (rightRecent !== leftRecent) {
+          return rightRecent - leftRecent;
+        }
+
+        const leftFavorite = favoriteIds.has(left.id) ? 1 : 0;
+        const rightFavorite = favoriteIds.has(right.id) ? 1 : 0;
+        if (rightFavorite !== leftFavorite) {
+          return rightFavorite - leftFavorite;
+        }
+
+        return left.name.localeCompare(right.name, "tr");
+      })
+      .slice(0, 8);
+  }, [channel, favorites, recentlyWatched]);
+  const relatedChannels = channel ? [channel, ...recommendedChannels] : [];
   const playbackStatuses = usePlaybackAvailability(relatedChannels);
 
   const getPlaybackStatus = (item) => {
@@ -57,7 +91,19 @@ export default function WatchPage({ favorites, toggleFavorite }) {
   const visibleExternalLinks = [youtubeLiveLink, officialLiveLink].filter(
     (item, index, list) => item?.url && list.findIndex((entry) => entry?.url === item.url) === index
   );
-  const otherChannels = CHANNELS.filter((item) => item.id !== channelId).slice(0, 8);
+  const continueWatchingChannels = useMemo(() => {
+    return recentlyWatched
+      .map((entry) => CHANNELS.find((item) => item.id === entry.id))
+      .filter((item) => item && item.id !== channel?.id)
+      .slice(0, 4);
+  }, [channel?.id, recentlyWatched]);
+  const nextChannel = recommendedChannels[0] || null;
+  const otherChannels = recommendedChannels;
+
+  useEffect(() => {
+    if (!channel?.id || typeof recordWatch !== "function") return;
+    recordWatch(channel.id);
+  }, [channel?.id, recordWatch]);
 
   if (!channelId) return null;
 
@@ -117,6 +163,86 @@ export default function WatchPage({ favorites, toggleFavorite }) {
           <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_360px]">
             <div className="space-y-4">
               <VideoPlayer channel={channel} playbackStatus={currentPlaybackStatus} />
+
+              {(nextChannel || continueWatchingChannels.length > 0) && (
+                <div className="rounded-2xl border border-white/10 bg-surface/50 p-4 sm:p-5">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="max-w-2xl">
+                      <div className="text-[11px] font-bold tracking-[1px] text-accent/80">HEMEN SONRA</div>
+                      <h2 className="mt-2 text-xl font-extrabold tracking-tight text-white">
+                        Kullanici akisini burada koparmayalim
+                      </h2>
+                      <p className="mt-2 text-sm text-white/55">
+                        Ayni kategori, son baktiklari ve favorileri bir araya getirip bir sonraki tiklamayi
+                        kolaylastiriyoruz.
+                      </p>
+                    </div>
+
+                    {nextChannel && (
+                      <Link
+                        href={`/watch/${nextChannel.id}`}
+                        className="inline-flex min-h-12 items-center justify-center rounded-xl bg-accent px-5 py-3 text-sm font-bold text-black no-underline transition hover:brightness-110"
+                      >
+                        Sonraki Kanal: {nextChannel.name}
+                      </Link>
+                    )}
+                  </div>
+
+                  {continueWatchingChannels.length > 0 && (
+                    <div className="mt-4">
+                      <div className="mb-2 text-[11px] font-bold tracking-[1px] text-white/45">
+                        AZ ONCE BAKTIKLARIN
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {continueWatchingChannels.map((item) => (
+                          <Link
+                            key={`recent-${item.id}`}
+                            href={`/watch/${item.id}`}
+                            className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 no-underline transition hover:bg-white/10"
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {otherChannels.length > 0 && (
+                    <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                      {otherChannels.slice(0, 6).map((item) => {
+                        const itemPlaybackStatus = getPlaybackStatus(item);
+                        const itemPlayable = itemPlaybackStatus?.playable || false;
+
+                        return (
+                          <Link
+                            key={`next-grid-${item.id}`}
+                            href={`/watch/${item.id}`}
+                            className="rounded-xl border border-white/10 bg-bg/60 px-3 py-3 text-white no-underline transition hover:border-white/20 hover:bg-bg"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="truncate text-sm font-semibold">{item.name}</span>
+                              <span
+                                className={`text-[10px] font-mono ${
+                                  itemPlayable ? "text-accent" : "text-white/35"
+                                }`}
+                              >
+                                {itemPlayable
+                                  ? itemPlaybackStatus?.playbackType === "youtube"
+                                    ? "YT"
+                                    : "CANLI"
+                                  : "YOK"}
+                              </span>
+                            </div>
+                            <div className="mt-2 text-[11px] text-white/45">
+                              {item.category === channel.category ? "Ayni kategori" : "Kesfetmeye ac"}
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
 
               {!canPlayInSite && (
                 <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4">

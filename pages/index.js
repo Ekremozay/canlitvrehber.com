@@ -1,4 +1,5 @@
-﻿import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 import Head from "next/head";
 import Header from "../components/Header";
 import CategoryMenu from "../components/CategoryMenu";
@@ -28,7 +29,27 @@ const PLAYBACK_FILTERS = [
   { id: "all", label: "Tumu" },
 ];
 
-export default function Home({ favorites, toggleFavorite }) {
+function createStableIndex(seed, max) {
+  if (!max) return 0;
+
+  let hash = 0;
+  for (const char of String(seed || "")) {
+    hash = (hash * 33 + char.charCodeAt(0)) >>> 0;
+  }
+
+  return hash % max;
+}
+
+function uniqueChannels(channels) {
+  const seen = new Set();
+  return channels.filter((channel) => {
+    if (!channel?.id || seen.has(channel.id)) return false;
+    seen.add(channel.id);
+    return true;
+  });
+}
+
+export default function Home({ favorites, recentlyWatched = [], toggleFavorite }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [playbackFilter, setPlaybackFilter] = useState("playable");
@@ -64,6 +85,69 @@ export default function Home({ favorites, toggleFavorite }) {
     const firstLetters = CHANNELS.map((item) => item.name.charAt(0).toUpperCase()).filter(Boolean);
     return Array.from(new Set(firstLetters)).sort((a, b) => a.localeCompare(b, "tr"));
   }, []);
+
+  const recentChannels = useMemo(() => {
+    return recentlyWatched
+      .map((entry) => {
+        const channel = CHANNELS.find((item) => item.id === entry.id);
+        if (!channel) return null;
+        return {
+          ...channel,
+          watchedAt: entry.watchedAt,
+        };
+      })
+      .filter(Boolean);
+  }, [recentlyWatched]);
+
+  const continueWatchingChannels = useMemo(() => {
+    return uniqueChannels(recentChannels).slice(0, 4);
+  }, [recentChannels]);
+
+  const favoriteChannels = useMemo(() => {
+    return CHANNELS.filter((channel) => favorites.includes(channel.id));
+  }, [favorites]);
+
+  const personalizedChannels = useMemo(() => {
+    const seen = new Set([
+      ...continueWatchingChannels.map((item) => item.id),
+      ...favoriteChannels.map((item) => item.id),
+    ]);
+
+    const preferredCategories = Array.from(
+      new Set(
+        [...continueWatchingChannels, ...favoriteChannels]
+          .map((item) => item.category)
+          .filter(Boolean)
+      )
+    );
+
+    const pool = CHANNELS.filter((channel) => {
+      if (seen.has(channel.id)) return false;
+      if (preferredCategories.length === 0) return true;
+      return preferredCategories.includes(channel.category);
+    })
+      .sort((left, right) => {
+        const leftPlayable = getPlaybackStatus(left).playable ? 1 : 0;
+        const rightPlayable = getPlaybackStatus(right).playable ? 1 : 0;
+        return rightPlayable - leftPlayable;
+      });
+
+    return uniqueChannels(pool).slice(0, 4);
+  }, [continueWatchingChannels, favoriteChannels, playbackStatuses]);
+
+  const surpriseChannel = useMemo(() => {
+    const candidates = CHANNELS.filter((channel) => getPlaybackStatus(channel).playable);
+    if (candidates.length === 0) return null;
+
+    const seed = [
+      new Date().toISOString().slice(0, 10),
+      continueWatchingChannels[0]?.id || "",
+      favoriteChannels[0]?.id || "",
+      totalPlayable,
+    ].join(":");
+
+    return candidates[createStableIndex(seed, candidates.length)] || candidates[0];
+  }, [continueWatchingChannels, favoriteChannels, playbackStatuses, totalPlayable]);
 
   const filtered = useMemo(() => {
     return CHANNELS.filter((channel) => {
@@ -137,6 +221,116 @@ export default function Home({ favorites, toggleFavorite }) {
             <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_310px] gap-6">
               <section>
                 <AiGuidePanel playableCount={totalPlayable} />
+
+                <div className="mb-5 grid gap-4 lg:grid-cols-3">
+                  <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
+                    <div className="text-[11px] font-bold tracking-[1px] text-accent/80">KALDIGIN YERDEN</div>
+                    <div className="mt-2 text-lg font-extrabold text-white">
+                      {continueWatchingChannels[0]?.name || "Ilk kanali ac, burasi senin rafin olsun"}
+                    </div>
+                    <p className="mt-2 text-sm text-white/50">
+                      Son baktigin kanallari tek satirda geri getiriyoruz ki kullanici siteye donsun.
+                    </p>
+                    {continueWatchingChannels[0] ? (
+                      <Link
+                        href={`/watch/${continueWatchingChannels[0].id}`}
+                        className="mt-4 inline-flex rounded-xl bg-accent px-4 py-2 text-sm font-bold text-black no-underline transition hover:brightness-110"
+                      >
+                        Devam Et
+                      </Link>
+                    ) : (
+                      <div className="mt-4 text-xs text-white/35">Izleme gecmisi olustukca burada gorunecek.</div>
+                    )}
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
+                    <div className="text-[11px] font-bold tracking-[1px] text-emerald-200/80">CEKIRDEK LISTE</div>
+                    <div className="mt-2 text-lg font-extrabold text-white">
+                      {favoriteChannels.length > 0 ? `${favoriteChannels.length} favori hazir` : "Favorilerini cebe at"}
+                    </div>
+                    <p className="mt-2 text-sm text-white/50">
+                      Kullanici favoriye atinca siteye sahip cikiyor. Bu da geri donus oranini artirir.
+                    </p>
+                    <Link
+                      href={favoriteChannels.length > 0 ? "/favorites" : surpriseChannel ? `/watch/${surpriseChannel.id}` : "/favorites"}
+                      className="mt-4 inline-flex rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white no-underline transition hover:bg-white/15"
+                    >
+                      {favoriteChannels.length > 0 ? "Favorilere Git" : "Bir Kanal Sec"}
+                    </Link>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
+                    <div className="text-[11px] font-bold tracking-[1px] text-sky-200/80">SURPRIZ KANAL</div>
+                    <div className="mt-2 text-lg font-extrabold text-white">
+                      {surpriseChannel?.name || "Kesif hazir olunca burada gosterilecek"}
+                    </div>
+                    <p className="mt-2 text-sm text-white/50">
+                      Tek tikla yeni kanal actir. Kararsiz kalan kullaniciyi sayfada tutmanin en kolay yolu bu.
+                    </p>
+                    {surpriseChannel && (
+                      <Link
+                        href={`/watch/${surpriseChannel.id}`}
+                        className="mt-4 inline-flex rounded-xl border border-sky-300/25 bg-sky-300/10 px-4 py-2 text-sm font-semibold text-sky-100 no-underline transition hover:bg-sky-300/20"
+                      >
+                        Kesfet
+                      </Link>
+                    )}
+                  </div>
+                </div>
+
+                {continueWatchingChannels.length > 0 && (
+                  <section className="mb-5">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <div>
+                        <h2 className="text-sm font-bold uppercase tracking-[1px] text-white/70">
+                          Kaldigin Yerden Devam Et
+                        </h2>
+                        <p className="mt-1 text-sm text-white/45">
+                          Son izlenen kanallari one aliyoruz.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                      {continueWatchingChannels.map((channel) => (
+                        <ChannelCard
+                          key={`continue-${channel.id}`}
+                          channel={channel}
+                          playable={getPlaybackStatus(channel).playable}
+                          playbackType={getPlaybackStatus(channel).playbackType}
+                          isFav={favorites.includes(channel.id)}
+                          onToggleFav={toggleFavorite}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {personalizedChannels.length > 0 && (
+                  <section className="mb-5">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <div>
+                        <h2 className="text-sm font-bold uppercase tracking-[1px] text-white/70">
+                          Sana Gore Hemen Ac
+                        </h2>
+                        <p className="mt-1 text-sm text-white/45">
+                          Favori ve son izleme davranisina gore secildi.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                      {personalizedChannels.map((channel) => (
+                        <ChannelCard
+                          key={`personal-${channel.id}`}
+                          channel={channel}
+                          playable={getPlaybackStatus(channel).playable}
+                          playbackType={getPlaybackStatus(channel).playbackType}
+                          isFav={favorites.includes(channel.id)}
+                          onToggleFav={toggleFavorite}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
 
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4 sm:p-5 mb-5">
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -375,3 +569,5 @@ export default function Home({ favorites, toggleFavorite }) {
     </>
   );
 }
+
+
