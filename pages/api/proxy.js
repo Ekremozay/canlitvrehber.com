@@ -11,6 +11,11 @@ const HOP_BY_HOP_HEADERS = new Set([
   "upgrade",
 ]);
 
+function shouldBypassProxy(targetUrl) {
+  const hostname = String(targetUrl?.hostname || "").toLowerCase();
+  return hostname.endsWith(".medya.trt.com.tr");
+}
+
 function asSingle(value) {
   if (Array.isArray(value)) return value[0];
   return value;
@@ -99,7 +104,7 @@ async function forwardRequest(targetUrl, ref, ua, requestHeaders) {
 export default async function handler(req, res) {
   triggerBackgroundLinkHealthCheck();
 
-  if (req.method !== "GET") {
+  if (!["GET", "HEAD"].includes(req.method || "")) {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
@@ -128,6 +133,12 @@ export default async function handler(req, res) {
 
   if (isPrivateHostname(targetUrl.hostname)) {
     res.status(400).json({ error: "Target host is not allowed" });
+    return;
+  }
+
+  if (shouldBypassProxy(targetUrl)) {
+    res.setHeader("Cache-Control", "no-store");
+    res.redirect(307, targetUrl.toString());
     return;
   }
 
