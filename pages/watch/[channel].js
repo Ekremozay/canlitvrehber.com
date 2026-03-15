@@ -107,7 +107,7 @@ export default function WatchPage({ favorites, toggleFavorite }) {
               <VideoPlayer channel={channel} />
 
               <AdSlot
-                slot={AD_SLOTS.homeInfeed}
+                slot={AD_SLOTS.homeLeaderboard}
                 label="Video Alti Reklam"
                 minHeight={110}
               />

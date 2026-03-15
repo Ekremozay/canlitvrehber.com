@@ -11,20 +11,22 @@ export default function AdSlot({
 }) {
   const adRef = useRef(null);
   const enabled = Boolean(ADSENSE_CLIENT && slot);
+  const resolvedFormat = format === "fluid" && !layoutKey ? "auto" : format;
+  const slotRenderKey = `${slot}:${resolvedFormat}:${layoutKey || "-"}`;
 
   useEffect(() => {
     if (!enabled) return;
     if (!adRef.current) return;
-    if (adRef.current.dataset.loaded === "true") return;
+    if (adRef.current.dataset.loadedKey === slotRenderKey) return;
 
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-      adRef.current.dataset.loaded = "true";
+      adRef.current.dataset.loadedKey = slotRenderKey;
     } catch (error) {
       // Keep the slot visible even when ad network fails.
       console.warn("[ads] slot render failed", error);
     }
-  }, [enabled, slot]);
+  }, [enabled, slotRenderKey]);
 
   return (
     <div
@@ -37,13 +39,16 @@ export default function AdSlot({
 
       {enabled ? (
         <ins
+          key={slotRenderKey}
           ref={adRef}
           className="adsbygoogle"
           style={{ display: "block", width: "100%", minHeight: Math.max(60, minHeight - 24) }}
           data-ad-client={ADSENSE_CLIENT}
           data-ad-slot={slot}
-          data-ad-format={format}
-          {...(layoutKey ? { "data-ad-layout-key": layoutKey } : {})}
+          data-ad-format={resolvedFormat}
+          {...(resolvedFormat === "fluid" && layoutKey
+            ? { "data-ad-layout-key": layoutKey }
+            : {})}
           data-full-width-responsive="true"
         />
       ) : (

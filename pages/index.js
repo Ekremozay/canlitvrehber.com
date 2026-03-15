@@ -276,7 +276,7 @@ export default function Home({ favorites, toggleFavorite }) {
                                   slot={AD_SLOTS.homeInfeed}
                                   label="Icerik Ici Reklam"
                                   minHeight={130}
-                                  format="fluid"
+                                  format={AD_SLOTS.homeInfeedLayoutKey ? "fluid" : "auto"}
                                   layoutKey={AD_SLOTS.homeInfeedLayoutKey}
                                 />
                               </div>
