@@ -23,7 +23,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav, playable,
   const reference = getCanliTvReference(channel);
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-surface/40 px-3.5 py-3 transition hover:bg-surface/70 sm:flex-nowrap flex-wrap">
+    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-surface/40 px-3.5 py-3 transition hover:bg-surface/70 sm:flex-nowrap">
       <div
         className="flex h-10 w-10 items-center justify-center rounded-lg text-xs font-black"
         style={{
@@ -77,7 +77,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav, playable,
           onClick={() => onToggleFav(channel.id)}
           className="rounded-lg border border-white/20 px-2.5 py-1.5 text-xs text-white/70 transition hover:bg-white/10 hover:text-white"
         >
-          {isFav ? "Favoride" : "Ekle"}
+          {isFav ? "Kayıtlı" : "Kaydet"}
         </button>
 
         <Link
@@ -88,7 +88,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav, playable,
               : "bg-white/10 text-white/70 hover:bg-white/15"
           }`}
         >
-          {hasStream ? "İzle" : "Detay"}
+          {hasStream ? "İzle" : "Detayı Gör"}
         </Link>
       </div>
     </div>

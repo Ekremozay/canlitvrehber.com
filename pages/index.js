@@ -224,48 +224,50 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
 
                 <div className="mb-5 grid gap-4 lg:grid-cols-3">
                   <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                    <div className="text-[11px] font-bold tracking-[1px] text-accent/80">KALDIĞIN YERDEN</div>
+                    <div className="text-[11px] font-bold tracking-[1px] text-accent/80">İZLEME DEVAMI</div>
                     <div className="mt-2 text-lg font-extrabold text-white">
-                      {continueWatchingChannels[0]?.name || "İlk kanalını aç, burada seni beklesin"}
+                      {continueWatchingChannels[0]?.name || "İlk izlemene burada devam edebilirsin"}
                     </div>
                     <p className="mt-2 text-sm text-white/50">
-                      Son izlediğin kanallara tek dokunuşla yeniden ulaş.
+                      Son izlediğin yayınlara tek dokunuşla yeniden ulaş.
                     </p>
                     {continueWatchingChannels[0] ? (
                       <Link
                         href={`/watch/${continueWatchingChannels[0].id}`}
                         className="mt-4 inline-flex rounded-xl bg-accent px-4 py-2 text-sm font-bold text-black no-underline transition hover:brightness-110"
                       >
-                        Devam Et
+                        Yayına Dön
                       </Link>
                     ) : (
-                      <div className="mt-4 text-xs text-white/35">İzledikçe burada görünecek.</div>
+                      <div className="mt-4 text-xs text-white/35">İzledikçe burada görünür.</div>
                     )}
                   </div>
 
                   <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                    <div className="text-[11px] font-bold tracking-[1px] text-emerald-200/80">FAVORİLER</div>
+                    <div className="text-[11px] font-bold tracking-[1px] text-emerald-200/80">FAVORİ LİSTEN</div>
                     <div className="mt-2 text-lg font-extrabold text-white">
-                      {favoriteChannels.length > 0 ? `${favoriteChannels.length} favori hazır` : "Sevdiklerini kaydet"}
+                      {favoriteChannels.length > 0
+                        ? `${favoriteChannels.length} favori kanal hazır`
+                        : "Favori listeni oluştur"}
                     </div>
                     <p className="mt-2 text-sm text-white/50">
-                      Sık izlediğin kanalları favorilere ekleyip tek yerden açabilirsin.
+                      Sık izlediğin kanalları kaydedip tek yerden açabilirsin.
                     </p>
                     <Link
                       href={favoriteChannels.length > 0 ? "/favorites" : surpriseChannel ? `/watch/${surpriseChannel.id}` : "/favorites"}
                       className="mt-4 inline-flex rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white no-underline transition hover:bg-white/15"
                     >
-                      {favoriteChannels.length > 0 ? "Favorilere Git" : "Kanal Seç"}
+                      {favoriteChannels.length > 0 ? "Favorilerine Git" : "Kanal Seç"}
                     </Link>
                   </div>
 
                   <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                    <div className="text-[11px] font-bold tracking-[1px] text-sky-200/80">SÜRPRİZ KANAL</div>
+                    <div className="text-[11px] font-bold tracking-[1px] text-sky-200/80">GÜNÜN SEÇİMİ</div>
                     <div className="mt-2 text-lg font-extrabold text-white">
-                      {surpriseChannel?.name || "Yeni öneriler hazır olduğunda burada görünecek"}
+                      {surpriseChannel?.name || "Yeni öneriler hazır olduğunda burada görünür"}
                     </div>
                     <p className="mt-2 text-sm text-white/50">
-                      Yeni bir şey denemek istersen tek dokunuşla aç.
+                      Yeni bir şey izlemek istersen tek dokunuşla aç.
                     </p>
                     {surpriseChannel && (
                       <Link
@@ -283,7 +285,7 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <div>
                         <h2 className="text-sm font-bold uppercase tracking-[1px] text-white/70">
-                          Kaldığın Yerden Devam Et
+                          İzlemeye Devam Et
                         </h2>
                         <p className="mt-1 text-sm text-white/45">
                           Son izlediğin kanallar burada hazır.
@@ -310,7 +312,7 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <div>
                         <h2 className="text-sm font-bold uppercase tracking-[1px] text-white/70">
-                          Sana Özel Seçimler
+                          Sana Özel Öneriler
                         </h2>
                         <p className="mt-1 text-sm text-white/45">
                           Favorilerin ve son izlediklerin doğrultusunda seçildi.
@@ -335,7 +337,7 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4 sm:p-5 mb-5">
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div>
-                      <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Kanal Rehberi</h1>
+                      <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Canlı Yayın Vitrini</h1>
                       <p className="text-sm text-white/50 mt-1">
                         Toplam {CHANNELS.length} kanal, site içinde açılabilen {totalPlayable} kanal.
                       </p>
@@ -343,10 +345,10 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
 
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="px-2.5 py-1 rounded-full border border-emerald-400/40 bg-emerald-400/10 text-emerald-100 text-[11px] font-semibold">
-                        Sıralama: Yayın - YouTube - Resmi Site
+                        İzleme sırası: Yayın &gt; YouTube &gt; Resmi Site
                       </span>
                       <span className="px-2.5 py-1 rounded-full border border-white/15 bg-white/5 text-white/70 text-[11px] font-semibold">
-                        Kaynak: {referenceSummary.youtube} YouTube bağlantısı
+                        Doğrulanmış YouTube bağlantısı: {referenceSummary.youtube}
                       </span>
                     </div>
                   </div>
@@ -357,7 +359,7 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
                       <input
                         value={search}
                         onChange={(event) => setSearch(event.target.value)}
-                        placeholder="Kanal adına göre ara..."
+                        placeholder="Kanal, kategori veya içerik ara..."
                         className="bg-transparent border-none outline-none text-white text-sm w-full placeholder:text-white/30"
                       />
                     </div>
@@ -464,16 +466,16 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
                     }}
                     className="ml-auto px-3 py-1.5 rounded-lg text-[11px] font-semibold border border-white/20 text-white/65 hover:text-white hover:bg-white/10 transition"
                   >
-                    Filtreleri Sıfırla
+                    Filtreleri Temizle
                   </button>
                 </div>
 
                 {filtered.length === 0 ? (
                   <div className="flex flex-col items-center py-20 text-center rounded-2xl border border-white/10 bg-surface/40">
                     <div className="text-5xl mb-4">-</div>
-                    <h3 className="text-lg font-bold mb-2">Kanal bulunamadı</h3>
+                    <h3 className="text-lg font-bold mb-2">Aradığın kritere uygun kanal bulunamadı</h3>
                     <p className="text-sm text-white/40 max-w-md px-4">
-                      Arama ifadesini veya kategori seçimini değiştirip yeniden dene.
+                      Arama ifadesini ya da kategori seçimini değiştirip yeniden dene.
                     </p>
                   </div>
                 ) : (
@@ -493,7 +495,7 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
                               <div key={item.id} className="sm:col-span-2 lg:col-span-3 xl:col-span-4">
                                 <AdSlot
                                   slot={AD_SLOTS.homeInfeed}
-                                  label="İçerik İçi Reklam"
+                                  label="İçerik içi tanıtım alanı"
                                   minHeight={130}
                                   format={AD_SLOTS.homeInfeedLayoutKey ? "fluid" : "auto"}
                                   layoutKey={AD_SLOTS.homeInfeedLayoutKey}
@@ -545,12 +547,12 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
                 <div className="sticky top-20 space-y-4">
                   <AdSlot
                     slot={AD_SLOTS.homeSidebarTop}
-                    label="Sağ Alan Reklam 1"
+                    label="Sağ alan tanıtım alanı 1"
                     minHeight={280}
                   />
                   <AdSlot
                     slot={AD_SLOTS.homeSidebarBottom}
-                    label="Sağ Alan Reklam 2"
+                    label="Sağ alan tanıtım alanı 2"
                     minHeight={280}
                   />
                 </div>
@@ -559,7 +561,7 @@ export default function Home({ favorites, recentlyWatched = [], toggleFavorite }
 
             <AdSlot
               slot={AD_SLOTS.homeLeaderboard}
-              label="Üst Banner Reklam"
+              label="Üst tanıtım alanı"
               minHeight={120}
               className="mt-6"
             />

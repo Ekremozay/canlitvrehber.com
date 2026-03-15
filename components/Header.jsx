@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BRAND } from "../lib/siteConfig";
@@ -13,7 +13,7 @@ export default function Header({
   search,
   onSearch,
   favCount = 0,
-  searchPlaceholder = "Kanal ara...",
+  searchPlaceholder = "Kanal, kategori veya yayın ara...",
 }) {
   const [time, setTime] = useState("");
   const router = useRouter();
@@ -46,7 +46,7 @@ export default function Header({
           />
           <div>
             <div className="text-base font-extrabold leading-none tracking-tight text-white">
-              Canlı<span className="text-accent">TV</span> Rehber
+              Canlı <span className="text-accent">TV</span> Rehberi
             </div>
             <div className="font-mono text-[10px] font-semibold tracking-[1.2px] text-accent">
               {BRAND.domain}
@@ -62,19 +62,19 @@ export default function Header({
       <div className="flex items-center gap-3">
         <nav className="flex gap-1 rounded-xl border border-white/10 bg-surface p-1">
           <Link href="/" className={navItemClass(router.pathname === "/")}>
-            Kanallar
+            Canlı Kanallar
           </Link>
           <Link
             href="/yerli-filmler"
             className={navItemClass(router.pathname.startsWith("/yerli-filmler"))}
           >
-            Yerli Filmler
+            Film Vitrini
           </Link>
           <Link
             href="/favorites"
             className={`${navItemClass(router.pathname === "/favorites")} inline-flex items-center gap-1.5`}
           >
-            Favoriler
+            Favorilerim
             {favCount > 0 && (
               <span className="rounded-full bg-danger px-1.5 text-[10px] font-bold text-white">
                 {favCount}
@@ -85,11 +85,11 @@ export default function Header({
             href="/telif-bildirimi"
             className={navItemClass(router.pathname === "/telif-bildirimi")}
           >
-            Telif
+            Telif Bildirimi
           </Link>
         </nav>
 
-        <div className="hidden min-w-[260px] items-center gap-2 rounded-xl border border-white/10 bg-surface px-3 py-2 transition focus-within:border-accent sm:flex">
+        <div className="hidden min-w-[280px] items-center gap-2 rounded-xl border border-white/10 bg-surface px-3 py-2 transition focus-within:border-accent sm:flex">
           <span className="text-xs opacity-50">ARA</span>
           <input
             value={search}

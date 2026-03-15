@@ -45,14 +45,14 @@ function loadIframeApi() {
 
 function getErrorLabel(code) {
   if (code === 101 || code === 150) {
-    return "Bu film telif veya yayin politikasi nedeniyle sayfa icinde oynatilamiyor.";
+    return "Bu film telif veya yayın politikası nedeniyle sayfa içinde oynatılamıyor.";
   }
 
   if (code === 100) {
-    return "Video su anda kullanilamiyor.";
+    return "Video şu anda kullanılamıyor.";
   }
 
-  return "YouTube oynatici baslatilamadi.";
+  return "YouTube oynatıcısı başlatılamadı.";
 }
 
 export default function YouTubeMoviePlayer({
@@ -158,19 +158,19 @@ export default function YouTubeMoviePlayer({
       {loading && !errorCode && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/72 px-6 text-center">
           <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-white/10 border-t-accent" />
-          <div className="mt-4 text-base font-bold text-white">Film hazirlaniyor</div>
-          <p className="mt-2 text-xs text-white/55">YouTube oynatici yukleniyor.</p>
+          <div className="mt-4 text-base font-bold text-white">Film hazırlanıyor</div>
+          <p className="mt-2 text-xs text-white/55">YouTube oynatıcısı yükleniyor.</p>
         </div>
       )}
 
       {Boolean(errorCode) && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/84 px-6 text-center">
-          <div className="text-base font-bold text-[#f6d18e]">Sayfa icinde baslatilamadi</div>
+          <div className="text-base font-bold text-[#f6d18e]">Bu sayfada başlatılamadı</div>
           <p className="mt-2 max-w-md text-xs leading-6 text-white/60">{getErrorLabel(errorCode)}</p>
           <p className="mt-2 text-[11px] font-semibold text-accent/80">
             {fallbackWatchUrl
-              ? "Seni uygun YouTube videosuna yonlendiriyoruz."
-              : "Seni dogrudan YouTube sayfasina yonlendiriyoruz."}
+              ? "Seni uygun YouTube videosuna yönlendiriyoruz."
+              : "Seni doğrudan YouTube sayfasına yönlendiriyoruz."}
           </p>
           <a
             href={fallbackWatchUrl || watchUrl}

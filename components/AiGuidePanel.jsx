@@ -2,8 +2,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 const QUICK_PROMPTS = [
-  "Şu an ne izlemeliyim?",
-  "Hızlı haber kanalı öner",
+  "Şu an ne izlesem?",
+  "Hızlı bir haber kanalı öner",
   "Spor için açık kanal bul",
   "Çocuklar için uygun kanal öner",
   "Akşam sakin bir şey izlemek istiyorum",
@@ -28,7 +28,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
   const [error, setError] = useState("");
 
   const placeholder = useMemo(() => {
-    return "Örnek: Şu an hızlı haber izlemek istiyorum, çocuk için kanal öner, gece sakin bir şey aç...";
+    return "Örnek: Şu an hızlı haber izlemek istiyorum, çocuk için kanal öner, akşam sakin bir yayın aç...";
   }, []);
 
   async function runGuide(nextQuery) {
@@ -54,8 +54,8 @@ export default function AiGuidePanel({ playableCount = 0 }) {
 
       setResult(payload);
       setQuery(cleanQuery);
-    } catch (requestError) {
-      setError("AI önerisi hazırlanırken bir sorun oluştu. Biraz sonra yeniden deneyebilirsin.");
+    } catch {
+      setError("Öneri hazırlanırken bir sorun oluştu. Biraz sonra yeniden deneyebilirsin.");
     } finally {
       setLoading(false);
     }
@@ -75,17 +75,19 @@ export default function AiGuidePanel({ playableCount = 0 }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[1.6px] text-emerald-100">
               Lemonfox Destekli
             </div>
-            <h2 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">AI Kanal Rehberi</h2>
+            <h2 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">
+              AI İzleme Rehberi
+            </h2>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/65">
-              Ne izlemek istediğini yaz. AI, yalnızca şu anda açılabilen {playableCount} kanal arasından
-              sana hızlı bir öneri hazırlar.
+              Ne izlemek istediğini yaz. AI, o anda açılabilen {playableCount} kanal arasından
+              sana hızlı ve net bir seçim hazırlar.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-right">
-            <div className="text-[11px] uppercase tracking-[1.4px] text-white/45">Canlı Kapsam</div>
+            <div className="text-[11px] uppercase tracking-[1.4px] text-white/45">Anlık Kapsam</div>
             <div className="mt-1 text-2xl font-black text-white">{playableCount}</div>
-            <div className="text-xs text-white/45">AI için kullanılan açık kanal</div>
+            <div className="text-xs text-white/45">Şu anda önerilebilen kanal</div>
           </div>
         </div>
 
@@ -105,11 +107,12 @@ export default function AiGuidePanel({ playableCount = 0 }) {
                 disabled={loading}
                 className="rounded-2xl bg-accent px-4 py-3 text-sm font-black text-black transition hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
               >
-                {loading ? "AI önerisi hazırlanıyor..." : "AI önerisi al"}
+                {loading ? "Öneri hazırlanıyor..." : "Öneri Al"}
               </button>
 
               <div className="rounded-2xl border border-white/10 bg-bg/50 px-4 py-3 text-xs text-white/55">
-                Öneriler anlık oynatma durumuna göre hazırlanır. Açılabilen yayınlar ve YouTube seçenekleri öne çıkar.
+                Öneriler anlık oynatma durumuna göre hazırlanır. Site içinde açılan kanallar ve
+                uygun YouTube seçenekleri öne çıkar.
               </div>
             </div>
           </div>
@@ -138,8 +141,12 @@ export default function AiGuidePanel({ playableCount = 0 }) {
             <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <div className="text-[11px] uppercase tracking-[1.4px] text-white/45">AI Sonucu</div>
-                  <h3 className="mt-1 text-xl font-black tracking-tight">{result.title || "AI Kanal Rehberi"}</h3>
+                  <div className="text-[11px] uppercase tracking-[1.4px] text-white/45">
+                    AI Önerisi
+                  </div>
+                  <h3 className="mt-1 text-xl font-black tracking-tight">
+                    {result.title || "AI İzleme Rehberi"}
+                  </h3>
                 </div>
                 <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold text-white/60">
                   {result.source === "lemonfox" ? "Lemonfox" : "Yerel Öneri"}
@@ -147,7 +154,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
               </div>
 
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                {result.summary || "AI kanalları analiz etti ve sana hızlı bir öneri hazırladı."}
+                {result.summary || "Uygun kanallar analiz edildi ve sana hızlı bir seçim hazırlandı."}
               </p>
 
               {result.followup && (
@@ -180,7 +187,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
 
                   {item.currentShow && (
                     <div className="mt-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-white/55">
-                      Şimdi: {item.currentShow}
+                      Şu anda: {item.currentShow}
                     </div>
                   )}
                 </Link>
@@ -188,7 +195,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
 
               {(!result.suggestions || result.suggestions.length === 0) && (
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/55">
-                  Şu anda önerilecek uygun kanal bulunamadı.
+                  Şu anda uygun bir kanal önerisi bulunamadı.
                 </div>
               )}
             </div>

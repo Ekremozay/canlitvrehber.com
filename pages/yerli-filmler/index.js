@@ -14,23 +14,23 @@ import {
 const FILTERS = [
   {
     id: "all",
-    label: "Tum Filmler",
-    description: "Butun arsivi tek bakista gor.",
+    label: "Tüm Filmler",
+    description: "Bütün arşivi tek bakışta gör.",
   },
   {
     id: "long",
     label: "Uzun Metraj",
-    description: "Aksam boyu acik kalacak filmler.",
+    description: "Akşam boyu eşlik edecek filmler.",
   },
   {
     id: "classics",
-    label: "Klasik Secki",
-    description: "Yili belli filmlerden nostaljik secim.",
+    label: "Klasik Seçki",
+    description: "Zamana iz bırakan yapımları keşfet.",
   },
   {
     id: "fresh",
     label: "Yeni Eklenenler",
-    description: "Listeye son eklenen filmleri yakala.",
+    description: "Listeye son eklenen filmleri hemen keşfet.",
   },
 ];
 
@@ -113,24 +113,24 @@ function getStatCards(movies) {
 
   return [
     {
-      label: "Toplam Arsiv",
+      label: "Toplam Arşiv",
       value: formatMovieCountLabel(movies.length),
-      note: "Tek parca acilan yerli film kutuphanesi",
+      note: "Tek parça açılan yerli film arşivi",
     },
     {
       label: "Uzun Metraj",
-      value: `${longFeatures} secim`,
-      note: "90 dakika ve ustu aksamlik filmler",
+      value: `${longFeatures} seçim`,
+      note: "90 dakika ve üzeri uzun metraj filmler",
     },
     {
-      label: "One Cikanlar",
-      value: `${shortList} vitrin`,
-      note: "Acilis ekraninda hizlica goz atilacak secki",
+      label: "Öne Çıkanlar",
+      value: `${shortList} film`,
+      note: "Vitrinde öne çıkan hızlı seçimler",
     },
     {
       label: "Klasik Ton",
       value: `${classics} film`,
-      note: "Yili oturmus filmlerden nostaljik secimler",
+      note: "Zamana iz bırakan nostaljik seçimler",
     },
   ];
 }
@@ -197,13 +197,13 @@ function SpotlightTile({ movie, emphasis = "default" }) {
           </h3>
           <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-white/62">
             {movie.title === movie.movieTitle
-              ? "YouTube oynatici ile hizlica ac, film sayfasinda ozet ve yonlendirmeleri gor."
+              ? "YouTube oynatıcısı ile hemen aç, film sayfasında özet ve detaylara göz at."
               : movie.title}
           </p>
           <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-black uppercase tracking-[1.3px] text-black transition group-hover:translate-x-1">
-            Hemen Ac
+            Hemen Aç
             <span aria-hidden="true">/</span>
-            Film Sayfasi
+            Film Sayfası
           </div>
         </div>
       </div>
@@ -284,7 +284,7 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
     <>
       <SeoHead
         title="Yerli Filmler"
-        description="Yerli filmleri platform kalitesinde bir vitrinde kesfet. Buyuk kapaklar, guclu seckiler ve YouTube oynatici ile tek ekranda izle."
+        description="Yerli filmleri daha güçlü bir vitrinde keşfet. Büyük kapaklar, öne çıkan seçimler ve YouTube oynatıcısı ile tek ekranda izle."
         path="/yerli-filmler"
       />
 
@@ -295,7 +295,12 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
             "radial-gradient(circle at 15% 15%, rgba(194, 74, 22, 0.22), transparent 26%), radial-gradient(circle at 85% 10%, rgba(228, 174, 64, 0.18), transparent 22%), linear-gradient(180deg, #07080c 0%, #0a0a11 48%, #08080c 100%)",
         }}
       >
-        <Header search={search} onSearch={setSearch} favCount={0} searchPlaceholder="Film, oyuncu ya da ad ara..." />
+        <Header
+          search={search}
+          onSearch={setSearch}
+          favCount={0}
+          searchPlaceholder="Film adı, oyuncu ya da anahtar kelime ara..."
+        />
 
         <main className="mx-auto max-w-[1660px] px-4 pb-14 pt-5 sm:px-6 lg:px-8">
           <section className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[#0d0e14] shadow-[0_35px_120px_rgba(0,0,0,0.45)]">
@@ -314,15 +319,17 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#f4b44a]/35 bg-[#f4b44a]/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[1.8px] text-[#f7d38e]">
                   Sinema Vitrini
                   <span className="h-1.5 w-1.5 rounded-full bg-[#f4b44a]" />
-                  Platform hissi veren yeni ekran
+                  Özenle hazırlanmış yerli film deneyimi
                 </div>
 
                 <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-[-0.03em] text-white sm:text-5xl xl:text-6xl">
-                  Yerli filmleri artik daha guclu bir vitrinde kesfet.
+                  Yerli filmleri daha güçlü bir vitrinde keşfet.
                 </h1>
 
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-white/66 sm:text-base">
-                  {playlistTitle || "Yerli Filmler"} listesindeki yapimlari, buyuk kapaklar, hizli seckiler ve guclu film sayfalariyla bir araya getirdik. Amaç sadece liste gostermek degil, kullaniciyi icerigin icinde tutan bir deneyim sunmak.
+                  {playlistTitle || "Yerli Filmler"} listesindeki yapımları büyük kapaklar,
+                  hızlı seçimler ve düzenli film sayfalarıyla bir araya getirdik. Aradığın
+                  filme daha hızlı ulaşman ve izlemen için sade bir deneyim hazırladık.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -331,8 +338,8 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
                       href={`/yerli-filmler/${featuredMovie.slug}`}
                       className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-black text-black no-underline transition hover:translate-y-[-1px]"
                     >
-                      Hemen Izle
-                      <span aria-hidden="true">Play</span>
+                      Hemen İzle
+                      <span aria-hidden="true">&gt;</span>
                     </Link>
                   )}
                   <a
@@ -341,8 +348,8 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-5 py-3 text-sm font-bold text-white no-underline transition hover:bg-white/[0.1]"
                   >
-                    YouTube Listesini Ac
-                    <span aria-hidden="true">Open</span>
+                    YouTube Listesini Aç
+                    <span aria-hidden="true">&gt;</span>
                   </a>
                 </div>
 
@@ -374,14 +381,15 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
           <section className="mt-8 rounded-[32px] border border-white/10 bg-white/[0.03] px-5 py-5 sm:px-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-[1.8px] text-white/42">Izleme Modu</div>
-                <h2 className="mt-2 text-2xl font-black tracking-tight text-white">Sana gore secilmis raflar</h2>
+                <div className="text-[11px] font-bold uppercase tracking-[1.8px] text-white/42">İzleme Modu</div>
+                <h2 className="mt-2 text-2xl font-black tracking-tight text-white">Sana uygun seçkiler</h2>
                 <p className="mt-2 max-w-2xl text-sm text-white/56">
-                  Filtreden bir ton sec, arsivi o ruh haline gore daralt. Arama aciksa secimlerin aninda guncellenir.
+                  Bir seçim modu belirle; arşiv sana uygun tona göre anında daralsın. Arama
+                  yaptığında vitrin hemen güncellenir.
                 </p>
               </div>
               <div className="rounded-full border border-white/10 bg-black/25 px-4 py-2 text-xs font-bold uppercase tracking-[1.4px] text-white/58">
-                {updatedLabel ? `Son guncelleme ${updatedLabel}` : "Kaynak YouTube listesi"}
+                {updatedLabel ? `Son güncelleme ${updatedLabel}` : "Kaynak: YouTube listesi"}
               </div>
             </div>
 
@@ -400,9 +408,9 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
           <section className="mt-10 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="rounded-[32px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
               <SectionHeader
-                eyebrow="Bu Aksam"
-                title="Bir oturusta izlenecek seckiler"
-                description="Uzun metraj filmleri one cikariyoruz. Tek tikla film sayfasina gec, YouTube oynaticidan ac."
+                eyebrow="Bu Akşam"
+                title="Bir oturuşta izlenecek seçkiler"
+                description="Uzun metraj filmleri öne çıkarıyoruz. Tek dokunuşla film sayfasına geç, YouTube oynatıcısında aç."
               />
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {(tonightMovies.length ? tonightMovies : spotlightMovies.slice(0, 4)).map((movie) => (
@@ -414,8 +422,8 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
             <div className="rounded-[32px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
               <SectionHeader
                 eyebrow="Yeni Eklenenler"
-                title="Vitrine yeni dusen filmler"
-                description="Listeye son eklenen yapimlari hizli yakalamak isteyenler icin." 
+                title="Vitrine yeni gelen filmler"
+                description="Listeye son eklenen yapımları hızlı yakalamak isteyenler için."
               />
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {(freshMovies.length ? freshMovies : spotlightMovies.slice(4, 8)).map((movie) => (
@@ -427,9 +435,9 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
 
           <section className="mt-10 rounded-[34px] border border-white/10 bg-[#0d0f15] px-5 py-6 sm:px-6 sm:py-7">
             <SectionHeader
-              eyebrow="Platform Listesi"
-              title="Ilk 10 Yerli Film"
-              description="Acilis ekrani gibi davranan, dikkat cekici ve hizli karar verdiren bir top liste."
+              eyebrow="Öne Çıkanlar"
+              title="İlk 10 Yerli Film"
+              description="Karar vermeyi hızlandıran, dikkat çeken ve güçlü bir ilk seçim listesi."
             />
             <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
               {topTenMovies.map((movie, index) => (
@@ -440,38 +448,38 @@ export default function YerliFilmlerPage({ playlistTitle, playlistUrl, movies, u
 
           <AdSlot
             slot={AD_SLOTS.homeLeaderboard}
-            label="Yerli Filmler Vitrin Reklam Alani"
+            label="Yerli Filmler tanıtım alanı"
             minHeight={110}
             className="mt-8"
           />
 
           <ShelfGrid
-            title="Editorun Sectikleri"
-            description="Guclu kapaklar ve aramadan en cok tik beklenen filmler burada toplandi."
+            title="Editörün Seçtikleri"
+            description="Öne çıkan kapaklar ve ilk bakışta dikkat çeken filmler burada toplandı."
             movies={spotlightMovies.slice(0, 4)}
           />
 
           <section className="mt-10 rounded-[34px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
             <SectionHeader
-              eyebrow="Tum Arsiv"
-              title="Film kutuphanesi"
+              eyebrow="Tüm Arşiv"
+              title="Film arşivi"
               description={
                 filteredMovies.length === 0
-                  ? "Aramana gore sonuc bulunamadi."
-                  : `${filteredMovies.length} film su an bu ekranda listeleniyor.`
+                  ? "Aramana göre sonuç bulunamadı."
+                  : `${filteredMovies.length} film şu anda bu ekranda listeleniyor.`
               }
               action={
                 <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-bold uppercase tracking-[1.3px] text-white/58">
-                  Oynatici: YouTube
+                  Oynatıcı: YouTube
                 </div>
               }
             />
 
             {filteredMovies.length === 0 ? (
               <div className="mt-6 rounded-[28px] border border-dashed border-white/15 bg-black/20 px-6 py-16 text-center">
-                <div className="text-2xl font-black text-white">Film bulunamadi</div>
+                <div className="text-2xl font-black text-white">Film bulunamadı</div>
                 <p className="mt-3 text-sm text-white/52">
-                  Arama kelimesini degistir veya farkli bir secim modu dene.
+                  Arama kelimesini değiştir ya da farklı bir seçim modu dene.
                 </p>
               </div>
             ) : (

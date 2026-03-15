@@ -158,7 +158,7 @@ export default function WatchPage({
                 href="/"
                 className="rounded-lg border border-white/15 px-3 py-2 text-sm text-white/75 no-underline transition hover:bg-white/10 hover:text-white"
               >
-                Geri Dön
+                Kanallara Dön
               </Link>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 bg-danger/15 px-2.5 py-0.5 text-[10px] font-bold tracking-widest font-mono text-danger">
                 <span className="h-1.5 w-1.5 rounded-full bg-danger animate-pulse" />
@@ -171,7 +171,7 @@ export default function WatchPage({
               onClick={() => toggleFavorite(channel.id)}
               className="rounded-lg border border-white/15 px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
             >
-              {isFav ? "Favorilerden Çıkar" : "Favoriye Ekle"}
+              {isFav ? "Favorilerden Çıkar" : "Favorilere Kaydet"}
             </button>
           </div>
 
@@ -183,9 +183,9 @@ export default function WatchPage({
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4 sm:p-5">
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div className="max-w-2xl">
-                      <div className="text-[11px] font-bold tracking-[1px] text-accent/80">SIRADAKİ</div>
+                      <div className="text-[11px] font-bold tracking-[1px] text-accent/80">SIRADAKİLER</div>
                       <h2 className="mt-2 text-xl font-extrabold tracking-tight text-white">
-                        Bunu da izleyebilirsin
+                        İzlemeye Devam Et
                       </h2>
                       <p className="mt-2 text-sm text-white/55">
                         Aynı kategori ve izleme alışkanlığına göre seçilen kanallar burada.
@@ -197,7 +197,7 @@ export default function WatchPage({
                         href={`/watch/${nextChannel.id}`}
                         className="inline-flex min-h-12 items-center justify-center rounded-xl bg-accent px-5 py-3 text-sm font-bold text-black no-underline transition hover:brightness-110"
                       >
-                        Sıradaki Kanal: {nextChannel.name}
+                        Sıradaki kanal: {nextChannel.name}
                       </Link>
                     )}
                   </div>
@@ -268,7 +268,7 @@ export default function WatchPage({
                   </p>
                   {canliTvReference?.mode && (
                     <p className="mb-3 text-[11px] text-amber-100/75">
-                      Kaynak durumu: {getCanliTvModeLabel(canliTvReference.mode)}
+                      Kaynak bilgisi: {getCanliTvModeLabel(canliTvReference.mode)}
                     </p>
                   )}
                   <div className="flex flex-wrap gap-2">
@@ -318,12 +318,12 @@ export default function WatchPage({
             <aside className="space-y-4">
               <AdSlot
                 slot={AD_SLOTS.watchSidebarTop}
-                label="İzleme Sayfası Reklam 1"
+                label="İzleme sayfası tanıtım alanı 1"
                 minHeight={250}
               />
 
               <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                <h2 className="mb-3 text-sm font-bold text-white/70">Kanal Bilgisi</h2>
+                <h2 className="mb-3 text-sm font-bold text-white/70">Kanal Hakkında</h2>
                 <p className="text-sm text-white/80">{channel.description}</p>
 
                 {channel.sourceCategories?.length > 0 && (
@@ -347,7 +347,7 @@ export default function WatchPage({
                       rel="noopener noreferrer"
                       className="block break-all text-xs text-accent hover:underline"
                     >
-                      Resmi Site: {channel.officialWebsite}
+                      Resmi site: {channel.officialWebsite}
                     </a>
                   )}
                   {channel.sourceChannelId && (
@@ -358,7 +358,7 @@ export default function WatchPage({
 
               {visibleExternalLinks.length > 0 && (
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                  <h3 className="mb-3 text-sm font-bold text-white/70">Ek Kaynaklar</h3>
+                  <h3 className="mb-3 text-sm font-bold text-white/70">Ek İzleme Seçenekleri</h3>
                   <div className="grid grid-cols-1 gap-2">
                     {visibleExternalLinks.map((link) => (
                       <ExternalButton key={`${channel.id}-ext-${link.url}`} link={link} />
@@ -418,12 +418,12 @@ export default function WatchPage({
 
               <AdSlot
                 slot={AD_SLOTS.watchSidebarBottom}
-                label="İzleme Sayfası Reklam 2"
+                label="İzleme sayfası tanıtım alanı 2"
                 minHeight={250}
               />
 
               <div className="rounded-2xl border border-emerald-400/35 bg-emerald-400/10 p-3.5 text-xs text-emerald-100/85">
-                Oynatma sırası: önce yayın, sonra YouTube, en son resmi site.
+                İzleme sırası: önce yayın, sonra YouTube, en son resmi site.
               </div>
             </aside>
           </div>

@@ -53,7 +53,7 @@ function buildYoutubeState(channel, playbackStatus, youtubeLiveLink) {
       embedUrl: playbackStatus.embedUrl || "",
       watchUrl: playbackStatus.liveUrl || playbackStatus.watchUrl || youtubeLiveLink.url,
       liveUrl: playbackStatus.liveUrl || "",
-      title: playbackStatus.youtubeTitle || channel?.name || "YouTube Canlı",
+      title: playbackStatus.youtubeTitle || channel?.name || "YouTube canlı",
       checkedAt: playbackStatus.checkedAt || "",
     };
   }
@@ -193,7 +193,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
             embedUrl: payload.embedUrl,
             watchUrl: payload.liveUrl || payload.watchUrl || youtubeLiveLink.url,
             liveUrl: payload.liveUrl || "",
-            title: payload.title || channel?.name || "YouTube Canlı",
+            title: payload.title || channel?.name || "YouTube canlı",
             checkedAt: payload.checkedAt || "",
           });
           return;
@@ -326,7 +326,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
       {selectedPlayer === "youtube" && youtubeReady ? (
         <iframe
           src={youtubeState.embedUrl}
-          title={`${channel.name} YouTube Canlı`}
+          title={`${channel.name} YouTube canlı yayını`}
           className="h-full w-full bg-black"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           allowFullScreen
@@ -384,7 +384,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
               rel="noopener noreferrer"
               className="mt-5 rounded-xl bg-accent px-5 py-2.5 text-sm font-bold text-black no-underline transition hover:brightness-110"
             >
-              Resmi Siteye Git
+              Resmi Siteyi Aç
             </a>
           )}
           {!youtubeChecking && !youtubeReady && !officialUrl && directYoutubeUrl && (
@@ -413,7 +413,9 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
           ) : (
             <>
               <div className={`text-base font-bold ${shouldAutoRedirectToOfficial ? "text-accent" : "text-red-400"}`}>
-                {shouldAutoRedirectToOfficial ? "Resmi siteye yönlendiriliyorsun" : "Site içi oynatıcı açılamadı"}
+                {shouldAutoRedirectToOfficial
+                  ? "Resmi siteye yönlendiriliyorsun"
+                  : "Site içi oynatıcı başlatılamadı"}
               </div>
               <p className="mt-2 max-w-md text-xs text-white/55">
                 {shouldAutoRedirectToOfficial
@@ -446,7 +448,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
                     rel="noopener noreferrer"
                     className="rounded-xl bg-accent px-5 py-2.5 text-sm font-bold text-black no-underline transition hover:brightness-110"
                   >
-                    Resmi Siteye Git
+                    Resmi Siteyi Aç
                   </a>
                 )}
               </div>

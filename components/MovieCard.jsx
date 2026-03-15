@@ -5,7 +5,7 @@ function getMovieDescription(movie) {
   const cleanTitle = String(movie?.movieTitle || "").trim();
 
   if (!rawTitle || rawTitle === cleanTitle) {
-    return "Film sayfasina gec, YouTube oynatici ile hemen ac ve ozet detaylarini incele.";
+    return "Film sayfasına geç, YouTube oynatıcısı ile hemen aç ve özet detaylarını incele.";
   }
 
   return rawTitle;
@@ -62,7 +62,7 @@ export default function MovieCard({ movie }) {
             </div>
 
             <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-[11px] font-black uppercase tracking-[1.2px] text-black transition group-hover:translate-x-1">
-              Filme Gir
+              Filmi Aç
               <span aria-hidden="true">+</span>
             </div>
           </div>

@@ -84,7 +84,7 @@ function buildRankedSuggestions(query, candidates) {
 function createFallbackResponse(query, candidates) {
   const suggestions = buildRankedSuggestions(query, candidates);
   return {
-    title: "AI Kanal Rehberi",
+    title: "AI İzleme Rehberi",
     summary:
       suggestions.length > 0
         ? "Şu anda açılabilen kanallar arasından hızlı bir seçim yaptım."
@@ -97,7 +97,7 @@ function createFallbackResponse(query, candidates) {
 
 function sanitizeAiCopy(payload, suggestions) {
   return {
-    title: String(payload?.title || "AI Kanal Rehberi").trim().slice(0, 80),
+    title: String(payload?.title || "AI İzleme Rehberi").trim().slice(0, 80),
     summary: String(payload?.summary || "").trim().slice(0, 280),
     suggestions,
     followup: String(payload?.followup || "").trim().slice(0, 160),
@@ -124,7 +124,7 @@ export default async function handler(req, res) {
 
     if (candidates.length === 0) {
       res.status(200).json({
-        title: "AI Kanal Rehberi",
+        title: "AI İzleme Rehberi",
         summary: "Şu anda açılabilir kanal bulunamadığı için öneri hazırlanamadı.",
         suggestions: [],
         followup: "Biraz sonra yeniden deneyebilirsin.",

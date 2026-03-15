@@ -15,10 +15,10 @@ const YouTubeMoviePlayer = dynamic(() => import("../../components/YouTubeMoviePl
   ssr: false,
   loading: () => (
     <div className="relative aspect-video overflow-hidden rounded-[32px] border border-white/10 bg-black">
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/72 px-6 text-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-white/10 border-t-accent" />
-        <div className="mt-4 text-base font-bold text-white">Film hazirlaniyor</div>
-        <p className="mt-2 text-xs text-white/55">YouTube oynatici yukleniyor.</p>
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/72 px-6 text-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-white/10 border-t-accent" />
+        <div className="mt-4 text-base font-bold text-white">Film hazırlanıyor</div>
+        <p className="mt-2 text-xs text-white/55">YouTube oynatıcısı yükleniyor.</p>
       </div>
     </div>
   ),
@@ -117,9 +117,9 @@ function NotesPanel({ facts }) {
   return (
     <section className="rounded-[30px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
       <SectionTitle
-        eyebrow="Kisa Bilgiler"
-        title="Film notlari"
-        description="Sayfa icinde karar vermeyi hizlandiran ozet bilgiler burada toplandi."
+        eyebrow="Kısa Bilgiler"
+        title="Film notları"
+        description="Karar vermeyi hızlandıran özet bilgiler burada toplandı."
       />
       <div className="mt-5 grid gap-3">
         {facts.map((fact) => (
@@ -141,9 +141,9 @@ function RelatedRail({ movies }) {
   return (
     <section className="mt-10 rounded-[34px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
       <SectionTitle
-        eyebrow="Siradaki Secim"
-        title="Bunu izlediysen bunlar da ilgini cekebilir"
-        description="Ayni listenin icinden izlemeye devam etmek icin hazir secimler."
+        eyebrow="Sıradaki Seçim"
+        title="Bunu izlediysen bunlar da ilgini çekebilir"
+        description="Aynı listenin içinden izlemeye devam etmek için hazır seçimler."
       />
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {movies.slice(0, 4).map((item) => (
@@ -156,10 +156,10 @@ function RelatedRail({ movies }) {
 
 function getSourceLabel(movie) {
   if (movie.source === "ai") {
-    return "Video aciklamasi ve metadata icinden derlenen ozet bilgiler";
+    return "Video açıklaması ve bilgilerinden derlenen özet içerik";
   }
 
-  return "YouTube aciklamasi ve video bilgileri";
+  return "YouTube açıklaması ve video bilgileri";
 }
 
 export default function YerliFilmDetailPage({ movie, relatedMovies }) {
@@ -171,7 +171,8 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
       <SeoHead
         title={`${movie.movieTitle} | Yerli Filmler`}
         description={
-          movie.summary || `${movie.movieTitle} film sayfasi, YouTube oynatici, ozet ve hizli erisim baglantilari.`
+          movie.summary ||
+          `${movie.movieTitle} film sayfası, YouTube oynatıcısı, özet ve hızlı erişim bağlantıları.`
         }
         path={`/yerli-filmler/${movie.slug}`}
         image={movie.thumbnailUrl}
@@ -191,7 +192,7 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
                 href="/yerli-filmler"
                 className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-white/76 no-underline transition hover:bg-white/[0.08] hover:text-white"
               >
-                Yerli Filmlere Don
+                Yerli Filmlere Dön
               </Link>
               <Link
                 href="/"
@@ -202,8 +203,8 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
             </div>
 
             <ActionButton href={movie.watchUrl} tone="primary">
-              YouTube'da Ac
-              <span aria-hidden="true">Open</span>
+              YouTube'da Aç
+              <span aria-hidden="true">&gt;</span>
             </ActionButton>
           </div>
 
@@ -229,7 +230,7 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
                   {movie.year && <MetaPill>{movie.year}</MetaPill>}
                   {movie.durationLabel && <MetaPill>{movie.durationLabel}</MetaPill>}
                   {viewCountLabel && <MetaPill>{viewCountLabel} izlenme</MetaPill>}
-                  <MetaPill>{movie.embeddable ? "Sayfa icinde oynatilabilir" : "YouTube'da acilir"}</MetaPill>
+                  <MetaPill>{movie.embeddable ? "Sayfa içinde oynatılabilir" : "YouTube'da açılır"}</MetaPill>
                 </div>
 
                 <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-0.03em] text-white sm:text-5xl xl:text-6xl">
@@ -246,26 +247,30 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <ActionButton href={movie.watchUrl} tone="primary">
-                    YouTube'da Izle
-                    <span aria-hidden="true">Play</span>
+                    YouTube'da İzle
+                    <span aria-hidden="true">&gt;</span>
                   </ActionButton>
                   {hasAlternative && (
                     <ActionButton href={movie.alternativeVideo.watchUrl} tone="accent">
-                      Alternatif Videoyu Ac
-                      <span aria-hidden="true">Alt</span>
+                      Alternatif Videoyu Aç
+                      <span aria-hidden="true">&gt;</span>
                     </ActionButton>
                   )}
                   <ActionButton href={movie.channelUrl || YERLI_FILMLER_PLAYLIST_URL}>
                     Kanala Git
-                    <span aria-hidden="true">Go</span>
+                    <span aria-hidden="true">&gt;</span>
                   </ActionButton>
                 </div>
 
                 <div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                  <DetailCard label="Yonetmen" value={movie.director} note="Sayfadaki temel yaratici bilgisi" />
-                  <DetailCard label="Kaynak Kanal" value={movie.channelName} note="Filmin geldigi resmi YouTube kanali" />
-                  <DetailCard label="Yayin Tarihi" value={movie.publishedLabel} note="YouTube tarafindaki yuklenme tarihi" />
-                  <DetailCard label="Veri Kaynagi" value={movie.source === "ai" ? "Guclendirilmis film ozeti" : "Standart film ozeti"} note={getSourceLabel(movie)} />
+                  <DetailCard label="Yönetmen" value={movie.director} note="Sayfadaki temel yaratıcı bilgisi" />
+                  <DetailCard label="Kaynak Kanal" value={movie.channelName} note="Filmin geldiği resmi YouTube kanalı" />
+                  <DetailCard label="Yayın Tarihi" value={movie.publishedLabel} note="YouTube tarafındaki yüklenme tarihi" />
+                  <DetailCard
+                    label="Veri Kaynağı"
+                    value={movie.source === "ai" ? "Güçlendirilmiş film özeti" : "Standart film özeti"}
+                    note={getSourceLabel(movie)}
+                  />
                 </div>
               </div>
             </div>
@@ -275,9 +280,9 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
             <section className="space-y-6">
               <section className="rounded-[34px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
                 <SectionTitle
-                  eyebrow="Izleme Alani"
-                  title="Filmi hemen baslat"
-                  description="Video bu sayfada acilmazsa sistem seni uygun YouTube secenegine yonlendirir."
+                  eyebrow="İzleme Alanı"
+                  title="Filmi hemen başlat"
+                  description="Video bu sayfada açılmazsa sistem seni uygun YouTube seçeneğine yönlendirir."
                 />
                 <div className="mt-5">
                   <YouTubeMoviePlayer
@@ -285,23 +290,23 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
                     title={movie.movieTitle}
                     watchUrl={movie.watchUrl}
                     fallbackWatchUrl={movie.alternativeVideo?.watchUrl || ""}
-                    fallbackLabel={movie.alternativeVideo ? "Alternatif videoyu ac" : "YouTube'da izle"}
+                    fallbackLabel={movie.alternativeVideo ? "Alternatif videoyu aç" : "YouTube'da izle"}
                   />
                 </div>
               </section>
 
               <AdSlot
                 slot={AD_SLOTS.homeInfeed}
-                label="Film sayfasi reklam alani"
+                label="Film sayfası tanıtım alanı"
                 minHeight={110}
               />
 
               {movie.description && (
                 <section className="rounded-[34px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
                   <SectionTitle
-                    eyebrow="Hikaye"
-                    title="Film ozeti"
-                    description="Izlemeden once filmin tonunu ve ana hikayesini hizlica hisset."
+                    eyebrow="Hikâye"
+                    title="Film özeti"
+                    description="İzlemeden önce filmin tonunu ve ana hikâyesini hızlıca hisset."
                   />
                   <p className="mt-5 whitespace-pre-line text-sm leading-7 text-white/72 sm:text-[15px]">
                     {movie.description}
@@ -311,7 +316,7 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
 
               <div className="grid gap-6 lg:grid-cols-2">
                 <ChipSection title="Oyuncu kadrosu" items={movie.cast} tone="accent" />
-                <ChipSection title="Turler" items={movie.genres} />
+                <ChipSection title="Türler" items={movie.genres} />
               </div>
 
               <NotesPanel facts={movie.facts} />
@@ -320,41 +325,44 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
             <aside className="space-y-4">
               <section className="rounded-[30px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
                 <SectionTitle
-                  eyebrow="Hizli Erisim"
-                  title="Izleme secenekleri"
-                  description="Kullanici burada beklemeden dogru izleme noktasina gecmeli."
+                  eyebrow="Hızlı Erişim"
+                  title="İzleme seçenekleri"
+                  description="En uygun izleme bağlantısına tek dokunuşla geç."
                 />
                 <div className="mt-5 grid gap-3">
                   <ActionButton href={movie.watchUrl} tone="primary">
-                    YouTube'da Ac
+                    YouTube'da Aç
                   </ActionButton>
                   {hasAlternative && (
                     <ActionButton href={movie.alternativeVideo.watchUrl} tone="accent">
-                      Alternatif Tek Parca Video
+                      Alternatif Tek Parça Video
                     </ActionButton>
                   )}
                   <ActionButton href={movie.channelUrl || YERLI_FILMLER_PLAYLIST_URL}>
-                    Kanal Sayfasina Git
+                    Kanal Sayfasına Git
                   </ActionButton>
                   <ActionButton href={YERLI_FILMLER_PLAYLIST_URL}>
-                    Oynatma Listesini Ac
+                    Oynatma Listesini Aç
                   </ActionButton>
                 </div>
               </section>
 
-              <AdSlot slot={AD_SLOTS.watchSidebarTop} label="Film detay yan reklam 1" minHeight={250} />
+              <AdSlot slot={AD_SLOTS.watchSidebarTop} label="Film detay yan alanı 1" minHeight={250} />
 
               <section className="rounded-[30px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
                 <SectionTitle
                   eyebrow="Film Profili"
-                  title="Kisa bakis"
-                  description="Sayfa acilir acilmaz kullanicinin aklindaki temel sorulara cevap verir."
+                  title="Kısa bakış"
+                  description="Filme başlamadan önce temel bilgileri tek yerde gör."
                 />
                 <div className="mt-5 grid gap-3">
-                  <DetailCard label="Film Adi" value={movie.movieTitle} />
-                  <DetailCard label="Sure" value={movie.durationLabel} />
-                  <DetailCard label="Yil" value={movie.year} />
-                  <DetailCard label="Izleme Durumu" value={movie.embeddable ? "Sayfa icinde aciliyor" : "YouTube sayfasina gecis gerekebilir"} />
+                  <DetailCard label="Film Adı" value={movie.movieTitle} />
+                  <DetailCard label="Süre" value={movie.durationLabel} />
+                  <DetailCard label="Yıl" value={movie.year} />
+                  <DetailCard
+                    label="İzleme Durumu"
+                    value={movie.embeddable ? "Sayfa içinde açılıyor" : "YouTube sayfasına geçiş gerekebilir"}
+                  />
                 </div>
               </section>
 
@@ -362,8 +370,8 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
                 <section className="rounded-[30px] border border-white/10 bg-[#0d0f15] p-5 sm:p-6">
                   <SectionTitle
                     eyebrow="Sonraki Film"
-                    title="Benzer secimler"
-                    description="Sayfadan cikmadan izlemeye devam etmek isteyenler icin."
+                    title="Benzer seçimler"
+                    description="İzlemeye ara vermeden devam etmek isteyenler için."
                   />
                   <div className="mt-5 space-y-3">
                     {relatedMovies.slice(0, 4).map((item) => (
@@ -394,7 +402,7 @@ export default function YerliFilmDetailPage({ movie, relatedMovies }) {
                 </section>
               )}
 
-              <AdSlot slot={AD_SLOTS.watchSidebarBottom} label="Film detay yan reklam 2" minHeight={250} />
+              <AdSlot slot={AD_SLOTS.watchSidebarBottom} label="Film detay yan alanı 2" minHeight={250} />
             </aside>
           </div>
 
