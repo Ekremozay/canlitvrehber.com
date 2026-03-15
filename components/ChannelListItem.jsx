@@ -7,7 +7,7 @@ function prettyCategory(category) {
     general: "Genel",
     news: "Haber",
     sports: "Spor",
-    kids: "Cocuk",
+    kids: "Çocuk",
     documentary: "Belgesel",
     religious: "Dini",
     local: "Yerel",
@@ -54,15 +54,15 @@ export default function ChannelListItem({ channel, isFav, onToggleFav, playable,
           >
             {hasStream
               ? resolvedPlaybackType === "internal"
-                ? "Dahili"
+                ? "Yayın"
                 : resolvedPlaybackType === "youtube"
                   ? "YouTube"
-                  : "Canli"
+                  : "Canlı"
               : "Harici"}
           </span>
           {reference?.mode && (
             <span className="rounded-full border border-amber-300/35 bg-amber-300/10 px-2 py-0.5 text-[10px] text-amber-100/85">
-              Ref: {getCanliTvModeLabel(reference.mode)}
+              Kaynak: {getCanliTvModeLabel(reference.mode)}
             </span>
           )}
         </div>
@@ -77,7 +77,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav, playable,
           onClick={() => onToggleFav(channel.id)}
           className="rounded-lg border border-white/20 px-2.5 py-1.5 text-xs text-white/70 transition hover:bg-white/10 hover:text-white"
         >
-          {isFav ? "Favori" : "Ekle"}
+          {isFav ? "Favoride" : "Ekle"}
         </button>
 
         <Link
@@ -88,7 +88,7 @@ export default function ChannelListItem({ channel, isFav, onToggleFav, playable,
               : "bg-white/10 text-white/70 hover:bg-white/15"
           }`}
         >
-          {hasStream ? (resolvedPlaybackType === "youtube" ? "YouTube" : "Izle") : "Detay"}
+          {hasStream ? "İzle" : "Detay"}
         </Link>
       </div>
     </div>

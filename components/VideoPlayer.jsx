@@ -25,15 +25,15 @@ const EMPTY_YOUTUBE_STATE = {
 
 function getReasonLabel(reason) {
   const map = {
-    live_not_found: "YouTube tarafinda aktif resmi canli yayin bulunamadi.",
-    missing_youtube_source: "Bu kanal icin tanimli YouTube canli kaynagi yok.",
-    invalid_youtube_url: "YouTube kaynagi gecersiz gorunuyor.",
-    embedding_disabled: "Bu YouTube canli yayini baska sitelerde oynatilmaya kapatmis.",
-    timeout: "YouTube canli kontrolu zaman asimina ugradi.",
-    network_error: "YouTube canli kontrolu sirasinda baglanti hatasi olustu.",
+    live_not_found: "YouTube tarafında doğrulanmış bir canlı yayın bulunamadı.",
+    missing_youtube_source: "Bu kanal için tanımlı bir YouTube yayını bulunmuyor.",
+    invalid_youtube_url: "YouTube bağlantısı geçersiz görünüyor.",
+    embedding_disabled: "Bu YouTube yayını başka sitelerde oynatmaya kapatılmış.",
+    timeout: "YouTube canlı yayın kontrolü zaman aşımına uğradı.",
+    network_error: "YouTube kontrolü sırasında bağlantı hatası oluştu.",
   };
 
-  return map[String(reason || "")] || "YouTube canli yayini dogrulanamadi.";
+  return map[String(reason || "")] || "YouTube yayını doğrulanamadı.";
 }
 
 function buildYoutubeState(channel, playbackStatus, youtubeLiveLink) {
@@ -53,7 +53,7 @@ function buildYoutubeState(channel, playbackStatus, youtubeLiveLink) {
       embedUrl: playbackStatus.embedUrl || "",
       watchUrl: playbackStatus.liveUrl || playbackStatus.watchUrl || youtubeLiveLink.url,
       liveUrl: playbackStatus.liveUrl || "",
-      title: playbackStatus.youtubeTitle || channel?.name || "YouTube Canli",
+      title: playbackStatus.youtubeTitle || channel?.name || "YouTube Canlı",
       checkedAt: playbackStatus.checkedAt || "",
     };
   }
@@ -193,7 +193,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
             embedUrl: payload.embedUrl,
             watchUrl: payload.liveUrl || payload.watchUrl || youtubeLiveLink.url,
             liveUrl: payload.liveUrl || "",
-            title: payload.title || channel?.name || "YouTube Canli",
+            title: payload.title || channel?.name || "YouTube Canlı",
             checkedAt: payload.checkedAt || "",
           });
           return;
@@ -326,7 +326,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
       {selectedPlayer === "youtube" && youtubeReady ? (
         <iframe
           src={youtubeState.embedUrl}
-          title={`${channel.name} YouTube Canli`}
+          title={`${channel.name} YouTube Canlı`}
           className="h-full w-full bg-black"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           allowFullScreen
@@ -346,13 +346,13 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
       {selectedPlayer === "internal" && status === "loading" && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/70 px-6 text-center">
           <div className="h-10 w-10 rounded-full border-[3px] border-white/10 border-t-accent animate-spin" />
-          <div className="mt-4 text-base font-bold text-white">Bizim yayin aciliyor</div>
+          <div className="mt-4 text-base font-bold text-white">Yayın açılıyor</div>
           <p className="mt-2 text-xs text-white/55">
-            {sourceCount > 1 ? `Kaynak ${sourceIndex + 1}/${sourceCount} deneniyor.` : "Kaynak baglantisi kuruluyor."}
+            {sourceCount > 1 ? `Kaynak ${sourceIndex + 1}/${sourceCount} deneniyor.` : "Yayın bağlantısı kuruluyor."}
           </p>
           {youtubeChecking && (
             <p className="mt-2 text-[11px] text-emerald-200">
-              Yedek olarak YouTube canli yayin da kontrol ediliyor.
+              Aynı anda YouTube seçeneği de kontrol ediliyor.
             </p>
           )}
         </div>
@@ -360,11 +360,11 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
 
       {selectedPlayer === "internal" && (status === "error" || status === "unavailable") && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/78 px-6 text-center">
-          <div className="text-base font-bold text-red-400">Bizim yayin su an baglanamadi</div>
+          <div className="text-base font-bold text-red-400">Yayın şu anda açılamadı</div>
           <p className="mt-2 max-w-md text-xs text-white/55">
             {blockedByPolicy && SAFE_MODE_ENABLED
-              ? "Bu kanal dahili playerda guvenli mod nedeniyle kapali."
-              : "Dahili kaynak hata verdi. Siradaki secenek olarak YouTube canli kontrol ediliyor."}
+              ? "Bu kanal güvenli mod nedeniyle site içinde kapalı."
+              : "Yayın bağlantısı kurulamadı. Sıradaki seçenek olarak YouTube kontrol ediliyor."}
           </p>
           {youtubeChecking && (
             <div className="mt-4 h-8 w-8 rounded-full border-[3px] border-white/10 border-t-emerald-300 animate-spin" />
@@ -374,7 +374,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
               onClick={() => setSelectedPlayer("youtube")}
               className="mt-5 rounded-xl border border-emerald-400/30 bg-emerald-400/15 px-5 py-2.5 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/25"
             >
-              YouTube'a Gec
+              YouTube'a Geç
             </button>
           )}
           {!youtubeChecking && !youtubeReady && officialUrl && (
@@ -394,7 +394,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
               rel="noopener noreferrer"
               className="mt-5 rounded-xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white no-underline transition hover:bg-white/15"
             >
-              YouTube'da Kontrol Et
+              YouTube'da Aç
             </a>
           )}
         </div>
@@ -405,28 +405,28 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
           {youtubeChecking ? (
             <>
               <div className="h-10 w-10 rounded-full border-[3px] border-white/10 border-t-accent animate-spin" />
-              <div className="mt-4 text-base font-bold text-white">YouTube canli yayin kontrol ediliyor</div>
+              <div className="mt-4 text-base font-bold text-white">YouTube canlı yayını kontrol ediliyor</div>
               <p className="mt-2 max-w-md text-xs text-white/55">
-                Bizde yayin acilmadi. Resmi YouTube yayini bulunursa ayni player alaninda acilacak.
+                Yayın açılamadı. Resmi YouTube yayını bulunursa burada açılacak.
               </p>
             </>
           ) : (
             <>
               <div className={`text-base font-bold ${shouldAutoRedirectToOfficial ? "text-accent" : "text-red-400"}`}>
-                {shouldAutoRedirectToOfficial ? "Resmi siteye yonlendiriliyorsunuz" : "Site ici oynatici acilamadi"}
+                {shouldAutoRedirectToOfficial ? "Resmi siteye yönlendiriliyorsun" : "Site içi oynatıcı açılamadı"}
               </div>
               <p className="mt-2 max-w-md text-xs text-white/55">
                 {shouldAutoRedirectToOfficial
-                  ? "Bizde yayin ve YouTube canli secenegi su an acilmadi. Resmi canli yayin sayfasi birazdan otomatik acilacak."
+                  ? "Yayın ve YouTube şu anda açılamadı. Resmi yayın sayfası birazdan otomatik açılacak."
                   : hasYoutubeOption
                     ? getReasonLabel(youtubeState.reason)
-                    : "Bu kanal icin tanimli YouTube canli kaynagi bulunamadi."}
+                    : "Bu kanal için tanımlı bir YouTube yayını bulunamadı."}
               </p>
               {checkedAtLabel && (
-                <p className="mt-2 text-[11px] text-white/35">Son YouTube kontrolu: {checkedAtLabel}</p>
+                <p className="mt-2 text-[11px] text-white/35">Son YouTube kontrolü: {checkedAtLabel}</p>
               )}
               {shouldAutoRedirectToOfficial && (
-                <p className="mt-2 text-[11px] font-semibold text-accent/80">Yonlendirme otomatik baslatildi.</p>
+                <p className="mt-2 text-[11px] font-semibold text-accent/80">Yönlendirme başlatıldı.</p>
               )}
               <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
                 {directYoutubeUrl && !shouldAutoRedirectToOfficial && (
@@ -436,7 +436,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
                     rel="noopener noreferrer"
                     className="rounded-xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white no-underline transition hover:bg-white/15"
                   >
-                    YouTube'da Ac
+                    YouTube'da Aç
                   </a>
                 )}
                 {officialUrl && (
@@ -469,7 +469,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
 
         {(internalPlaybackAllowed || youtubeReady || youtubeChecking) && (
           <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/35 p-1 sm:flex">
-            {internalPlaybackAllowed && (
+                {internalPlaybackAllowed && (
               <button
                 onClick={() => setSelectedPlayer("internal")}
                 className={`rounded-full px-2.5 py-1 text-[10px] font-bold transition ${
@@ -478,7 +478,7 @@ export default function VideoPlayer({ channel, playbackStatus = null }) {
                     : "text-white/70 hover:text-white"
                 }`}
               >
-                Bizim Yayin
+                Yayın
               </button>
             )}
             {(youtubeReady || youtubeChecking) && (

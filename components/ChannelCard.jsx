@@ -67,7 +67,7 @@ export default function ChannelCard({ channel, isFav, onToggleFav, playable, pla
             />
             {hasStream
               ? resolvedPlaybackType === "internal"
-                ? "DAHILI"
+                ? "YAYIN"
                 : resolvedPlaybackType === "youtube"
                   ? "YOUTUBE"
                   : "CANLI"
@@ -76,7 +76,7 @@ export default function ChannelCard({ channel, isFav, onToggleFav, playable, pla
 
           {reference?.mode && (
             <span className="inline-flex items-center rounded-full border border-amber-300/35 bg-amber-300/10 px-2 py-0.5 text-[10px] text-amber-100/85">
-              Ref: {getCanliTvModeLabel(reference.mode)}
+              Kaynak: {getCanliTvModeLabel(reference.mode)}
             </span>
           )}
         </div>
@@ -91,11 +91,7 @@ export default function ChannelCard({ channel, isFav, onToggleFav, playable, pla
             textShadow: "0 1px 2px rgba(0,0,0,0.3)",
           }}
         >
-          {hasStream
-            ? resolvedPlaybackType === "youtube"
-              ? "YouTube"
-              : "Izle"
-            : "Canli Yayin Yok"}
+          {hasStream ? "İzle" : "Detayları Gör"}
         </Link>
 
         <div className="mt-2.5 max-h-0 overflow-hidden border-t border-white/[0.06] pt-2.5 opacity-0 transition-all duration-300 group-hover:max-h-14 group-hover:opacity-100">

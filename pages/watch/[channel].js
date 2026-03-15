@@ -33,6 +33,21 @@ function ExternalButton({ link }) {
   );
 }
 
+function prettyCategory(category) {
+  const labels = {
+    general: "Genel",
+    news: "Haber",
+    sports: "Spor",
+    kids: "Çocuk",
+    documentary: "Belgesel",
+    religious: "Dini",
+    local: "Yerel",
+    commercial: "Ticari",
+  };
+
+  return labels[category] || category;
+}
+
 export default function WatchPage({
   favorites,
   recentlyWatched = [],
@@ -112,15 +127,15 @@ export default function WatchPage({
       <div className="flex min-h-screen items-center justify-center bg-bg px-6">
         <div className="max-w-md text-center">
           <div className="mb-4 text-5xl">?</div>
-          <h1 className="mb-2 text-xl font-bold">Kanal bulunamadi</h1>
+          <h1 className="mb-2 text-xl font-bold">Kanal bulunamadı</h1>
           <p className="mb-6 text-sm text-white/50">
-            Kanal ID gecersiz olabilir veya liste disinda kalmis olabilir.
+            Kanal bağlantısı geçersiz olabilir ya da bu kanal listede yer almıyor olabilir.
           </p>
           <Link
             href="/"
             className="rounded-xl bg-accent px-6 py-2.5 text-sm font-bold text-black no-underline transition hover:brightness-110"
           >
-            Ana Sayfaya Don
+            Ana Sayfaya Dön
           </Link>
         </div>
       </div>
@@ -130,8 +145,8 @@ export default function WatchPage({
   return (
     <>
       <SeoHead
-        title={`${channel.name} Canli Izle`}
-        description={`${channel.name} canli yayinina tek tikla ulas. Once site ici yayin, acilmazsa YouTube yedegi ve resmi baglantilar burada.`}
+        title={`${channel.name} Canlı İzle`}
+        description={`${channel.name} canlı yayınına tek dokunuşla ulaş. Önce yayın açılır, gerekirse YouTube ve resmi site seçenekleri burada sunulur.`}
         path={`/watch/${channel.id}`}
       />
 
@@ -143,7 +158,7 @@ export default function WatchPage({
                 href="/"
                 className="rounded-lg border border-white/15 px-3 py-2 text-sm text-white/75 no-underline transition hover:bg-white/10 hover:text-white"
               >
-                Geri
+                Geri Dön
               </Link>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 bg-danger/15 px-2.5 py-0.5 text-[10px] font-bold tracking-widest font-mono text-danger">
                 <span className="h-1.5 w-1.5 rounded-full bg-danger animate-pulse" />
@@ -156,7 +171,7 @@ export default function WatchPage({
               onClick={() => toggleFavorite(channel.id)}
               className="rounded-lg border border-white/15 px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
             >
-              {isFav ? "Favoriden Cikar" : "Favoriye Ekle"}
+              {isFav ? "Favorilerden Çıkar" : "Favoriye Ekle"}
             </button>
           </div>
 
@@ -168,13 +183,12 @@ export default function WatchPage({
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4 sm:p-5">
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div className="max-w-2xl">
-                      <div className="text-[11px] font-bold tracking-[1px] text-accent/80">HEMEN SONRA</div>
+                      <div className="text-[11px] font-bold tracking-[1px] text-accent/80">SIRADAKİ</div>
                       <h2 className="mt-2 text-xl font-extrabold tracking-tight text-white">
-                        Kullanici akisini burada koparmayalim
+                        Bunu da izleyebilirsin
                       </h2>
                       <p className="mt-2 text-sm text-white/55">
-                        Ayni kategori, son baktiklari ve favorileri bir araya getirip bir sonraki tiklamayi
-                        kolaylastiriyoruz.
+                        Aynı kategori ve izleme alışkanlığına göre seçilen kanallar burada.
                       </p>
                     </div>
 
@@ -183,7 +197,7 @@ export default function WatchPage({
                         href={`/watch/${nextChannel.id}`}
                         className="inline-flex min-h-12 items-center justify-center rounded-xl bg-accent px-5 py-3 text-sm font-bold text-black no-underline transition hover:brightness-110"
                       >
-                        Sonraki Kanal: {nextChannel.name}
+                        Sıradaki Kanal: {nextChannel.name}
                       </Link>
                     )}
                   </div>
@@ -191,7 +205,7 @@ export default function WatchPage({
                   {continueWatchingChannels.length > 0 && (
                     <div className="mt-4">
                       <div className="mb-2 text-[11px] font-bold tracking-[1px] text-white/45">
-                        AZ ONCE BAKTIKLARIN
+                        AZ ÖNCE İZLEDİKLERİN
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {continueWatchingChannels.map((item) => (
@@ -234,7 +248,7 @@ export default function WatchPage({
                               </span>
                             </div>
                             <div className="mt-2 text-[11px] text-white/45">
-                              {item.category === channel.category ? "Ayni kategori" : "Kesfetmeye ac"}
+                              {item.category === channel.category ? "Aynı kategori" : "Öne çıkan seçim"}
                             </div>
                           </Link>
                         );
@@ -247,15 +261,14 @@ export default function WatchPage({
               {!canPlayInSite && (
                 <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4">
                   <div className="mb-2 text-sm font-bold text-amber-200">
-                    Bu kanal su an site ici playerda acilamadi
+                    Bu kanal şu anda site içinde açılamıyor
                   </div>
                   <p className="mb-3 text-xs text-amber-100/80">
-                    Siralama once bizim yayin, baglanamazsa YouTube canli yedegi, o da yoksa resmi site
-                    yonlendirmesi seklinde calisir.
+                    Önce yayın denenir, ardından YouTube, son olarak resmi site açılır.
                   </p>
                   {canliTvReference?.mode && (
                     <p className="mb-3 text-[11px] text-amber-100/75">
-                      Referans Durumu (canlitv.diy): {getCanliTvModeLabel(canliTvReference.mode)}
+                      Kaynak durumu: {getCanliTvModeLabel(canliTvReference.mode)}
                     </p>
                   )}
                   <div className="flex flex-wrap gap-2">
@@ -264,7 +277,7 @@ export default function WatchPage({
                         <ExternalButton key={`${channel.id}-${link.url}`} link={link} />
                       ))
                     ) : (
-                      <span className="text-xs text-amber-100/70">Tanimli resmi YouTube linki bulunamadi.</span>
+                      <span className="text-xs text-amber-100/70">Doğrulanmış bir YouTube ya da resmi site bağlantısı bulunamadı.</span>
                     )}
                   </div>
                 </div>
@@ -273,30 +286,30 @@ export default function WatchPage({
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
                   <div className="text-[11px] uppercase tracking-wide text-white/40">Kategori</div>
-                  <div className="mt-1 text-sm font-semibold">{channel.category}</div>
+                  <div className="mt-1 text-sm font-semibold">{prettyCategory(channel.category)}</div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
-                  <div className="text-[11px] uppercase tracking-wide text-white/40">Ulke</div>
+                  <div className="text-[11px] uppercase tracking-wide text-white/40">Ülke</div>
                   <div className="mt-1 text-sm font-semibold">{channel.country || "Bilinmiyor"}</div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
-                  <div className="text-[11px] uppercase tracking-wide text-white/40">Ag / Grup</div>
+                  <div className="text-[11px] uppercase tracking-wide text-white/40">Yayıncı / Ağ</div>
                   <div className="mt-1 truncate text-sm font-semibold">{channel.network || "Bilinmiyor"}</div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
-                  <div className="text-[11px] uppercase tracking-wide text-white/40">Player Modu</div>
+                  <div className="text-[11px] uppercase tracking-wide text-white/40">Oynatma Türü</div>
                   <div className="mt-1 text-sm font-semibold">
                     {playbackType === "internal"
-                      ? "Dahili"
+                      ? "Yayın"
                       : playbackType === "youtube"
                         ? "YouTube"
                         : "Harici"}
                   </div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
-                  <div className="text-[11px] uppercase tracking-wide text-white/40">Canlitv Referans</div>
+                  <div className="text-[11px] uppercase tracking-wide text-white/40">Kaynak Referansı</div>
                   <div className="mt-1 text-sm font-semibold">
-                    {canliTvReference ? getCanliTvModeLabel(canliTvReference.mode) : "Bulunamadi"}
+                    {canliTvReference ? getCanliTvModeLabel(canliTvReference.mode) : "Bulunamadı"}
                   </div>
                 </div>
               </div>
@@ -305,7 +318,7 @@ export default function WatchPage({
             <aside className="space-y-4">
               <AdSlot
                 slot={AD_SLOTS.watchSidebarTop}
-                label="Izleme Sayfasi Reklam 1"
+                label="İzleme Sayfası Reklam 1"
                 minHeight={250}
               />
 
@@ -338,14 +351,14 @@ export default function WatchPage({
                     </a>
                   )}
                   {channel.sourceChannelId && (
-                    <div className="text-xs text-white/40">Veri Kaynagi ID: {channel.sourceChannelId}</div>
+                    <div className="text-xs text-white/40">Veri Kaynağı ID: {channel.sourceChannelId}</div>
                   )}
                 </div>
               </div>
 
               {visibleExternalLinks.length > 0 && (
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                  <h3 className="mb-3 text-sm font-bold text-white/70">Harici Yedek Kaynaklar</h3>
+                  <h3 className="mb-3 text-sm font-bold text-white/70">Ek Kaynaklar</h3>
                   <div className="grid grid-cols-1 gap-2">
                     {visibleExternalLinks.map((link) => (
                       <ExternalButton key={`${channel.id}-ext-${link.url}`} link={link} />
@@ -356,7 +369,7 @@ export default function WatchPage({
 
               {channel.epg?.length > 0 && (
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                  <h3 className="mb-3 text-sm font-bold text-white/70">Yayin Akisi</h3>
+                  <h3 className="mb-3 text-sm font-bold text-white/70">Yayın Akışı</h3>
                   <div className="space-y-2">
                     {channel.epg.map((item, index) => (
                       <div
@@ -374,7 +387,7 @@ export default function WatchPage({
               )}
 
               <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                <h3 className="mb-3 text-sm font-bold text-white/70">Diger Kanallar</h3>
+                <h3 className="mb-3 text-sm font-bold text-white/70">Benzer Kanallar</h3>
                 <div className="space-y-2">
                   {otherChannels.map((item) => {
                     const itemPlaybackStatus = getPlaybackStatus(item);
@@ -405,12 +418,12 @@ export default function WatchPage({
 
               <AdSlot
                 slot={AD_SLOTS.watchSidebarBottom}
-                label="Izleme Sayfasi Reklam 2"
+                label="İzleme Sayfası Reklam 2"
                 minHeight={250}
               />
 
               <div className="rounded-2xl border border-emerald-400/35 bg-emerald-400/10 p-3.5 text-xs text-emerald-100/85">
-                Oynatici sirasi: once bizim yayin, sonra YouTube canli yedegi, en son resmi site.
+                Oynatma sırası: önce yayın, sonra YouTube, en son resmi site.
               </div>
             </aside>
           </div>

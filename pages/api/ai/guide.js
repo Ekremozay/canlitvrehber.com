@@ -10,6 +10,14 @@ const MAX_QUERY_LENGTH = 240;
 const MAX_CANDIDATES = 36;
 const MAX_SUGGESTIONS = 3;
 
+const CATEGORY_LABELS = {
+  news: "haber",
+  sports: "spor",
+  kids: "çocuk",
+  documentary: "belgesel",
+  religious: "dini",
+};
+
 function normalizeQuery(value) {
   return String(value || "").replace(/\s+/g, " ").trim().slice(0, MAX_QUERY_LENGTH);
 }
@@ -23,9 +31,10 @@ function buildCandidateChannels(statuses) {
       id: channel.id,
       name: channel.name,
       category: channel.category,
+      categoryLabel: CATEGORY_LABELS[channel.category] || channel.category,
       description: channel.description,
       playbackType: status.playbackType,
-      playbackLabel: status.playbackType === "internal" ? "Bizim Yayin" : "YouTube",
+      playbackLabel: status.playbackType === "internal" ? "Yayın" : "YouTube",
       country: channel.country || "",
       network: channel.network || "",
       currentShow: channel.epg?.[0]?.show || "",
@@ -64,10 +73,10 @@ function buildRankedSuggestions(query, candidates) {
     playbackLabel: item.playbackLabel,
     reason:
       item.category === targetCategory && targetCategory
-        ? `Aramana uygun kategori: ${item.category}.`
+        ? `Aramana uygun kategori: ${item.categoryLabel}.`
         : item.playbackType === "internal"
-          ? "Site icinde direkt acilabiliyor."
-          : "YouTube uzerinden acilabiliyor.",
+          ? "Site içinde doğrudan açılabiliyor."
+          : "YouTube üzerinden açılabiliyor.",
     currentShow: item.currentShow,
   }));
 }
@@ -78,10 +87,10 @@ function createFallbackResponse(query, candidates) {
     title: "AI Kanal Rehberi",
     summary:
       suggestions.length > 0
-        ? "Simdi acilabilen kanallar arasindan hizli bir secim yaptim."
-        : "Su an uygun kanal bulunamadi.",
+        ? "Şu anda açılabilen kanallar arasından hızlı bir seçim yaptım."
+        : "Şu anda uygun kanal bulunamadı.",
     suggestions,
-    followup: "Istersen haber, spor veya cocuk gibi daha net bir niyet yazabilirsin.",
+    followup: "İstersen haber, spor ya da çocuk gibi daha net bir tercih yazabilirsin.",
     source: "fallback",
   };
 }
@@ -102,7 +111,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const query = normalizeQuery(req.body?.query || "Su an bana uygun bir kanal oner.");
+  const query = normalizeQuery(req.body?.query || "Şu an bana uygun bir kanal öner.");
   if (!query) {
     res.status(400).json({ error: "Missing query" });
     return;
@@ -116,9 +125,9 @@ export default async function handler(req, res) {
     if (candidates.length === 0) {
       res.status(200).json({
         title: "AI Kanal Rehberi",
-        summary: "Su an acilabilir kanal bulunamadigi icin onerim hazirlanamadi.",
+        summary: "Şu anda açılabilir kanal bulunamadığı için öneri hazırlanamadı.",
         suggestions: [],
-        followup: "Biraz sonra tekrar deneyebilirsin.",
+        followup: "Biraz sonra yeniden deneyebilirsin.",
         source: "fallback",
       });
       return;
@@ -134,7 +143,7 @@ export default async function handler(req, res) {
         {
           role: "system",
           content:
-            "Sen Canli TV Rehber icin Turkce calisan bir editor asistanisin. Verilen kanal onerilerine dayanarak sadece gecerli JSON don. JSON formati: {\"title\":\"\",\"summary\":\"\",\"followup\":\"\"}. suggestions alanini ASLA ekleme. Baslik kisa, summary ikna edici, followup ise yonlendirici olsun.",
+            "Sen Canlı TV Rehber için Türkçe çalışan bir editör asistansın. Verilen kanal önerilerine dayanarak sadece geçerli JSON dön. JSON formatı: {\"title\":\"\",\"summary\":\"\",\"followup\":\"\"}. suggestions alanını ASLA ekleme. Başlık kısa, summary ikna edici, followup ise yönlendirici olsun.",
         },
         {
           role: "user",
@@ -142,9 +151,9 @@ export default async function handler(req, res) {
             user_request: query,
             selected_suggestions: suggestions,
             notes: [
-              "summary en fazla 2 cumle olsun.",
-              "followup tek cumle olsun.",
-              "Cevabi Turkce ver.",
+              "summary en fazla 2 cümle olsun.",
+              "followup tek cümle olsun.",
+              "Cevabı Türkçe ver.",
             ],
           }),
         },

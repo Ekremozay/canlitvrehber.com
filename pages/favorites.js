@@ -26,7 +26,7 @@ export default function Favorites({ favorites, toggleFavorite }) {
     <>
       <SeoHead
         title="Favori Kanallar"
-        description="Favori canli TV kanallarini kaydet, tek ekrandan hizli ac ve yayina hemen ulas."
+        description="Favori canlı TV kanallarını kaydet, tek ekrandan hızlıca aç ve izlemeye kaldığın yerden devam et."
         path="/favorites"
       />
 
@@ -36,7 +36,7 @@ export default function Favorites({ favorites, toggleFavorite }) {
         <main className="flex-1 overflow-y-auto p-4 sm:p-6">
           <AdSlot
             slot={AD_SLOTS.favoritesLeaderboard}
-            label="Favori Sayfasi Ust Reklam"
+            label="Favori Sayfası Üst Reklam"
             minHeight={110}
             className="mb-4"
           />
@@ -49,9 +49,9 @@ export default function Favorites({ favorites, toggleFavorite }) {
           {favChannels.length === 0 ? (
             <div className="flex flex-col items-center py-20 text-center rounded-2xl border border-white/10 bg-surface/40">
               <div className="text-5xl mb-4">-</div>
-              <h3 className="text-lg font-bold mb-2">Henuz favori kanal yok</h3>
+              <h3 className="text-lg font-bold mb-2">Henüz favori kanalın yok</h3>
               <p className="text-sm text-white/40 max-w-md px-4">
-                Kanal kartlarindaki favori butonuna basarak bu listeyi doldurabilirsin.
+                Kanal kartlarındaki favori düğmesine dokunarak bu listeyi oluşturabilirsin.
               </p>
             </div>
           ) : (

@@ -1,9 +1,22 @@
 ﻿import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { BRAND } from "../lib/siteConfig";
 
-export default function Header({ search, onSearch, favCount = 0 }) {
+function navItemClass(isActive) {
+  return `px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition no-underline ${
+    isActive ? "bg-white/10 text-white" : "text-white/70 hover:text-white"
+  }`;
+}
+
+export default function Header({
+  search,
+  onSearch,
+  favCount = 0,
+  searchPlaceholder = "Kanal ara...",
+}) {
   const [time, setTime] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const tick = () => {
@@ -22,79 +35,82 @@ export default function Header({ search, onSearch, favCount = 0 }) {
   }, []);
 
   return (
-    <header className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 px-4 sm:px-6 py-3 border-b border-white/5 bg-bg/90 backdrop-blur-xl sticky top-0 z-50">
+    <header className="sticky top-0 z-50 flex flex-col gap-3 border-b border-white/5 bg-bg/90 px-4 py-3 backdrop-blur-xl sm:px-6 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex items-center justify-between gap-3">
         <Link href="/" className="flex items-center gap-3 no-underline">
           <img
             src="/logo-canlitvrehber.svg"
             alt={`${BRAND.domain} logo`}
-            className="w-10 h-10 rounded-xl border border-white/10"
+            className="h-10 w-10 rounded-xl border border-white/10"
             loading="eager"
           />
           <div>
-            <div className="text-base font-extrabold tracking-tight leading-none text-white">
-              Canli<span className="text-accent">TV</span> Rehber
+            <div className="text-base font-extrabold leading-none tracking-tight text-white">
+              Canlı<span className="text-accent">TV</span> Rehber
             </div>
-            <div className="text-[10px] text-accent font-mono font-semibold tracking-[1.2px]">
+            <div className="font-mono text-[10px] font-semibold tracking-[1.2px] text-accent">
               {BRAND.domain}
             </div>
           </div>
         </Link>
 
-        <div className="font-mono text-xs sm:text-sm text-white/60 font-medium px-3 py-1.5 bg-surface rounded-lg border border-white/10 lg:hidden">
+        <div className="rounded-lg border border-white/10 bg-surface px-3 py-1.5 font-mono text-xs font-medium text-white/60 sm:text-sm lg:hidden">
           {time}
         </div>
       </div>
 
       <div className="flex items-center gap-3">
-        <nav className="flex gap-1 bg-surface rounded-xl p-1 border border-white/10">
-          <Link
-            href="/"
-            className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white/70 hover:text-white transition no-underline"
-          >
+        <nav className="flex gap-1 rounded-xl border border-white/10 bg-surface p-1">
+          <Link href="/" className={navItemClass(router.pathname === "/")}>
             Kanallar
           </Link>
           <Link
+            href="/yerli-filmler"
+            className={navItemClass(router.pathname.startsWith("/yerli-filmler"))}
+          >
+            Yerli Filmler
+          </Link>
+          <Link
             href="/favorites"
-            className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white/70 hover:text-white transition no-underline inline-flex items-center gap-1.5"
+            className={`${navItemClass(router.pathname === "/favorites")} inline-flex items-center gap-1.5`}
           >
             Favoriler
             {favCount > 0 && (
-              <span className="bg-danger text-white text-[10px] font-bold px-1.5 rounded-full">
+              <span className="rounded-full bg-danger px-1.5 text-[10px] font-bold text-white">
                 {favCount}
               </span>
             )}
           </Link>
           <Link
             href="/telif-bildirimi"
-            className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white/70 hover:text-white transition no-underline"
+            className={navItemClass(router.pathname === "/telif-bildirimi")}
           >
             Telif
           </Link>
         </nav>
 
-        <div className="hidden sm:flex items-center gap-2 bg-surface border border-white/10 rounded-xl px-3 py-2 min-w-[260px] focus-within:border-accent transition">
+        <div className="hidden min-w-[260px] items-center gap-2 rounded-xl border border-white/10 bg-surface px-3 py-2 transition focus-within:border-accent sm:flex">
           <span className="text-xs opacity-50">ARA</span>
           <input
             value={search}
             onChange={(e) => onSearch(e.target.value)}
-            placeholder="Kanal ara..."
-            className="bg-transparent border-none outline-none text-white text-sm font-sans w-full placeholder:text-white/30"
+            placeholder={searchPlaceholder}
+            className="w-full border-none bg-transparent font-sans text-sm text-white outline-none placeholder:text-white/30"
           />
         </div>
 
-        <div className="hidden lg:block font-mono text-sm text-white/60 font-medium px-3 py-1.5 bg-surface rounded-lg border border-white/10">
+        <div className="hidden rounded-lg border border-white/10 bg-surface px-3 py-1.5 font-mono text-sm font-medium text-white/60 lg:block">
           {time}
         </div>
       </div>
 
-      <div className="sm:hidden flex items-center gap-2 bg-surface border border-white/10 rounded-xl px-3 py-2 focus-within:border-accent transition">
+      <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-surface px-3 py-2 transition focus-within:border-accent sm:hidden">
         <span className="text-xs opacity-50">ARA</span>
         <input
           value={search}
           onChange={(e) => onSearch(e.target.value)}
-          placeholder="Kanal ara..."
-          className="bg-transparent border-none outline-none text-white text-sm font-sans w-full placeholder:text-white/30"
+          placeholder={searchPlaceholder}
+          className="w-full border-none bg-transparent font-sans text-sm text-white outline-none placeholder:text-white/30"
         />
       </div>
     </header>

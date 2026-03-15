@@ -56,7 +56,7 @@ export default function AdSlot({
           className="w-full rounded-lg border border-dashed border-white/20 bg-black/20 flex items-center justify-center text-xs text-white/40"
           style={{ minHeight: Math.max(60, minHeight - 24) }}
         >
-          Reklam alani (AdSense slot bekleniyor)
+          Reklam alanı (AdSense slotu bekleniyor)
         </div>
       )}
     </div>

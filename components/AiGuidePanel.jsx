@@ -2,11 +2,11 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 const QUICK_PROMPTS = [
-  "Su an ne izlemeliyim?",
-  "Hizli haber kanali oner",
-  "Spor icin acik kanal bul",
-  "Cocuklar icin uygun kanal oner",
-  "Aksam sakin bir sey izlemek istiyorum",
+  "Şu an ne izlemeliyim?",
+  "Hızlı haber kanalı öner",
+  "Spor için açık kanal bul",
+  "Çocuklar için uygun kanal öner",
+  "Akşam sakin bir şey izlemek istiyorum",
 ];
 
 function playbackTone(playbackType) {
@@ -28,7 +28,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
   const [error, setError] = useState("");
 
   const placeholder = useMemo(() => {
-    return "Ornek: su an hizli haber izlemek istiyorum, cocuk icin kanal oner, gece sakin bir sey ac...";
+    return "Örnek: Şu an hızlı haber izlemek istiyorum, çocuk için kanal öner, gece sakin bir şey aç...";
   }, []);
 
   async function runGuide(nextQuery) {
@@ -55,7 +55,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
       setResult(payload);
       setQuery(cleanQuery);
     } catch (requestError) {
-      setError("AI onerisi alinirken bir hata oldu. Biraz sonra tekrar deneyebilirsin.");
+      setError("AI önerisi hazırlanırken bir sorun oluştu. Biraz sonra yeniden deneyebilirsin.");
     } finally {
       setLoading(false);
     }
@@ -77,15 +77,15 @@ export default function AiGuidePanel({ playableCount = 0 }) {
             </div>
             <h2 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">AI Kanal Rehberi</h2>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/65">
-              Ne izlemek istedigini yaz. AI, sadece su an acilabilen {playableCount} kanal arasindan
-              sana hizli bir secim cikarsin.
+              Ne izlemek istediğini yaz. AI, yalnızca şu anda açılabilen {playableCount} kanal arasından
+              sana hızlı bir öneri hazırlar.
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-right">
-            <div className="text-[11px] uppercase tracking-[1.4px] text-white/45">Canli Kapsam</div>
+            <div className="text-[11px] uppercase tracking-[1.4px] text-white/45">Canlı Kapsam</div>
             <div className="mt-1 text-2xl font-black text-white">{playableCount}</div>
-            <div className="text-xs text-white/45">AI icin kullanilan acik kanal</div>
+            <div className="text-xs text-white/45">AI için kullanılan açık kanal</div>
           </div>
         </div>
 
@@ -105,11 +105,11 @@ export default function AiGuidePanel({ playableCount = 0 }) {
                 disabled={loading}
                 className="rounded-2xl bg-accent px-4 py-3 text-sm font-black text-black transition hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
               >
-                {loading ? "AI Oneri Hazirlaniyor..." : "AI Oneri Al"}
+                {loading ? "AI önerisi hazırlanıyor..." : "AI önerisi al"}
               </button>
 
               <div className="rounded-2xl border border-white/10 bg-bg/50 px-4 py-3 text-xs text-white/55">
-                Oneriler mevcut oynatma durumuna gore olusur. Dahili veya YouTube acilabilen kanallar one cikar.
+                Öneriler anlık oynatma durumuna göre hazırlanır. Açılabilen yayınlar ve YouTube seçenekleri öne çıkar.
               </div>
             </div>
           </div>
@@ -142,12 +142,12 @@ export default function AiGuidePanel({ playableCount = 0 }) {
                   <h3 className="mt-1 text-xl font-black tracking-tight">{result.title || "AI Kanal Rehberi"}</h3>
                 </div>
                 <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold text-white/60">
-                  {result.source === "lemonfox" ? "Lemonfox" : "Akilli Yedek"}
+                  {result.source === "lemonfox" ? "Lemonfox" : "Yerel Öneri"}
                 </div>
               </div>
 
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                {result.summary || "AI kanallari analiz etti ve sana hizli bir secim hazirladi."}
+                {result.summary || "AI kanalları analiz etti ve sana hızlı bir öneri hazırladı."}
               </p>
 
               {result.followup && (
@@ -180,7 +180,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
 
                   {item.currentShow && (
                     <div className="mt-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-white/55">
-                      Simdi: {item.currentShow}
+                      Şimdi: {item.currentShow}
                     </div>
                   )}
                 </Link>
@@ -188,7 +188,7 @@ export default function AiGuidePanel({ playableCount = 0 }) {
 
               {(!result.suggestions || result.suggestions.length === 0) && (
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/55">
-                  Su an AI tarafinda gosterilecek uygun kanal bulunamadi.
+                  Şu anda önerilecek uygun kanal bulunamadı.
                 </div>
               )}
             </div>
