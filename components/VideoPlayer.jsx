@@ -29,6 +29,7 @@ const IMAGE_FILTERS = {
 export default function VideoPlayer({ channel }) {
   const videoRef = useRef(null);
   const hideTimer = useRef(null);
+  const hasAutoRedirected = useRef(false);
 
   const [playing, setPlaying] = useState(true);
   const [volume, setVolume] = useState(80);
@@ -37,6 +38,7 @@ export default function VideoPlayer({ channel }) {
   const [showQuality, setShowQuality] = useState(false);
   const [performanceMode, setPerformanceMode] = useState("balanced");
   const [imageMode, setImageMode] = useState("standard");
+  const [redirectCountdown, setRedirectCountdown] = useState(3);
 
   const internalPlaybackAllowed = canUseInternalStream(channel);
   const blockedByPolicy = isBlockedBySafeMode(channel);
@@ -89,6 +91,8 @@ export default function VideoPlayer({ channel }) {
     return channel.externalLinks?.find((item) => item.type === "youtube-live") || null;
   }, [channel.externalLinks]);
 
+  const fallbackLiveLink = officialLiveLink || youtubeLiveLink;
+
   const {
     status,
     qualities,
@@ -110,6 +114,38 @@ export default function VideoPlayer({ channel }) {
     if (playing) v.play().catch(() => {});
     else v.pause();
   }, [playing, status]);
+
+  useEffect(() => {
+    hasAutoRedirected.current = false;
+    setRedirectCountdown(3);
+  }, [channel.id]);
+
+  useEffect(() => {
+    if (status !== "error") {
+      setRedirectCountdown(3);
+      return;
+    }
+
+    if (!fallbackLiveLink?.url || hasAutoRedirected.current) return;
+
+    let remaining = 3;
+    setRedirectCountdown(remaining);
+
+    const tick = setInterval(() => {
+      remaining -= 1;
+      setRedirectCountdown(Math.max(remaining, 0));
+    }, 1000);
+
+    const timer = setTimeout(() => {
+      hasAutoRedirected.current = true;
+      window.location.assign(fallbackLiveLink.url);
+    }, 3000);
+
+    return () => {
+      clearInterval(tick);
+      clearTimeout(timer);
+    };
+  }, [status, fallbackLiveLink?.url]);
 
   const handleMouseMove = useCallback(() => {
     setShowUI(true);
@@ -170,6 +206,19 @@ export default function VideoPlayer({ channel }) {
           <p className="text-xs text-white/50 mt-2 mb-4">
             Farkli bir kaynak secin veya daha sonra tekrar deneyin
           </p>
+          {fallbackLiveLink?.url && (
+            <p className="text-xs text-emerald-300 mb-3">
+              {redirectCountdown} sn sonra resmi canli yayina yonlendiriliyorsun...
+            </p>
+          )}
+          {officialLiveLink?.url && (
+            <a
+              href={officialLiveLink.url}
+              className="px-6 py-2 rounded-xl bg-accent text-black text-sm font-bold hover:brightness-110 transition no-underline mb-2"
+            >
+              Resmi Canli Ac
+            </a>
+          )}
           <button
             onClick={() => window.location.reload()}
             className="px-6 py-2 rounded-xl border border-white/20 bg-white/10 text-white text-sm font-semibold hover:bg-accent hover:text-black hover:border-accent transition"
