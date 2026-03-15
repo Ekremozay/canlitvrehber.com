@@ -28,6 +28,7 @@ function getReasonLabel(reason) {
     live_not_found: "YouTube tarafinda aktif resmi canli yayin bulunamadi.",
     missing_youtube_source: "Bu kanal icin tanimli YouTube canli kaynagi yok.",
     invalid_youtube_url: "YouTube kaynagi gecersiz gorunuyor.",
+    embedding_disabled: "Bu YouTube canli yayini baska sitelerde oynatilmaya kapatmis.",
     timeout: "YouTube canli kontrolu zaman asimina ugradi.",
     network_error: "YouTube canli kontrolu sirasinda baglanti hatasi olustu.",
   };
