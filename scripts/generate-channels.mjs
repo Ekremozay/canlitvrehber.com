@@ -4,6 +4,7 @@ import path from "path";
 const REQUESTED_LIST_PATH = path.join("data", "requested_channels.txt");
 const CHANNELS_API_PATH = "tmp_channels.json";
 const STREAMS_API_PATH = "tmp_streams.json";
+const LOCAL_TR_M3U_PATH = path.join("streams", "tr.m3u");
 const OUTPUT_PATH = path.join("lib", "channels.js");
 const REPORT_PATH = "tmp_channel_generation_report.json";
 
@@ -310,6 +311,10 @@ function buildChannelIndex(allChannels) {
   return map;
 }
 
+function buildChannelIdSet(allChannels) {
+  return new Set(allChannels.map((channel) => channel.id).filter(Boolean));
+}
+
 function buildStreamsIndex(allStreams) {
   const map = new Map();
   for (const stream of allStreams) {
@@ -372,6 +377,9 @@ function scoreStream(stream) {
   }
 
   if ((stream.feed || "").toUpperCase() === "SD") score += 4;
+  if (stream.user_agent) score += 4;
+  if (stream.referrer) score += 4;
+  if (stream.source === "streams-tr-m3u") score += 2;
 
   return score;
 }
@@ -502,6 +510,160 @@ function buildEPG(category) {
   ];
 }
 
+function cleanM3UTitle(value) {
+  return String(value || "")
+    .replace(/\s*\([^)]*\)/g, "")
+    .replace(/\s*\[[^\]]*\]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeM3UChannelId(value) {
+  const normalizedValue = String(value || "")
+    .trim()
+    .split("@")[0]
+    .trim();
+  return normalizedValue || null;
+}
+
+function parseM3UExtInf(line) {
+  const tvgIdMatch = line.match(/\btvg-id="([^"]+)"/i);
+  const rawTitle = line.includes(",") ? line.slice(line.indexOf(",") + 1).trim() : "";
+  const qualityMatch = rawTitle.match(/\((\d{3,4}p)\)/i);
+  const feedMatch = String(tvgIdMatch?.[1] || "").match(/@([a-z0-9]+)$/i);
+
+  return {
+    channelIdHint: normalizeM3UChannelId(tvgIdMatch?.[1]),
+    rawTitle,
+    title: cleanM3UTitle(rawTitle),
+    quality: qualityMatch?.[1]?.toLowerCase() || null,
+    feed: feedMatch?.[1]?.toUpperCase() || "SD",
+    options: {},
+  };
+}
+
+function resolveM3UChannelId(entry, channelIndex, allChannels, channelIds) {
+  if (entry.channelIdHint && channelIds.has(entry.channelIdHint)) {
+    return entry.channelIdHint;
+  }
+
+  const normalizedTitle = normalize(entry.title);
+  const forcedId = DIRECT_CHANNEL_ID_OVERRIDES[normalizedTitle];
+  if (forcedId && channelIds.has(forcedId)) {
+    return forcedId;
+  }
+
+  const directMatches = channelIndex.get(normalizedTitle) || [];
+  if (directMatches.length) {
+    return directMatches
+      .map((channel) => ({
+        channel,
+        score: scoreChannelCandidate(channel, entry.title),
+      }))
+      .sort((a, b) => b.score - a.score)[0].channel.id;
+  }
+
+  const fallbackMatches = allChannels
+    .map((channel) => ({
+      channel,
+      score: scoreChannelCandidate(channel, entry.title),
+    }))
+    .filter((entryScore) => entryScore.score >= 150)
+    .sort((a, b) => b.score - a.score);
+
+  return fallbackMatches[0]?.channel?.id || null;
+}
+
+function parseLocalTrM3U(rawText, channelIndex, allChannels) {
+  const channelIds = buildChannelIdSet(allChannels);
+  const output = [];
+  let current = null;
+
+  const commitCurrent = (url) => {
+    if (!current || !url) {
+      current = null;
+      return;
+    }
+
+    const channelId = resolveM3UChannelId(current, channelIndex, allChannels, channelIds);
+    if (!channelId) {
+      current = null;
+      return;
+    }
+
+    output.push({
+      channel: channelId,
+      feed: current.feed || "SD",
+      title: current.title || current.rawTitle || channelId,
+      url,
+      quality: current.quality || null,
+      user_agent: current.options.user_agent || null,
+      referrer: current.options.referrer || null,
+      source: "streams-tr-m3u",
+    });
+
+    current = null;
+  };
+
+  for (const rawLine of rawText.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    if (line.startsWith("#EXTINF:")) {
+      current = parseM3UExtInf(line);
+      continue;
+    }
+
+    if (line.startsWith("#EXTVLCOPT:") && current) {
+      const optionLine = line.slice("#EXTVLCOPT:".length);
+      const separatorIndex = optionLine.indexOf("=");
+      if (separatorIndex !== -1) {
+        const key = optionLine.slice(0, separatorIndex).trim().toLowerCase();
+        const value = optionLine.slice(separatorIndex + 1).trim();
+        if (key === "http-user-agent" && value) current.options.user_agent = value;
+        if (key === "http-referrer" && value) current.options.referrer = value;
+      }
+      continue;
+    }
+
+    if (!line.startsWith("#") && current) {
+      commitCurrent(asHttpUrl(line));
+    }
+  }
+
+  return output;
+}
+
+function scoreStreamMetadata(stream) {
+  let score = 0;
+  if (stream.quality) score += 1;
+  if (stream.user_agent) score += 4;
+  if (stream.referrer) score += 4;
+  if (stream.source === "streams-tr-m3u") score += 2;
+  return score;
+}
+
+function mergeStreams(primaryStreams, secondaryStreams) {
+  const merged = new Map();
+
+  for (const stream of [...primaryStreams, ...secondaryStreams]) {
+    if (!stream?.channel || !stream?.url) continue;
+
+    const key = `${stream.channel}::${stream.url}`;
+    const existing = merged.get(key);
+    if (!existing) {
+      merged.set(key, stream);
+      continue;
+    }
+
+    if (scoreStreamMetadata(stream) > scoreStreamMetadata(existing)) {
+      merged.set(key, { ...existing, ...stream });
+    }
+  }
+
+  return [...merged.values()];
+}
+
 function proxyUrl(stream) {
   const params = new URLSearchParams();
   params.set("url", stream.url);
@@ -587,10 +749,18 @@ function generate() {
   const requestedRaw = fs.readFileSync(REQUESTED_LIST_PATH, "utf8");
   const apiChannels = JSON.parse(fs.readFileSync(CHANNELS_API_PATH, "utf8"));
   const apiStreams = JSON.parse(fs.readFileSync(STREAMS_API_PATH, "utf8"));
+  const localTrM3U =
+    fs.existsSync(LOCAL_TR_M3U_PATH) && fs.statSync(LOCAL_TR_M3U_PATH).isFile()
+      ? fs.readFileSync(LOCAL_TR_M3U_PATH, "utf8")
+      : "";
 
   const requested = parseRequestedChannels(requestedRaw);
   const channelIndex = buildChannelIndex(apiChannels);
-  const streamsByChannel = buildStreamsIndex(apiStreams);
+  const localTrStreams = localTrM3U
+    ? parseLocalTrM3U(localTrM3U, channelIndex, apiChannels)
+    : [];
+  const mergedStreams = mergeStreams(apiStreams, localTrStreams);
+  const streamsByChannel = buildStreamsIndex(mergedStreams);
 
   const output = [];
   const skipped = [];
@@ -679,7 +849,7 @@ function generate() {
     }
   }
 
-  const fileBody = `/**\n * Auto-generated channel list from data/requested_channels.txt\n * Source: iptv-org channel and stream APIs (filtered for safer playback).\n */\n\nexport const CHANNELS = ${JSON.stringify(output, null, 2)};\n\nexport const CATEGORIES = ${JSON.stringify(CATEGORY_META, null, 2)};\n`;
+  const fileBody = `/**\n * Auto-generated channel list from data/requested_channels.txt\n * Source: iptv-org channel data + local streams/tr.m3u stream overrides (filtered for safer playback).\n */\n\nexport const CHANNELS = ${JSON.stringify(output, null, 2)};\n\nexport const CATEGORIES = ${JSON.stringify(CATEGORY_META, null, 2)};\n`;
 
   fs.writeFileSync(OUTPUT_PATH, fileBody, "utf8");
 
@@ -691,6 +861,11 @@ function generate() {
         requested: requested.length,
         added: output.length,
         warnings: skipped.length,
+        streamInventory: {
+          api: apiStreams.length,
+          localTrM3U: localTrStreams.length,
+          merged: mergedStreams.length,
+        },
         skippedItems: skipped,
       },
       null,
@@ -702,6 +877,9 @@ function generate() {
   console.log(`Requested: ${requested.length}`);
   console.log(`Added: ${output.length}`);
   console.log(`Warnings: ${skipped.length}`);
+  console.log(`API streams: ${apiStreams.length}`);
+  console.log(`streams/tr.m3u streams: ${localTrStreams.length}`);
+  console.log(`Merged streams: ${mergedStreams.length}`);
 }
 
 generate();
