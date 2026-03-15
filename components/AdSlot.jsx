@@ -7,6 +7,7 @@ export default function AdSlot({
   className = "",
   minHeight = 90,
   format = "auto",
+  layoutKey = "",
 }) {
   const adRef = useRef(null);
   const enabled = Boolean(ADSENSE_CLIENT && slot);
@@ -42,6 +43,7 @@ export default function AdSlot({
           data-ad-client={ADSENSE_CLIENT}
           data-ad-slot={slot}
           data-ad-format={format}
+          {...(layoutKey ? { "data-ad-layout-key": layoutKey } : {})}
           data-full-width-responsive="true"
         />
       ) : (
@@ -55,4 +57,3 @@ export default function AdSlot({
     </div>
   );
 }
-
