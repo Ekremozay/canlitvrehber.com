@@ -1,4 +1,5 @@
-﻿import SeoHead from "../components/SeoHead";
+import SeoHead from "../components/SeoHead";
+import { LEGAL_NOTICE_EMAIL } from "../lib/siteConfig";
 
 export default function TelifBildirimiPage() {
   return (
@@ -18,9 +19,22 @@ export default function TelifBildirimiPage() {
           </p>
 
           <div className="space-y-4 text-sm text-white/80 leading-relaxed">
-            <p>
-              Bildirim icin e-posta: <a className="text-accent" href="mailto:telif@canlitvrehber.com">telif@canlitvrehber.com</a>
-            </p>
+            {LEGAL_NOTICE_EMAIL ? (
+              <p>
+                Bildirim icin e-posta:{" "}
+                <a className="text-accent" href={`mailto:${LEGAL_NOTICE_EMAIL}`}>
+                  {LEGAL_NOTICE_EMAIL}
+                </a>
+              </p>
+            ) : (
+              <p className="text-amber-200/85">
+                Telif bildirim e-postasi henuz tanimli degil. Lutfen panelden{" "}
+                <code className="px-1 py-0.5 rounded bg-black/30 border border-white/10">
+                  NEXT_PUBLIC_LEGAL_NOTICE_EMAIL
+                </code>{" "}
+                degerini gir.
+              </p>
+            )}
             <p>Bildirimde su bilgileri iletin:</p>
             <ul className="list-disc ml-5 space-y-1 text-white/75">
               <li>Hak sahibi adi ve iletisim bilgisi</li>
@@ -28,9 +42,7 @@ export default function TelifBildirimiPage() {
               <li>Hak sahipligini gosteren kisa aciklama</li>
               <li>Gerekliyse resmi belge veya referans linki</li>
             </ul>
-            <p>
-              Gecerli taleplerde hedefimiz 24 saat icinde gecici aksiyon almaktir.
-            </p>
+            <p>Gecerli taleplerde hedefimiz 24 saat icinde gecici aksiyon almaktir.</p>
           </div>
         </section>
       </main>
