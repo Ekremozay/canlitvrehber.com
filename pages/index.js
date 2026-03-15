@@ -4,12 +4,14 @@ import Header from "../components/Header";
 import CategoryMenu from "../components/CategoryMenu";
 import ChannelCard from "../components/ChannelCard";
 import ChannelListItem from "../components/ChannelListItem";
+import AiGuidePanel from "../components/AiGuidePanel";
 import AdSlot from "../components/AdSlot";
 import SeoHead from "../components/SeoHead";
 import { CHANNELS, CATEGORIES } from "../lib/channels";
 import { AD_SLOTS } from "../lib/adSlots";
 import { BRAND, SITE_URL } from "../lib/siteConfig";
 import { getBasePlaybackStatus } from "../lib/playbackStatus";
+import { canUseInternalStream } from "../lib/safeMode";
 import { usePlaybackAvailability } from "../lib/usePlaybackAvailability";
 import canliTvReferenceRows from "../data/canlitv-reference.json";
 
@@ -19,10 +21,17 @@ const VIEW_MODES = [
   { id: "both", label: "Tumu" },
 ];
 
+const PLAYBACK_FILTERS = [
+  { id: "playable", label: "Oynatilabilen" },
+  { id: "internal", label: "Bizim Yayin" },
+  { id: "youtube", label: "YouTube" },
+  { id: "all", label: "Tumu" },
+];
+
 export default function Home({ favorites, toggleFavorite }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
-  const [showPlayableOnly, setShowPlayableOnly] = useState(true);
+  const [playbackFilter, setPlaybackFilter] = useState("playable");
   const [viewMode, setViewMode] = useState("list");
   const [letterFilter, setLetterFilter] = useState("all");
   const searchTerm = search.trim().toLowerCase();
@@ -34,6 +43,12 @@ export default function Home({ favorites, toggleFavorite }) {
 
   const totalPlayable = useMemo(() => {
     return CHANNELS.filter((item) => getPlaybackStatus(item).playable).length;
+  }, [playbackStatuses]);
+  const totalInternal = useMemo(() => {
+    return CHANNELS.filter((item) => canUseInternalStream(item)).length;
+  }, []);
+  const totalYoutubeFallback = useMemo(() => {
+    return CHANNELS.filter((item) => getPlaybackStatus(item).playbackType === "youtube").length;
   }, [playbackStatuses]);
   const totalExternal = CHANNELS.length - totalPlayable;
   const referenceSummary = useMemo(() => {
@@ -52,17 +67,22 @@ export default function Home({ favorites, toggleFavorite }) {
 
   const filtered = useMemo(() => {
     return CHANNELS.filter((channel) => {
+      const playbackStatus = getPlaybackStatus(channel);
       const inCategory = category === "all" || channel.category === category;
       const inSearch =
         channel.name.toLowerCase().includes(searchTerm) ||
         (channel.description || "").toLowerCase().includes(searchTerm);
-      const byPlayableFilter = !showPlayableOnly || getPlaybackStatus(channel).playable;
       const byLetter =
         letterFilter === "all" || channel.name.toUpperCase().startsWith(letterFilter);
+      const byPlaybackFilter =
+        playbackFilter === "all" ||
+        (playbackFilter === "playable" && playbackStatus.playable) ||
+        (playbackFilter === "internal" && playbackStatus.playbackType === "internal") ||
+        (playbackFilter === "youtube" && playbackStatus.playbackType === "youtube");
 
-      return inCategory && inSearch && byPlayableFilter && byLetter;
+      return inCategory && inSearch && byPlaybackFilter && byLetter;
     });
-  }, [category, searchTerm, showPlayableOnly, letterFilter, playbackStatuses]);
+  }, [category, searchTerm, playbackFilter, letterFilter, playbackStatuses]);
 
   const cardItemsWithAds = useMemo(() => {
     const output = [];
@@ -81,7 +101,7 @@ export default function Home({ favorites, toggleFavorite }) {
   const showList = viewMode === "list" || viewMode === "both";
 
   const seoDescription =
-    "Canli TV kanallarini tek ekranda izle. Haber, spor, cocuk, belgesel ve yerel kanallara hizli ulas; dogrulanmis resmi YouTube canli yayinlariyla yasal ve net deneyim.";
+    "Canli TV kanallarini tek ekranda izle. Haber, spor, cocuk, belgesel ve yerel kanallara hizli ulas; once site ici yayin, acilmazsa YouTube yedegi ve resmi yonlendirme ile izle.";
 
   return (
     <>
@@ -123,32 +143,24 @@ export default function Home({ favorites, toggleFavorite }) {
 
             <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_310px] gap-6">
               <section>
+                <AiGuidePanel playableCount={totalPlayable} />
+
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4 sm:p-5 mb-5">
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div>
                       <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Kanal Rehberi</h1>
                       <p className="text-sm text-white/50 mt-1">
-                        Toplam {CHANNELS.length} kanal, site icinde resmi YouTube player ile izlenebilen {totalPlayable} kanal.
+                        Toplam {CHANNELS.length} kanal, site icinde oynatilabilen {totalPlayable} kanal.
                       </p>
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="px-2.5 py-1 rounded-full border border-emerald-400/40 bg-emerald-400/10 text-emerald-100 text-[11px] font-semibold">
-                        Yasal Mod: Resmi YouTube
+                        Siralama: Bizim Yayin - YouTube - Resmi Site
                       </span>
                       <span className="px-2.5 py-1 rounded-full border border-white/15 bg-white/5 text-white/70 text-[11px] font-semibold">
                         Ref: {referenceSummary.youtube} YouTube kaynagi
                       </span>
-                      <button
-                        onClick={() => setShowPlayableOnly((prev) => !prev)}
-                        className={`px-3.5 py-2 rounded-lg text-xs font-semibold border transition ${
-                          showPlayableOnly
-                            ? "bg-accent/15 text-accent border-accent/40"
-                            : "bg-white/5 text-white/70 border-white/15 hover:bg-white/10"
-                        }`}
-                      >
-                        {showPlayableOnly ? "Tum Kanallari Goster" : "Sadece Oynatilabilenler"}
-                      </button>
                     </div>
                   </div>
 
@@ -178,6 +190,22 @@ export default function Home({ favorites, toggleFavorite }) {
                         </button>
                       ))}
                     </div>
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {PLAYBACK_FILTERS.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => setPlaybackFilter(item.id)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${
+                          playbackFilter === item.id
+                            ? "bg-accent/15 text-accent border-accent/40"
+                            : "bg-white/5 text-white/70 border-white/15 hover:bg-white/10"
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -228,7 +256,13 @@ export default function Home({ favorites, toggleFavorite }) {
                 <div className="flex flex-wrap items-center gap-2 mb-5">
                   <span className="text-sm text-white/40 font-medium">Sonuc: {filtered.length} kanal</span>
                   <span className="px-2 py-1 rounded-full text-[11px] border border-accent/30 bg-accent/10 text-accent font-semibold">
-                    YouTube Canli: {totalPlayable}
+                    Oynatilabilir: {totalPlayable}
+                  </span>
+                  <span className="px-2 py-1 rounded-full text-[11px] border border-emerald-400/30 bg-emerald-400/10 text-emerald-100 font-semibold">
+                    Dahili: {totalInternal}
+                  </span>
+                  <span className="px-2 py-1 rounded-full text-[11px] border border-sky-400/30 bg-sky-400/10 text-sky-100 font-semibold">
+                    YouTube: {totalYoutubeFallback}
                   </span>
                   <span className="px-2 py-1 rounded-full text-[11px] border border-white/20 text-white/60 font-semibold">
                     Harici: {totalExternal}
@@ -238,7 +272,7 @@ export default function Home({ favorites, toggleFavorite }) {
                       setSearch("");
                       setCategory("all");
                       setLetterFilter("all");
-                      setShowPlayableOnly(true);
+                      setPlaybackFilter("playable");
                       setViewMode("list");
                     }}
                     className="ml-auto px-3 py-1.5 rounded-lg text-[11px] font-semibold border border-white/20 text-white/65 hover:text-white hover:bg-white/10 transition"

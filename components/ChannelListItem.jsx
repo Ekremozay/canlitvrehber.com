@@ -53,10 +53,12 @@ export default function ChannelListItem({ channel, isFav, onToggleFav, playable,
             }`}
           >
             {hasStream
-              ? resolvedPlaybackType === "youtube"
-                ? "YouTube"
-                : "Canli"
-              : "YouTube Yok"}
+              ? resolvedPlaybackType === "internal"
+                ? "Dahili"
+                : resolvedPlaybackType === "youtube"
+                  ? "YouTube"
+                  : "Canli"
+              : "Harici"}
           </span>
           {reference?.mode && (
             <span className="rounded-full border border-amber-300/35 bg-amber-300/10 px-2 py-0.5 text-[10px] text-amber-100/85">

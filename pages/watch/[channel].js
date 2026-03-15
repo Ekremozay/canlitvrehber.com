@@ -8,7 +8,7 @@ import { AD_SLOTS } from "../../lib/adSlots";
 import { getBasePlaybackStatus } from "../../lib/playbackStatus";
 import { usePlaybackAvailability } from "../../lib/usePlaybackAvailability";
 import { getCanliTvModeLabel, getCanliTvReference } from "../../lib/canlitvReference";
-import { getYoutubeLiveLink } from "../../lib/channelPlayback";
+import { getOfficialLiveLink, getYoutubeLiveLink } from "../../lib/channelPlayback";
 
 const VideoPlayer = dynamic(() => import("../../components/VideoPlayer"), {
   ssr: false,
@@ -53,7 +53,10 @@ export default function WatchPage({ favorites, toggleFavorite }) {
   const playbackType = currentPlaybackStatus?.playbackType || "external";
   const canliTvReference = getCanliTvReference(channel);
   const youtubeLiveLink = getYoutubeLiveLink(channel);
-  const visibleExternalLinks = youtubeLiveLink?.url ? [youtubeLiveLink] : [];
+  const officialLiveLink = getOfficialLiveLink(channel);
+  const visibleExternalLinks = [youtubeLiveLink, officialLiveLink].filter(
+    (item, index, list) => item?.url && list.findIndex((entry) => entry?.url === item.url) === index
+  );
   const otherChannels = CHANNELS.filter((item) => item.id !== channelId).slice(0, 8);
 
   if (!channelId) return null;
@@ -82,7 +85,7 @@ export default function WatchPage({ favorites, toggleFavorite }) {
     <>
       <SeoHead
         title={`${channel.name} Canli Izle`}
-        description={`${channel.name} resmi YouTube canli yayinina tek tikla ulas. Dogrulanmis YouTube player ve resmi baglantilar burada.`}
+        description={`${channel.name} canli yayinina tek tikla ulas. Once site ici yayin, acilmazsa YouTube yedegi ve resmi baglantilar burada.`}
         path={`/watch/${channel.id}`}
       />
 
@@ -124,11 +127,11 @@ export default function WatchPage({ favorites, toggleFavorite }) {
               {!canPlayInSite && (
                 <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4">
                   <div className="mb-2 text-sm font-bold text-amber-200">
-                    Bu kanal icin dogrulanmis resmi YouTube canli yayini su an yok
+                    Bu kanal su an site ici playerda acilamadi
                   </div>
                   <p className="mb-3 text-xs text-amber-100/80">
-                    Site icinde sadece resmi ve dogrulanmis YouTube canli yayinlari aciliyor. Yayin tekrar
-                    baslarsa saatlik kontrol ile oynatilabilir listeye geri gelir.
+                    Siralama once bizim yayin, baglanamazsa YouTube canli yedegi, o da yoksa resmi site
+                    yonlendirmesi seklinde calisir.
                   </p>
                   {canliTvReference?.mode && (
                     <p className="mb-3 text-[11px] text-amber-100/75">
@@ -163,7 +166,11 @@ export default function WatchPage({ favorites, toggleFavorite }) {
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
                   <div className="text-[11px] uppercase tracking-wide text-white/40">Player Modu</div>
                   <div className="mt-1 text-sm font-semibold">
-                    {playbackType === "youtube" ? "Resmi YouTube" : "Harici"}
+                    {playbackType === "internal"
+                      ? "Dahili"
+                      : playbackType === "youtube"
+                        ? "YouTube"
+                        : "Harici"}
                   </div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-surface/60 p-3">
@@ -218,7 +225,7 @@ export default function WatchPage({ favorites, toggleFavorite }) {
 
               {visibleExternalLinks.length > 0 && (
                 <div className="rounded-2xl border border-white/10 bg-surface/50 p-4">
-                  <h3 className="mb-3 text-sm font-bold text-white/70">Resmi YouTube Kaynagi</h3>
+                  <h3 className="mb-3 text-sm font-bold text-white/70">Harici Yedek Kaynaklar</h3>
                   <div className="grid grid-cols-1 gap-2">
                     {visibleExternalLinks.map((link) => (
                       <ExternalButton key={`${channel.id}-ext-${link.url}`} link={link} />
@@ -262,7 +269,13 @@ export default function WatchPage({ favorites, toggleFavorite }) {
                         <div className="h-2 w-2 flex-shrink-0 rounded-full" style={{ background: item.color }} />
                         <span className="flex-1 truncate">{item.name}</span>
                         <span className={`text-[10px] font-mono ${itemHasStream ? "text-accent" : "text-white/40"}`}>
-                          {itemHasStream ? "YT" : "YOK"}
+                          {itemHasStream
+                            ? itemPlaybackStatus?.playbackType === "internal"
+                              ? "IN"
+                              : itemPlaybackStatus?.playbackType === "youtube"
+                                ? "YT"
+                                : "CANLI"
+                            : "YOK"}
                         </span>
                       </Link>
                     );
@@ -277,7 +290,7 @@ export default function WatchPage({ favorites, toggleFavorite }) {
               />
 
               <div className="rounded-2xl border border-emerald-400/35 bg-emerald-400/10 p-3.5 text-xs text-emerald-100/85">
-                Site ici oynatma sadece resmi ve dogrulanmis YouTube canli yayinlariyla sinirli.
+                Oynatici sirasi: once bizim yayin, sonra YouTube canli yedegi, en son resmi site.
               </div>
             </aside>
           </div>

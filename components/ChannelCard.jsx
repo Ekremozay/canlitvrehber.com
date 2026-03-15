@@ -65,7 +65,13 @@ export default function ChannelCard({ channel, isFav, onToggleFav, playable, pla
             <span
               className={`h-1.5 w-1.5 rounded-full ${hasStream ? "bg-danger animate-pulse" : "bg-white/40"}`}
             />
-            {hasStream ? "YOUTUBE" : "YOUTUBE YOK"}
+            {hasStream
+              ? resolvedPlaybackType === "internal"
+                ? "DAHILI"
+                : resolvedPlaybackType === "youtube"
+                  ? "YOUTUBE"
+                  : "CANLI"
+              : "KAYNAK YOK"}
           </span>
 
           {reference?.mode && (
@@ -87,7 +93,7 @@ export default function ChannelCard({ channel, isFav, onToggleFav, playable, pla
         >
           {hasStream
             ? resolvedPlaybackType === "youtube"
-              ? "YouTube Ile Izle"
+              ? "YouTube"
               : "Izle"
             : "Canli Yayin Yok"}
         </Link>

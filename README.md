@@ -116,9 +116,9 @@ Böylece tarayıcı aynı origin'den veri alır ve CORS hatası oluşmaz.
 ## Hukuki Guvenli Mod
 
 Guvenli mod varsayilan olarak aciktir.
-`.env.example` canlitv uyumu icin `reference` profiliyle gelir.
+Tum ortam ayarlarini dogrudan `.env.local` icinde yonet.
 
-1. `.env.local` dosyasi olustur ve `.env.example` icerigini kopyala.
+1. `.env.local` dosyasini duzenle.
 2. (Istersen) `NEXT_PUBLIC_SAFE_MODE=true` olarak birak.
 3. Mod sec:
    `NEXT_PUBLIC_SAFE_MODE_LEVEL=reference` (canlitv referansi ile uyumlu)
